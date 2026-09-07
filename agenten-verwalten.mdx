@@ -1,0 +1,101 @@
+---
+title: "Agenten verwalten"
+description: "Agenten anlegen, konfigurieren und ihre Grundeinstellungen pflegen."
+---
+
+Ein **Agent** ist ein konfigurierter Voice-Agent, der an eine Rufnummer gebunden ist. Alles, was einen Anruf steuert – Verhalten, Sprache, Anbindungen – hängt am Agenten.
+
+## Agenten-Übersicht
+
+Die Agentenliste zeigt alle Agenten Ihres Mandanten mit ihrem Veröffentlichungsstatus (aktive Live-Version oder „noch keine Version"). Von hier legen Sie neue Agenten an oder löschen bestehende.
+
+Öffnen Sie die Liste über **Agents** in der Seitenleiste.
+
+<Frame caption="Die Agentenliste – hier noch ohne Agenten, mit der Karte „Neuer Agent“.">
+  <img src="/images/agenten/01-agents-leer.png" alt="Leere Agentenliste mit der Karte Neuer Agent" />
+</Frame>
+
+## Neuen Agenten anlegen
+
+Klicken Sie auf die Karte **Neuer Agent**. Der **Agenten-Assistent** führt in fünf Schritten durch die Grundkonfiguration. Nur der Name ist Pflicht – alle weiteren Einstellungen sind optional und lassen sich später anpassen.
+
+<Steps>
+  <Step title="Grundeinstellungen">
+    **Name** und **Beschreibung** des Agenten sowie die **Telefonnummer**, unter der er erreichbar ist. Der Name muss eindeutig sein; die Rufnummer muss bei unserem Provider registriert sein.
+
+    <Frame caption="Schritt 1 – Grundeinstellungen: Name, Beschreibung und Rufnummer.">
+      <img src="/images/agenten/02-wizard-grundeinstellungen.png" alt="Wizard-Schritt Grundeinstellungen" />
+    </Frame>
+  </Step>
+  <Step title="Basis-Instructions">
+    Die grundlegende Anweisung an den Agenten: **Systemrolle** (wer er ist und wie er kommuniziert), **globale Regeln** für alle Gespräche und **kritische Regeln** mit höchster Priorität (siehe unten).
+
+    <Frame caption="Schritt 2 – Basis-Instructions: Systemrolle, globale und kritische Regeln.">
+      <img src="/images/agenten/03-wizard-basisinstruktionen.png" alt="Wizard-Schritt Basisinstruktionen" />
+    </Frame>
+  </Step>
+  <Step title="Anrufparameter">
+    Zeitliche Grenzen des Gesprächs: **maximale Wartezeit** auf eine Nutzereingabe und **maximale Anrufdauer**. Beide sind standardmäßig unbegrenzt und werden über einen Schalter aktiviert.
+
+    <Frame caption="Schritt 3 – Anrufparameter: Wartezeit und Anrufdauer begrenzen.">
+      <img src="/images/agenten/04-wizard-anrufparameter.png" alt="Wizard-Schritt Anrufparameter" />
+    </Frame>
+  </Step>
+  <Step title="KI-Modell-Parameter">
+    **Stimme**, **Transkriptsprache**, **Geräuschunterdrückung** und **Barge-in** (ob der Anrufer den Agenten unterbrechen darf).
+
+    <Frame caption="Schritt 4 – KI-Modell-Parameter: Stimme, Sprache, Geräuschunterdrückung, Barge-in.">
+      <img src="/images/agenten/05-wizard-ki-modellparameter.png" alt="Wizard-Schritt KI-Modell-Parameter" />
+    </Frame>
+  </Step>
+  <Step title="Connectoren">
+    Optionale Anbindung an Ihre Fachsysteme. Verfügbare Connectoren stehen rechts, aktivierte links. Details im Kapitel [Connectoren einrichten](/connectoren). Zum Abschluss speichern Sie den Agenten mit **Erstellen**.
+
+    <Frame caption="Schritt 5 – Connectoren auswählen und Agenten mit „Erstellen“ speichern.">
+      <img src="/images/agenten/06-wizard-konnektoren.png" alt="Wizard-Schritt Connectoren" />
+    </Frame>
+  </Step>
+</Steps>
+
+Nach **Erstellen** erscheint der neue Agent in der Liste – zunächst ohne Live-Version und ohne Rufnummer. Von der Karte aus öffnen Sie den **Entwurf** (Flow-Editor), die **Versionen** oder die **Einstellungen**.
+
+<Frame caption="Der neu erstellte Agent in der Liste, bereit zur weiteren Konfiguration.">
+  <img src="/images/agenten/07-agent-erstellt.png" alt="Agentenliste mit dem neu erstellten Agenten" />
+</Frame>
+
+## Agenten-Konfiguration im Detail
+
+Einen bestehenden Agenten bearbeiten Sie über die **Einstellungen** auf der Agentenkarte. Die Konfiguration ist in Tabs gegliedert:
+
+<AccordionGroup>
+  <Accordion title="Grundeinstellungen" icon="sliders">
+    Name, Beschreibung und die **Rufnummer**, unter der der Agent erreichbar ist. Die Rufnummer wählen Sie über ein Auswahlfeld; jede Nummer ist eindeutig einem Agenten zugeordnet.
+  </Accordion>
+  <Accordion title="Basis-Instructions" icon="message-lines">
+    Der System-Prompt des Agenten. Hier legen Sie **Rolle**, **globale Regeln** und **kritische Regeln** fest, die in jedem Gesprächszustand gelten. Zustands-spezifische Anweisungen kommen später im [Flow](/flows-bauen) dazu.
+  </Accordion>
+  <Accordion title="Anrufparameter" icon="clock">
+    - **Maximale Wartezeit auf Nutzereingabe** – wie lange der Agent auf eine Antwort wartet, bevor er reagiert (mit Option „unbegrenzt").
+    - **Maximale Anrufdauer** – Obergrenze für die Gesprächslänge (mit Option „unbegrenzt").
+  </Accordion>
+  <Accordion title="KI-Modell-Parameter" icon="waveform">
+    - **Stimme** des Agenten (mehrere Stimmen wählbar, Standard: eine natürliche deutsche Stimme).
+    - **Transkriptionssprache** (Standard: Deutsch).
+    - **Geräuschunterdrückung** für die Anrufer-Audioqualität.
+    - **Barge-in** – ob der Anrufer den Agenten unterbrechen darf, während dieser spricht.
+  </Accordion>
+  <Accordion title="Connectoren" icon="plug">
+    Anbindung an Ihre Fachsysteme. Siehe eigenes Kapitel: [Connectoren einrichten](/connectoren).
+  </Accordion>
+</AccordionGroup>
+
+## Versionen und Livegang
+
+Ein Agent arbeitet mit **Versionen** seines Flows:
+
+- Sie bearbeiten den **Entwurf (Draft)**.
+- Beim **Veröffentlichen** wird der Entwurf geprüft und als unveränderliche, nummerierte **Version** gespeichert.
+- Sie **aktivieren** eine Version als Live-Version. Neue Anrufe nutzen diese; laufende Anrufe bleiben auf ihrer Version.
+- Aus einer Version können Sie jederzeit wieder einen bearbeitbaren Entwurf öffnen.
+
+Mehr dazu im Kapitel [Gesprächs-Flows bauen](/flows-bauen#versionierung).

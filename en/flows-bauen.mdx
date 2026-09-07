@@ -1,0 +1,87 @@
+---
+title: "Build Conversation Flows"
+description: "Model an agent's conversation flow as a state graph."
+---
+
+A **flow** describes how a conversation proceeds. You build it in the **flow editor** as a **state graph**: a map made of states and transitions between them.
+
+## The flow editor
+
+The flow editor is a graphical interface in which you arrange states as nodes and link them with connections (transitions). You can arrange the graph freely, add states, edit them, and remove them again.
+
+## State types
+
+Each state has one of three types:
+
+<CardGroup cols={3}>
+  <Card title="REGULAR" icon="comments">
+    A conversation state with its own instructions, permitted tools, and transitions.
+  </Card>
+  <Card title="FORWARD" icon="phone-arrow-up-right">
+    Transfer to an external phone number (e.g. to a human). Terminal state.
+  </Card>
+  <Card title="HANGUP" icon="phone-slash">
+    Ends the call. Terminal state.
+  </Card>
+</CardGroup>
+
+## Transitions and conditions
+
+A **REGULAR** state has **outputs** – named, ordered transitions to subsequent states. Each output is tied to a **condition**:
+
+- a **tool** that was called in the state,
+- an expected **response code** (the result of the tool),
+- optionally **negated** ("does *not* apply").
+
+While running, the agent checks the outputs in their order. The first matching transition determines the subsequent state.
+
+<Note>
+**No response code, no transition.** If a tool does not trigger a declared response code, the agent stays in the current state. This keeps you in control of the conversation's course.
+</Note>
+
+### Example
+
+```
+[REGULAR: Greeting & request]
+   ── classify → "termin"    →  [REGULAR: Book appointment]
+   ── classify → "sonstiges" →  [FORWARD: to practice]
+
+[REGULAR: Book appointment]
+   ── book_appointment → "ok"        →  [HANGUP: Farewell]
+   ── book_appointment → "kein_slot" →  [REGULAR: Book appointment]
+```
+
+## Tools in a state
+
+For each REGULAR state, you define which **tools** the agent may use there. There are two kinds:
+
+- **`classify`** ✅ – built-in tool with which the agent sorts the caller's request into categories you define. The categories become response codes for your transitions.
+- **Connector tools** 🚧 – business actions such as "book appointment" or "look up patient" that go to your system via a [connector](/en/connectoren).
+
+<Warning>
+The integration of connector tools with external systems is currently being finalized (🚧). You can already model flows with these tools; the actual execution against your business system is imminent. The built-in `classify`, as well as transfer and hang-up, work fully.
+</Warning>
+
+## State instructions and slots
+
+Each REGULAR state can carry its own **instructions** that apply only there (in addition to the agent's [base instructions](/en/agenten-verwalten)). Values the agent collects during the conversation (e.g. a name mentioned or a preferred appointment) are available as **slots** in the further course of the conversation.
+
+## Validation
+
+The editor checks your flow continuously – for example whether all states are reachable and transitions are valid. Open issues are shown before you publish. In addition, you can **import and export** flows.
+
+## Versioning
+
+<Steps>
+  <Step title="Edit the draft">
+    You always work on an editable **draft**.
+  </Step>
+  <Step title="Publish">
+    On publishing, the draft is validated and stored as an immutable, numbered **version**.
+  </Step>
+  <Step title="Activate">
+    You set a version as the **live version**. New calls use it immediately.
+  </Step>
+</Steps>
+
+You can view earlier versions read-only and, if needed, reopen them as a draft.

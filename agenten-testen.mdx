@@ -1,0 +1,48 @@
+---
+title: "Agenten testen"
+description: "Den Agenten direkt im Browser sprechen – ohne echten Anruf."
+---
+
+Bevor ein Agent live geht, sollten Sie ihn ausprobieren. Mit dem **Test-Anruf** sprechen Sie direkt im Browser mit dem Agenten – über Ihr Mikrofon, ganz ohne Telefonnetz.
+
+## Was der Test-Anruf prüft
+
+Der Test-Anruf läuft **live gegen Ihren aktuellen Entwurf (Draft)**. Änderungen am Flow wirken sich also sofort im nächsten Test aus, ohne dass Sie veröffentlichen müssen. So iterieren Sie schnell.
+
+<Note>
+Test-Anrufe erzeugen **keinen** protokollierten Anruf und keinen Eintrag in der Anrufauswertung – sie dienen ausschließlich dem Ausprobieren.
+</Note>
+
+## Einen Test-Anruf starten
+
+<Steps>
+  <Step title="Test-Ansicht öffnen">
+    Öffnen Sie zum Entwurf des Agenten die Ansicht **Test-Anruf**.
+  </Step>
+  <Step title="Mikrofon freigeben">
+    Erlauben Sie dem Browser den Zugriff auf Ihr Mikrofon. Die Verbindung wird aufgebaut.
+  </Step>
+  <Step title="Sprechen">
+    Sprechen Sie mit dem Agenten wie ein echter Anrufer. Sie hören seine Antworten und sehen das Gespräch live.
+  </Step>
+</Steps>
+
+## Die Test-Oberfläche
+
+Während des Tests sehen Sie drei Bereiche nebeneinander:
+
+<CardGroup cols={3}>
+  <Card title="Flow-Zustand" icon="diagram-project">
+    Zeigt live, in welchem Zustand des Flows sich der Agent gerade befindet.
+  </Card>
+  <Card title="Live-Chat" icon="comments">
+    Das laufende Gespräch als Text – Ihre Eingaben und die Antworten des Agenten.
+  </Card>
+  <Card title="Ereignis-Log" icon="list">
+    Technische Ereignisse wie Tool-Aufrufe, Ergebnisse und Zustandswechsel.
+  </Card>
+</CardGroup>
+
+<Tip>
+Achten Sie im Ereignis-Log besonders auf die **Tool-Aufrufe** und **Zustandswechsel** – so erkennen Sie schnell, ob Ihre Übergangsbedingungen wie gewünscht greifen.
+</Tip>

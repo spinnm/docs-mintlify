@@ -1,0 +1,48 @@
+---
+title: "Test an Agent"
+description: "Talk to the agent directly in the browser – without a real call."
+---
+
+Before an agent goes live, you should try it out. With the **test call**, you talk to the agent directly in the browser – through your microphone, entirely without the phone network.
+
+## What the test call checks
+
+The test call runs **live against your current draft**. Changes to the flow therefore take effect immediately in the next test, without you having to publish. This lets you iterate quickly.
+
+<Note>
+Test calls create **no** logged call and no entry in the call analysis – they serve solely for trying things out.
+</Note>
+
+## Starting a test call
+
+<Steps>
+  <Step title="Open the test view">
+    For the agent's draft, open the **Test call** view.
+  </Step>
+  <Step title="Grant microphone access">
+    Allow the browser access to your microphone. The connection is established.
+  </Step>
+  <Step title="Speak">
+    Talk to the agent like a real caller. You hear its responses and see the conversation live.
+  </Step>
+</Steps>
+
+## The test interface
+
+During the test, you see three areas side by side:
+
+<CardGroup cols={3}>
+  <Card title="Flow state" icon="diagram-project">
+    Shows live which state of the flow the agent is currently in.
+  </Card>
+  <Card title="Live chat" icon="comments">
+    The ongoing conversation as text – your inputs and the agent's responses.
+  </Card>
+  <Card title="Event log" icon="list">
+    Technical events such as tool calls, results, and state changes.
+  </Card>
+</CardGroup>
+
+<Tip>
+In the event log, pay particular attention to the **tool calls** and **state changes** – this lets you quickly see whether your transition conditions take effect as intended.
+</Tip>

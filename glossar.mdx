@@ -1,0 +1,24 @@
+---
+title: "Glossar"
+description: "Die wichtigsten Begriffe rund um msg.Hello."
+---
+
+| Begriff | Bedeutung |
+|---|---|
+| **Mandant** | Die abgeschlossene Arbeitsumgebung Ihrer Organisation. Benutzer, Agenten und Daten gehören immer zu genau einem Mandanten. Wird von msg bereitgestellt. |
+| **Agent** | Ein konfigurierter Voice-Agent, der an eine Rufnummer gebunden ist und Anrufe entgegennimmt. |
+| **Flow** | Der Gesprächsablauf eines Agenten, modelliert als Zustandsgraph aus Zuständen und Übergängen. |
+| **Zustand (State)** | Ein Schritt im Gespräch. Typen: **REGULAR** (Gesprächszustand mit Tools und Übergängen), **FORWARD** (Weiterleitung an eine Rufnummer), **HANGUP** (Anruf beenden). |
+| **Output** | Ein benannter, an eine Bedingung geknüpfter Übergang von einem Zustand zum nächsten. |
+| **Bedingung** | Kombination aus Tool und erwartetem Response-Code, die einen Übergang auslöst (optional negierbar). |
+| **Tool** | Eine Aktion, die der Agent im Gespräch ausführen kann – z. B. das eingebaute `classify` oder ein fachliches Connector-Tool wie „Termin buchen". |
+| **Response-Code** | Das Ergebnis eines Tools, das den weiteren Gesprächsverlauf steuert. |
+| **`classify`** | Eingebautes Tool, mit dem der Agent das Anliegen des Anrufers in von Ihnen definierte Kategorien einordnet. |
+| **Connector** | Anbindung eines Agenten an ein externes Fachsystem; stellt dem Agenten fachliche Tools bereit. Als Standard-Connector (selbst implementiert) oder Direkt-Integration (von msg). |
+| **Slot** | Ein im Gespräch gesammelter Wert (z. B. Name, Wunschtermin), der im weiteren Verlauf zur Verfügung steht. |
+| **Entwurf (Draft)** | Der bearbeitbare Stand eines Flows. |
+| **Version** | Ein veröffentlichter, unveränderlicher Stand eines Flows. Die aktive Version heißt **Live-Version**. |
+| **Test-Anruf** | Ein Gespräch mit dem Agenten direkt im Browser, live gegen den aktuellen Entwurf – ohne echten Anruf. |
+| **Rolle** | Ein Bündel von Berechtigungen, das Benutzern zugewiesen wird und steuert, was sie im Portal dürfen. |
+| **Retention** | Die pro Mandant konfigurierbare Aufbewahrungsfrist für Anruf- und Dialogdaten. |
+| **SSO (Single Sign-On)** | Anmeldung über den zentralen Login Ihrer Organisation. |

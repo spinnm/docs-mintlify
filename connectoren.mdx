@@ -1,0 +1,58 @@
+---
+title: "Connectoren einrichten"
+description: "Fachsysteme anbinden, damit der Agent echte Vorgänge erledigt."
+---
+
+Ein **Connector** verbindet einen Agenten mit einem externen System – etwa Ihrer Praxis- oder Fachsoftware. Er stellt dem Agenten **Tools** bereit (z. B. „Termin buchen", „Patient suchen"), die der Agent im [Flow](/flows-bauen) verwendet. So erledigt der Agent vollständige Fachprozesse Ende-zu-Ende, statt nur zu informieren.
+
+<Info>
+Dieses Kapitel beschreibt, wie Sie einen Connector im Portal **auswählen und konfigurieren**. Die technische **Implementierung** eines Connectors ist nicht Teil dieses Handbuchs.
+</Info>
+
+## Zwei Wege zur Anbindung
+
+<CardGroup cols={2}>
+  <Card title="Standard-Connector" icon="code">
+    Ihr System stellt eine standardisierte Schnittstelle nach der msg.Hello-Spezifikation bereit. Maximale Flexibilität, keine Abhängigkeit von einem bestimmten Anbieter.
+  </Card>
+  <Card title="Direkt-Integrationen" icon="puzzle-piece">
+    Für etablierte Systeme bietet msg fertige Connectoren an – ohne eigenen Implementierungsaufwand. Das Angebot wächst laufend. 📋
+  </Card>
+</CardGroup>
+
+## Reifegrad
+
+<Warning>
+Das **Connector-Konzept** und die **Konfiguration im Portal** sind verfügbar (✅). Die **Ausführung** der fachlichen Tools gegen Ihr System wird derzeit fertiggestellt (🚧). Sie können Connectoren also bereits anlegen und Ihre Flows vorbereiten; die tatsächliche Anbindung folgt in Kürze. Fertige Direkt-Integrationen für Systeme wie Doctolib oder ClickDoc sind geplant (📋), siehe [Ausblick](/roadmap).
+</Warning>
+
+## Einen Connector konfigurieren
+
+Im Tab **Connectoren** eines Agenten sehen Sie die verfügbaren Connector-Typen (mit Beschreibung, Anzahl unterstützter Tools und den unterstützten Authentifizierungsmethoden) sowie Ihre bereits aktiven Connectoren.
+
+<Steps>
+  <Step title="Connector-Typ wählen">
+    Wählen Sie den passenden Connector-Typ für Ihr System.
+  </Step>
+  <Step title="Basis-URL hinterlegen">
+    Tragen Sie die Adresse (Basis-URL) ein, unter der Ihr System die Schnittstelle bereitstellt.
+  </Step>
+  <Step title="Zugangsdaten hinterlegen">
+    Geben Sie die Authentifizierung ein (z. B. einen API-Schlüssel). Welche Felder erscheinen, hängt von der gewählten Authentifizierungsmethode ab. Geheime Werte werden verschlüsselt gespeichert.
+  </Step>
+  <Step title="Tools aktivieren">
+    Aktivieren Sie die Tools, die der Agent über diesen Connector nutzen darf. Jedes Tool ist genau einem Connector zugeordnet.
+  </Step>
+</Steps>
+
+<Note>
+Ihre Zugangsdaten werden **verschlüsselt** abgelegt. Geheime Felder werden im Portal nach dem Speichern nicht mehr im Klartext angezeigt.
+</Note>
+
+## Beispiel: Terminbuchung
+
+Der ausgereifteste Anwendungsfall ist die telefonische **Terminbuchung** für das Gesundheitswesen. Der zugehörige Connector stellt u. a. Tools bereit, um Patienten zu identifizieren, Fachgebiete und Terminarten abzufragen, Verfügbarkeiten zu ermitteln sowie Termine zu buchen, abzufragen und abzusagen. In Ihrem Flow verketten Sie diese Tools zum vollständigen Buchungsgespräch.
+
+<Tip>
+Nach dem Einrichten eines Connectors sollten Sie den Agenten gründlich mit einem [Test-Anruf](/agenten-testen) prüfen, bevor Sie ihn live schalten.
+</Tip>

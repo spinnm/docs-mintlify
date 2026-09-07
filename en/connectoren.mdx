@@ -1,0 +1,58 @@
+---
+title: "Setting up connectors"
+description: "Connect your specialist systems so the agent can handle real transactions."
+---
+
+A **connector** links an agent to an external system – for example, your practice or specialist software. It provides the agent with **tools** (e.g. "book appointment", "look up patient") that the agent uses in the [flow](/en/flows-bauen). This lets the agent handle complete business processes end-to-end, rather than just providing information.
+
+<Info>
+This chapter describes how to **select and configure** a connector in the portal. The technical **implementation** of a connector is out of scope for this handbook.
+</Info>
+
+## Two ways to connect
+
+<CardGroup cols={2}>
+  <Card title="Standard connector" icon="code">
+    Your system provides a standardized interface following the msg.Hello specification. Maximum flexibility, no dependency on a particular vendor.
+  </Card>
+  <Card title="Direct integrations" icon="puzzle-piece">
+    For established systems, msg offers ready-made connectors – with no implementation effort on your part. The range is growing continuously. 📋
+  </Card>
+</CardGroup>
+
+## Maturity
+
+<Warning>
+The **connector concept** and the **configuration in the portal** are available (✅). The **execution** of the business tools against your system is currently being finalized (🚧). You can therefore already create connectors and prepare your flows; the actual connection will follow shortly. Ready-made direct integrations for systems such as Doctolib or ClickDoc are planned (📋), see [Roadmap](/en/roadmap).
+</Warning>
+
+## Configuring a connector
+
+In an agent's **Connectors** tab, you see the available connector types (with description, number of supported tools, and the supported authentication methods) as well as your already active connectors.
+
+<Steps>
+  <Step title="Choose a connector type">
+    Select the connector type that matches your system.
+  </Step>
+  <Step title="Enter the base URL">
+    Enter the address (base URL) where your system provides the interface.
+  </Step>
+  <Step title="Enter the credentials">
+    Enter the authentication details (e.g. an API key). Which fields appear depends on the selected authentication method. Secret values are stored encrypted.
+  </Step>
+  <Step title="Enable tools">
+    Enable the tools that the agent is allowed to use through this connector. Each tool is assigned to exactly one connector.
+  </Step>
+</Steps>
+
+<Note>
+Your credentials are stored **encrypted**. Secret fields are no longer displayed in plain text in the portal after saving.
+</Note>
+
+## Example: appointment booking
+
+The most mature use case is telephone **appointment booking** for healthcare. The associated connector provides tools to, among other things, identify patients, query specialties and appointment types, determine availability, and book, look up, and cancel appointments. In your flow, you chain these tools together into a complete booking conversation.
+
+<Tip>
+After setting up a connector, you should thoroughly check the agent with a [test call](/en/agenten-testen) before going live.
+</Tip>

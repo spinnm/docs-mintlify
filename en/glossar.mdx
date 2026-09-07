@@ -1,0 +1,24 @@
+---
+title: "Glossary"
+description: "The key terms around msg.Hello."
+---
+
+| Term | Meaning |
+|---|---|
+| **Tenant** | The self-contained working environment of your organization. Users, agents, and data always belong to exactly one tenant. Provided by msg. |
+| **Agent** | A configured voice agent that is bound to a phone number and answers calls. |
+| **Flow** | The conversation flow of an agent, modeled as a state graph of states and transitions. |
+| **State** | A step in the conversation. Types: **REGULAR** (conversation state with tools and transitions), **FORWARD** (forwarding to a phone number), **HANGUP** (end the call). |
+| **Output** | A named transition from one state to the next, tied to a condition. |
+| **Condition** | A combination of tool and expected response code that triggers a transition (can optionally be negated). |
+| **Tool** | An action the agent can perform during the conversation – e.g. the built-in `classify` or a business connector tool such as "book appointment". |
+| **Response code** | The result of a tool that controls how the conversation continues. |
+| **`classify`** | Built-in tool with which the agent categorizes the caller's request into categories you define. |
+| **Connector** | The connection of an agent to an external specialist system; provides the agent with business tools. As a standard connector (implemented yourself) or a direct integration (by msg). |
+| **Slot** | A value collected during the conversation (e.g. name, preferred appointment) that remains available later on. |
+| **Draft** | The editable state of a flow. |
+| **Version** | A published, immutable state of a flow. The active version is called the **live version**. |
+| **Test call** | A conversation with the agent directly in the browser, live against the current draft – without a real call. |
+| **Role** | A bundle of permissions that is assigned to users and controls what they are allowed to do in the portal. |
+| **Retention** | The retention period for call and dialog data, configurable per tenant. |
+| **SSO (Single Sign-On)** | Sign-in via your organization's central login. |

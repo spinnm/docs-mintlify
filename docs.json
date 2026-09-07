@@ -1,72 +1,62 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "msg.Hello",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#A01441",
+    "light": "#A01441",
+    "dark": "#A01441"
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/msg-hello-light.svg",
+    "dark": "/logo/msg-hello-dark.svg"
+  },
   "navigation": {
-    "pages": [
+    "languages": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "language": "de",
+        "default": true,
+        "tabs": [
+          {
+            "tab": "Handbuch",
+            "groups": [
+              { "group": "Einstieg", "pages": ["index", "erste-schritte"] },
+              { "group": "Agenten & Gespräche", "pages": ["agenten-verwalten", "flows-bauen", "agenten-testen"] },
+              { "group": "Integration", "pages": ["connectoren"] },
+              { "group": "Im Alltag", "pages": ["anrufe-auswerten", "einstellungen", "benutzer-team"] },
+              { "group": "Referenz", "pages": ["glossar", "roadmap"] }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Guide",
+            "groups": [
+              { "group": "Getting Started", "pages": ["en/index", "en/erste-schritte"] },
+              { "group": "Agents & Conversations", "pages": ["en/agenten-verwalten", "en/flows-bauen", "en/agenten-testen"] },
+              { "group": "Integration", "pages": ["en/connectoren"] },
+              { "group": "Daily Use", "pages": ["en/anrufe-auswerten", "en/einstellungen", "en/benutzer-team"] },
+              { "group": "Reference", "pages": ["en/glossar", "en/roadmap"] }
+            ]
+          }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    ]
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "label": "Zum Portal",
+      "href": "https://portal.msg-hello.example"
     }
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
-    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "website": "https://www.msg.group"
     }
   }
 }
