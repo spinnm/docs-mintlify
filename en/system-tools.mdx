@@ -1,55 +1,55 @@
 ---
-title: "Built-in tools"
-description: "Platform-native tools available in every agent without any configuration."
+title: "Built-In Tools"
+description: "Platform-native tools that are available in every agent without configuration."
 ---
 
-**Built-in tools** (also called *system tools*) are tools that msg.Hello ships itself. They are **automatically available in every agent**, need **no connector**, **no base URL**, and **no credentials**, and they talk to **no external system**. Their logic runs entirely on the platform.
+**Built-in tools** (also called *system tools*) are tools that msg.Hello ships with itself. They are **automatically available in every agent**, need **no connector**, **no base URL**, and **no credentials**, and they talk to **no external system**. Their logic runs entirely on the platform.
 
 <Info>
-Because built-in tools are available without configuration, they do **not** appear in the connector selection. You enable them directly in the [flow](/en/flows-bauen) at the relevant state.
+Because built-in tools are available without configuration, they do **not** appear in the connector selection. You enable them directly in the [flow](/en/flows-bauen) at the respective state.
 </Info>
 
 ## `classify` – classify the request
 
-The central built-in tool is **`classify`**. With it, the agent assigns the caller's request to exactly **one** of the categories you defined. The chosen category becomes the **response code** on which your flow transitions branch.
+The central built-in tool is **`classify`**. With it the agent assigns the caller's request to **exactly one** of the categories you have defined. The chosen category becomes the **response code** on which your flow transitions branch.
 
 <CardGroup cols={2}>
   <Card title="What it does" icon="tags">
-    Picks the matching one from your categories (e.g. `appointment`, `prescription`, `other`) and returns it as a branching code.
+    Picks the matching one from your categories (e.g. `termin`, `rezept`, `sonstiges`) and returns it as a branching code.
   </Card>
   <Card title="When the agent calls it" icon="clock">
-    Only once the category is unambiguous. When in doubt, the agent keeps asking rather than guessing.
+    Only once the category is unambiguously established. When in doubt, the agent keeps asking instead of guessing.
   </Card>
 </CardGroup>
 
-### How to use it in the flow
+### How you use it in the flow
 
 <Steps>
   <Step title="Define categories">
-    At a REGULAR state, define the allowed categories – these are the possible outcomes of the classification.
+    Set the allowed categories at a state – these are the possible results of the classification.
   </Step>
   <Step title="Link transitions">
     Connect each category to the target state the agent should switch to for that request.
   </Step>
   <Step title="Test">
-    Use a [test call](/en/agenten-testen) to check that typical requests are classified correctly.
+    Check with a [test call](/en/agenten-testen) whether typical requests are classified correctly.
   </Step>
 </Steps>
 
 ```
-[REGULAR: Greeting & request]
-   ── classify → "appointment" →  [REGULAR: Book appointment]
-   ── classify → "other"       →  [FORWARD: to practice]
+[Greeting & request]
+   ── classify → "termin"    →  [Book appointment]
+   ── classify → "sonstiges" →  [Forward: to practice]
 ```
 
 <Note>
-`classify` is **fully live** (✅). It works locally and without side effects: no external call, no database, no stored slots.
+`classify` is **fully live**. It works locally and without side effects: no external call, no database, no stored states.
 </Note>
 
 ## Distinction: forwarding & hanging up
 
-**Forwarding** to a human and **hanging up** are not tools but **state types** in the flow (`FORWARD` and `HANGUP`). They likewise work without any integration. See the [Building flows](/en/flows-bauen) chapter for details.
+**Forwarding** to a human and **hanging up** are not tools but **terminal states** in the flow. They also work without any integration. Details on this in the [Building flows](/en/flows-bauen) chapter.
 
 <Tip>
-A useful starter agent combines only built-in capabilities: greet, recognize the request with `classify`, and forward when needed. You then build out business automation via [connectors](/en/connectoren) or [MCP servers](/en/mcp-server) step by step.
+A useful entry-level agent combines only built-in capabilities: greet, recognize the request with `classify`, and forward if needed. You build out domain-specific automation via [connectors](/en/connectoren) or [MCP servers](/en/mcp-server) afterwards, step by step.
 </Tip>

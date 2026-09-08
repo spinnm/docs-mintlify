@@ -1,54 +1,48 @@
 ---
-title: "Getting Started"
-description: "From a provisioned tenant to your first ready-to-use agent."
+title: "Quickstart"
+description: "Your first agent in 5 minutes."
 ---
 
-This chapter guides you from your first login to an agent you can test.
+In just a few minutes, build your first voice agent: it greets callers, recognizes their request and transfers them to the right team – with no connection to a business system at all.
 
-## Prerequisite: your tenant
+<Frame caption="In under 2 minutes: create and configure an agent in the portal.">
+  {/* TODO: Embed video once available:
+  <video controls className="w-full aspect-video rounded-2xl" src="/images/schnellstart-agent.mp4" poster="/images/schnellstart-agent.jpg" />
+  */}
+  <img src="/images/schnellstart-placeholder.svg" alt="Quickstart video – coming soon" />
+</Frame>
 
-Your **tenant** (your organization's self-contained working environment) is **set up by msg**. As part of onboarding, msg also sets up your first **administrator account** and then hands the tenant over to you for independent management.
+## Your first agent in 5 steps
 
-<Note>
-So you do not have to create your tenant yourself. As soon as you have received your credentials, you can sign in and get started right away.
-</Note>
-
-## Signing in
+As an example, we build a **reception agent** that transfers callers to the right team depending on their request.
 
 <Steps>
-  <Step title="Open the portal">
-    Open the msg.Hello portal in your browser.
+  <Step title="Create the agent">
+    Create a new agent through the **agent wizard**. Give it a name and add a short **greeting**, e.g. "Hello, you have reached reception. How can I help?"
   </Step>
-  <Step title="Sign in with your account">
-    Enter your email address. Sign-in is handled via single sign-on (SSO) – depending on your organization's configuration, through your usual corporate login.
+  <Step title="Recognize the request">
+    In the **flow editor**, add a conversation state where the agent uses the built-in tool **`classify`**. Define the possible categories – e.g. `vertrieb`, `support`, `sonstiges`. The agent assigns the request to exactly one of them.
   </Step>
-  <Step title="Select a tenant">
-    If you belong to multiple tenants, select the one you want. Otherwise you land directly on the home page.
+  <Step title="Transfer">
+    Connect each category to a target: add one **transfer** state each with the matching **phone number** (sales, support, front desk). For unclear cases you can instead ask a follow-up question or **hang up**.
+  </Step>
+  <Step title="Test call">
+    Check the agent with a **test call right in the browser** – with no real call. Speak typical requests and see whether they are classified and transferred correctly. Details: [Test agents](/en/agenten-testen).
+  </Step>
+  <Step title="Publish & assign a phone number">
+    Publish the flow as a **version**, activate it and assign the agent a **phone number**. From then on, new calls use the active version.
   </Step>
 </Steps>
 
-## Your first agent
+## Done – what now?
 
-On the home page, an **onboarding checklist** guides you through the most important steps. The core is your first agent:
+Your agent answers calls, recognizes the request and transfers reliably. From here you extend it step by step:
 
-<Steps>
-  <Step title="Create an agent">
-    Create a new agent using the **agent wizard**. You assign a name and go through the basic settings. Details: [Manage agents](/en/agenten-verwalten).
-  </Step>
-  <Step title="Build a conversation flow">
-    In the **flow editor**, define how the conversation should proceed – greeting, recognizing the request, transferring or hanging up. Details: [Build conversation flows](/en/flows-bauen).
-  </Step>
-  <Step title="Assign a phone number">
-    Assign the agent a phone number at which it should be reachable.
-  </Step>
-  <Step title="Test">
-    Check the agent with a **test call directly in the browser** before it goes live. Details: [Test an agent](/en/agenten-testen).
-  </Step>
-  <Step title="Publish">
-    Publish the flow as a **version** and activate it. From then on, new calls use the active version.
-  </Step>
-</Steps>
-
-<Tip>
-Start small: an agent that greets, recognizes the request, and transfers to a human when needed is built in a few minutes and immediately useful. You then expand business automation via connectors step by step.
-</Tip>
+<CardGroup cols={2}>
+  <Card title="Refine conversations" icon="diagram-project" href="/en/flows-bauen">
+    More states, follow-up questions and branches in the flow editor.
+  </Card>
+  <Card title="Connect business systems & tools" icon="plug" href="/en/connectoren">
+    Handle real cases – such as booking appointments – via connectors or MCP servers.
+  </Card>
+</CardGroup>

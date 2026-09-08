@@ -1,9 +1,9 @@
 ---
-title: "Manage Agents"
+title: "Manage agents"
 description: "Create and configure agents and maintain their basic settings."
 ---
 
-An **agent** is a configured voice agent bound to a phone number. Everything that controls a call – behavior, language, integrations – is attached to the agent.
+An **agent** is a configured voice agent that is bound to a phone number. Everything that controls a call – behavior, language, connections – hangs off the agent.
 
 ## Agent overview
 
@@ -11,101 +11,51 @@ The agent list shows all agents of your tenant with their publication status (ac
 
 Open the list via **Agents** in the sidebar.
 
-<Frame caption="The agent list – here still without agents, with the “New Agent” card.">
+<Frame caption="The agent list with the New agent card and existing agents.">
   <img
     src="/images/agenten/01-agents-leer.png"
-    alt="Empty agent list with the New Agent card"
+    alt="Agent list with the New agent card and existing agents"
   />
 </Frame>
 
-## Creating a new agent
+## Create a new agent
 
-Click the **New Agent** card. The **agent wizard** guides you through the basic configuration in five steps. Only the name is required – all other settings are optional and can be adjusted later.
+Click the **New agent** card. The **agent wizard** guides you through the basic configuration in five steps. Only the name is required – all other settings are optional and can be adjusted later.
+
+<Frame caption="Step 1 of the agent wizard: basic settings with name, description and phone number.">
+  <img src="/images/agenten/Agents_Grundeinstellungen.png" alt="Agent wizard – basic settings step" />
+</Frame>
 
 <Steps>
   <Step title="Basic settings">
-    **Name** and **description** of the agent, plus the **phone number** at which it is reachable. The name must be unique; the phone number must be registered with our provider.
-
-    <Frame caption="Step 1 – Basic settings: name, description, and phone number.">
-      <img src="/images/agenten/02-wizard-grundeinstellungen.png" alt="Wizard step Basic settings" />
-    </Frame>
-
+    **Name** and **description** of the agent as well as the **phone number**
+    at which it is reachable. The name must be unique; the phone number must be
+    registered with our provider.
   </Step>
   <Step title="Base instructions">
-    The fundamental instruction to the agent: **system role** (who it is and how it communicates), **global rules** for all conversations, and **critical rules** with the highest priority (see below).
-
-    <Frame caption="Step 2 – Base instructions: system role, global and critical rules.">
-      <img src="/images/agenten/03-wizard-basisinstruktionen.png" alt="Wizard step Base instructions" />
-    </Frame>
-
+    The fundamental instruction to the agent: **system role** (who it is and
+    how it communicates), **global rules** for all conversations and **critical
+    rules** with the highest priority. How to word these fields well is shown in
+    the [prompting guide](/en/prompting-guide).
   </Step>
   <Step title="Call parameters">
-    Time limits of the conversation: **maximum wait time** for user input and **maximum call duration**. Both are unlimited by default and are enabled via a toggle.
-
-    <Frame caption="Step 3 – Call parameters: limit wait time and call duration.">
-      <img src="/images/agenten/04-wizard-anrufparameter.png" alt="Wizard step Call parameters" />
-    </Frame>
-
+    Time limits of the conversation: **maximum wait time** for a user input
+    and **maximum call duration**. Both are unlimited by default and are
+    enabled via a toggle.
   </Step>
   <Step title="AI model parameters">
-    **Voice**, **transcription language**, **noise suppression**, and **barge-in** (whether the caller may interrupt the agent).
-
-    <Frame caption="Step 4 – AI model parameters: voice, language, noise suppression, barge-in.">
-      <img src="/images/agenten/05-wizard-ki-modellparameter.png" alt="Wizard step AI model parameters" />
-    </Frame>
-
+    **Voice**, **transcription language**, **noise suppression** and
+    **barge-in** (whether the caller may interrupt the agent).
   </Step>
   <Step title="Connectors">
-    Optional integration with your business systems. Available connectors are on the right, activated ones on the left. Details in the chapter [Set up connectors](/en/connectoren). Finally, save the agent with **Create**.
-
-    <Frame caption="Step 5 – Select connectors and save the agent with “Create”.">
-      <img src="/images/agenten/06-wizard-konnektoren.png" alt="Wizard step Connectors" />
-    </Frame>
-
+    Optional connection to your business systems. Available connectors are on
+    the right, activated ones on the left. Details in the chapter [Set up
+    connectors](/en/connectoren). To finish, save the agent with
+    **Create**.
   </Step>
 </Steps>
 
-After **Create**, the new agent appears in the list – initially without a live version and without a phone number. From the card you open the **draft** (flow editor), the **versions**, or the **settings**.
-
-<Frame caption="The newly created agent in the list, ready for further configuration.">
-  <img
-    src="/images/agenten/07-agent-erstellt.png"
-    alt="Agent list with the newly created agent"
-  />
-</Frame>
-
-## Agent configuration in detail
-
-You edit an existing agent via the **settings** on the agent card. The configuration is organized into tabs:
-
-<AccordionGroup>
-  <Accordion title="Basic settings" icon="sliders">
-    Name, description, and the **phone number** at which the agent is reachable.
-    You choose the phone number from a selection field; each number is uniquely
-    assigned to one agent.
-  </Accordion>
-  <Accordion title="Base instructions" icon="message-lines">
-    The agent's system prompt. Here you define the **role**, **global rules**,
-    and **critical rules** that apply in every conversation state.
-    State-specific instructions are added later in the [flow](/en/flows-bauen).
-  </Accordion>
-  <Accordion title="Call parameters" icon="clock">
-    - **Maximum wait time for user input** – how long the agent waits for a
-    response before it reacts (with an "unlimited" option). - **Maximum call
-    duration** – upper limit for the length of the conversation (with an
-    "unlimited" option).
-  </Accordion>
-  <Accordion title="AI model parameters" icon="waveform">
-    - The agent's **voice** (several voices selectable, default: a natural
-    German voice). - **Transcription language** (default: German). - **Noise
-    suppression** for the caller's audio quality. - **Barge-in** – whether the
-    caller may interrupt the agent while it is speaking.
-  </Accordion>
-  <Accordion title="Connectors" icon="plug">
-    Integration with your business systems. See the dedicated chapter: [Set up
-    connectors](/en/connectoren).
-  </Accordion>
-</AccordionGroup>
+After **Create**, the new agent appears in the list – initially without a live version and without a phone number. From the card you open the **draft** (flow editor), the **versions** or the **settings**.
 
 ## Versions and going live
 
@@ -114,6 +64,6 @@ An agent works with **versions** of its flow:
 - You edit the **draft**.
 - On **publishing**, the draft is validated and stored as an immutable, numbered **version**.
 - You **activate** a version as the live version. New calls use it; ongoing calls stay on their version.
-- From a version, you can reopen an editable draft at any time.
+- From a version you can reopen an editable draft at any time.
 
 More on this in the chapter [Build conversation flows](/en/flows-bauen#versionierung).
