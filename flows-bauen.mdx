@@ -76,7 +76,7 @@ Wie du gute Anweisungen formulierst – global und pro Schritt – zeigt der [Pr
 
 ## Validierung
 
-Der Editor prüft deinen Flow laufend – etwa ob alle Zustände erreichbar sind und Übergänge gültig sind. Offene Punkte werden angezeigt, bevor du veröffentlichst. Zusätzlich kannst du Flows **importieren und exportieren**.
+Der Editor prüft deinen Flow laufend – etwa ob alle Zustände erreichbar sind und Übergänge gültig sind. Offene Punkte werden angezeigt, bevor du veröffentlichst.
 
 ## Versionierung
 
@@ -93,3 +93,108 @@ Der Editor prüft deinen Flow laufend – etwa ob alle Zustände erreichbar sind
 </Steps>
 
 Frühere Versionen kannst du schreibgeschützt einsehen und bei Bedarf wieder als Entwurf öffnen.
+
+## Flows importieren und exportieren
+
+Du kannst einen kompletten Flow als **JSON-Datei exportieren** und an anderer Stelle wieder **importieren** – praktisch zum Sichern, Duplizieren oder Übertragen zwischen Agenten.
+
+<Steps>
+  <Step title="Exportieren">
+    Öffne im Flow-Editor das **⋮-Menü** (oben rechts) und wähle **Flow exportieren**. Der aktuelle Flow wird als JSON-Datei heruntergeladen. Export ist auch in der schreibgeschützten Versionsansicht möglich.
+  </Step>
+  <Step title="Importieren">
+    Öffne im **Entwurf** dasselbe Menü und wähle **Flow importieren**. Wähle eine zuvor exportierte JSON-Datei; ihr Inhalt ersetzt den aktuellen Entwurf. Prüfe das Ergebnis anschließend mit einem [Test-Anruf](/agenten-testen).
+  </Step>
+</Steps>
+
+<Note>
+Der Import überschreibt den bestehenden **Entwurf**. Bereits veröffentlichte Versionen bleiben unberührt – der importierte Flow wird erst mit dem nächsten Veröffentlichen zu einer Version.
+</Note>
+
+### Aufbau einer Export-Datei
+
+Die Datei enthält ein Objekt `flow` mit:
+
+- **`startStateId`** – ID des Start-Zustands.
+- **`statesOrder`** – Reihenfolge der Zustände.
+- **`states`** – die Zustände, je Schlüssel eine Zustands-ID. Ein Zustand trägt:
+  - **`type`** – `REGULAR`, `FORWARD` oder `HANGUP`.
+  - **`name`** – Anzeigename.
+  - **`stateInstructions`** – die [Anweisungen](#zustands-anweisungen) des Zustands.
+  - **`allowedTools`** – erlaubte Tools (bei `REGULAR`).
+  - **`outputsOrder`** / **`outputs`** – die Ausgänge. Jeder Ausgang hat ein Ziel (`transitionTo`) und **`conditions`** aus `tool`, `responseCode` und `isNegated`.
+
+  Ein `FORWARD`-Zustand trägt zusätzlich die Ziel-Rufnummer, ein `HANGUP`-Zustand nur Name und Anweisungen.
+
+### Beispiel
+
+Ein exportierter Flow (Auszug aus dem Demo-Agenten „Forderungsmanagement"):
+
+```json expandable
+{
+  "flow": {
+    "startStateId": "3b3aeb6f-3f07-4a7d-9e72-29ec1c728179",
+    "statesOrder": [
+      "3b3aeb6f-3f07-4a7d-9e72-29ec1c728179",
+      "5ea95814-f003-4497-ab48-b7198ff6e4b1",
+      "1d206d25-7529-407c-a29f-f516d66d2866",
+      "ebc687d6-ed86-4ac8-b6ab-412061367298"
+    ],
+    "states": {
+      "3b3aeb6f-3f07-4a7d-9e72-29ec1c728179": {
+        "type": "REGULAR",
+        "name": "S1 Begrüßung & Identifikation",
+        "stateInstructions": "Begrüße den Anrufer und frage nach Geburtsdatum und Kundennummer. Frage so lange nach, bis beides genannt wurde.",
+        "allowedTools": ["verify_customer"],
+        "outputsOrder": ["0ee3293b-6e72-4472-9cb1-5a7f48a7b460"],
+        "outputs": {
+          "0ee3293b-6e72-4472-9cb1-5a7f48a7b460": {
+            "name": "Ausgang 1",
+            "transitionTo": "5ea95814-f003-4497-ab48-b7198ff6e4b1",
+            "conditions": [
+              { "tool": "verify_customer", "responseCode": "CUSTOMER_VERIFIED", "isNegated": false }
+            ]
+          }
+        }
+      },
+      "5ea95814-f003-4497-ab48-b7198ff6e4b1": {
+        "type": "REGULAR",
+        "name": "S2 Saldo mitteilen & Absicht klären",
+        "stateInstructions": "Rufe den offenen Betrag ab und lies ihn samt Rechnungsgrund und Fälligkeit vor. Frage, ob eine Ratenzahlung gewünscht ist.",
+        "allowedTools": ["get_balance", "classify"],
+        "outputsOrder": ["3477d025-58a5-4eb8-ae38-7369ada2ed13"],
+        "outputs": {
+          "3477d025-58a5-4eb8-ae38-7369ada2ed13": {
+            "name": "Ausgang 1",
+            "transitionTo": "1d206d25-7529-407c-a29f-f516d66d2866",
+            "conditions": [
+              { "tool": "classify", "responseCode": "Ratenzahlung gewünscht", "isNegated": false }
+            ]
+          }
+        }
+      },
+      "1d206d25-7529-407c-a29f-f516d66d2866": {
+        "type": "REGULAR",
+        "name": "S3 Ratenplan aushandeln",
+        "stateInstructions": "Frage nach Wunsch-Ratenanzahl ODER Wunschrate. Lies den Plan vor und hole ein klares Ja ein, bevor du verbindlich vereinbarst.",
+        "allowedTools": ["propose_installment_plan", "agree_installment_plan"],
+        "outputsOrder": ["0ac15add-b8f1-4f38-8c84-4b46352b2141"],
+        "outputs": {
+          "0ac15add-b8f1-4f38-8c84-4b46352b2141": {
+            "name": "Ausgang 1",
+            "transitionTo": "ebc687d6-ed86-4ac8-b6ab-412061367298",
+            "conditions": [
+              { "tool": "agree_installment_plan", "responseCode": "AGREEMENT_CONFIRMED", "isNegated": false }
+            ]
+          }
+        }
+      },
+      "ebc687d6-ed86-4ac8-b6ab-412061367298": {
+        "type": "HANGUP",
+        "name": "Verabschiedung",
+        "stateInstructions": "Fasse das Ergebnis in einem Satz zusammen, bedanke dich und verabschiede dich."
+      }
+    }
+  }
+}
+```
