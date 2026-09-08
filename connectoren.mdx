@@ -1,34 +1,47 @@
 ---
-title: "Connectoren einrichten"
-description: "Fachsysteme anbinden, damit der Agent echte Vorgänge erledigt."
+title: "Integrationen & Tools – Überblick"
+description: "Wie der Agent handelt: Built-In-Tools, MCP-Server und Fachsystem-Connectoren."
 ---
 
-Ein **Connector** verbindet einen Agenten mit einem externen System – etwa Ihrer Praxis- oder Fachsoftware. Er stellt dem Agenten **Tools** bereit (z. B. „Termin buchen", „Patient suchen"), die der Agent im [Flow](/flows-bauen) verwendet. So erledigt der Agent vollständige Fachprozesse Ende-zu-Ende, statt nur zu informieren.
+Damit ein Agent nicht nur informiert, sondern **echte Vorgänge erledigt**, ruft er im [Flow](/flows-bauen) **Tools** auf – kleine, klar umrissene Aktionen wie „Anliegen einordnen", „Termin buchen" oder „Saldo abfragen". Woher ein Tool kommt und ob es ein externes System anspricht, hängt von seiner **Kategorie** ab.
 
-<Info>
-Dieses Kapitel beschreibt, wie Sie einen Connector im Portal **auswählen und konfigurieren**. Die technische **Implementierung** eines Connectors ist nicht Teil dieses Handbuchs.
-</Info>
+## Drei Kategorien von Tools
 
-## Zwei Wege zur Anbindung
-
-<CardGroup cols={2}>
-  <Card title="Standard-Connector" icon="code">
-    Ihr System stellt eine standardisierte Schnittstelle nach der msg.Hello-Spezifikation bereit. Maximale Flexibilität, keine Abhängigkeit von einem bestimmten Anbieter.
+<CardGroup cols={3}>
+  <Card title="Built-In-Tools" icon="wand-magic-sparkles" href="/system-tools">
+    Plattform-eigene Tools, die in **jedem Agenten ohne Konfiguration** verfügbar sind. Kein externes System, keine Zugangsdaten. Beispiel: `classify`.
   </Card>
-  <Card title="Direkt-Integrationen" icon="puzzle-piece">
-    Für etablierte Systeme bietet msg fertige Connectoren an – ohne eigenen Implementierungsaufwand. Das Angebot wächst laufend. 📋
+  <Card title="MCP-Server" icon="server" href="/mcp-server">
+    Binden Sie einen **beliebigen MCP-Server** an. Der Agent liest dessen Tools aus; Sie schalten pro Agent frei, was er nutzen darf.
+  </Card>
+  <Card title="Fachsystem-Connectoren" icon="plug">
+    Anbindung an Ihre **Praxis- oder Fachsoftware**. Stellt fachliche Tools bereit (z. B. Terminbuchung) und spricht Ihr System real an.
   </Card>
 </CardGroup>
 
-## Reifegrad
+<Info>
+Dieses Kapitel beschreibt, wie Sie Integrationen im Portal **auswählen und konfigurieren**. Die technische **Implementierung** einer eigenen Schnittstelle ist nicht Teil dieser Dokumentation.
+</Info>
 
-<Warning>
-Das **Connector-Konzept** und die **Konfiguration im Portal** sind verfügbar (✅). Die **Ausführung** der fachlichen Tools gegen Ihr System wird derzeit fertiggestellt (🚧). Sie können Connectoren also bereits anlegen und Ihre Flows vorbereiten; die tatsächliche Anbindung folgt in Kürze. Fertige Direkt-Integrationen für Systeme wie Doctolib oder ClickDoc sind geplant (📋), siehe [Ausblick](/roadmap).
-</Warning>
+## Fachsystem-Connectoren
 
-## Einen Connector konfigurieren
+Ein **Connector** verbindet einen Agenten mit einem externen Fachsystem und stellt ihm die dazu passenden Tools bereit. Jedes Tool ist genau **einem** Connector zugeordnet.
+
+### Verfügbare Connectoren
 
 Im Tab **Connectoren** eines Agenten sehen Sie die verfügbaren Connector-Typen (mit Beschreibung, Anzahl unterstützter Tools und den unterstützten Authentifizierungsmethoden) sowie Ihre bereits aktiven Connectoren.
+
+| Connector | Zweck | Auth | Status |
+|-----------|-------|------|--------|
+| **planorg PVS (Principa)** | Terminbuchung über die FHIR-R4-Schnittstelle des Praxisverwaltungssystems Principa von planorg – Patient suchen, Ärzt:innen/Kalender auflisten, freie Termine finden, Termine buchen. | Bearer-Token | Live |
+| **Forderungsmanagement (Demo)** | Vorführ-Connector: telefonische Saldenabfrage und Ratenzahlungsvereinbarung mit fiktiven Beispieldaten. | API-Key | Demo |
+| **Vertragsverifizierung (Demo)** | Vorführ-Connector: telefonischer Bestätigungsanruf zu einem abgeschlossenen Vertrag mit fiktiven Beispieldaten. | API-Key | Demo |
+
+<Note>
+Die **Demo-Connectoren** antworten mit fest hinterlegten Beispieldaten und eignen sich, um einen Flow ohne echtes Fachsystem auszuprobieren. Für den produktiven Einsatz nutzen Sie einen Fachsystem-Connector wie **planorg PVS** oder einen **[MCP-Server](/mcp-server)**.
+</Note>
+
+### Einen Connector konfigurieren
 
 <Steps>
   <Step title="Connector-Typ wählen">
@@ -38,21 +51,30 @@ Im Tab **Connectoren** eines Agenten sehen Sie die verfügbaren Connector-Typen 
     Tragen Sie die Adresse (Basis-URL) ein, unter der Ihr System die Schnittstelle bereitstellt.
   </Step>
   <Step title="Zugangsdaten hinterlegen">
-    Geben Sie die Authentifizierung ein (z. B. einen API-Schlüssel). Welche Felder erscheinen, hängt von der gewählten Authentifizierungsmethode ab. Geheime Werte werden verschlüsselt gespeichert.
+    Geben Sie die Authentifizierung ein (siehe unten). Welche Felder erscheinen, hängt von der gewählten Methode ab. Geheime Werte werden verschlüsselt gespeichert.
   </Step>
   <Step title="Tools aktivieren">
-    Aktivieren Sie die Tools, die der Agent über diesen Connector nutzen darf. Jedes Tool ist genau einem Connector zugeordnet.
+    Aktivieren Sie die Tools, die der Agent über diesen Connector nutzen darf.
   </Step>
 </Steps>
 
+## Authentifizierung
+
+Fachsystem- und MCP-Connectoren unterstützen zwei Authentifizierungsmethoden. Welche verfügbar ist, gibt der jeweilige Connector-Typ vor.
+
+| Methode | Feld | Wie es gesendet wird |
+|---------|------|----------------------|
+| **API-Key** | `API Key` | Als fester Schlüssel bei jeder Anfrage (bei MCP im Header `X-API-Key`). |
+| **Bearer-Token** | `Bearer Token` | Im Header `Authorization: Bearer <Token>`. Der Token wird unverändert weitergereicht (z. B. ein vorab ausgestelltes JWT). |
+
 <Note>
-Ihre Zugangsdaten werden **verschlüsselt** abgelegt. Geheime Felder werden im Portal nach dem Speichern nicht mehr im Klartext angezeigt.
+Ihre Zugangsdaten werden **verschlüsselt** abgelegt. Geheime Felder werden im Portal nach dem Speichern nicht mehr im Klartext angezeigt – beim Bearbeiten lassen Sie das Feld leer, um den gespeicherten Wert zu behalten.
 </Note>
 
 ## Beispiel: Terminbuchung
 
-Der ausgereifteste Anwendungsfall ist die telefonische **Terminbuchung** für das Gesundheitswesen. Der zugehörige Connector stellt u. a. Tools bereit, um Patienten zu identifizieren, Fachgebiete und Terminarten abzufragen, Verfügbarkeiten zu ermitteln sowie Termine zu buchen, abzufragen und abzusagen. In Ihrem Flow verketten Sie diese Tools zum vollständigen Buchungsgespräch.
+Der ausgereifteste Anwendungsfall ist die telefonische **Terminbuchung** für das Gesundheitswesen über den **planorg-PVS-Connector**. Er stellt u. a. Tools bereit, um Patient:innen zu identifizieren, Ärzt:innen und Kalender aufzulisten, Verfügbarkeiten zu ermitteln sowie Termine für bekannte und neue Patient:innen zu buchen. In Ihrem Flow verketten Sie diese Tools zum vollständigen Buchungsgespräch.
 
 <Tip>
-Nach dem Einrichten eines Connectors sollten Sie den Agenten gründlich mit einem [Test-Anruf](/agenten-testen) prüfen, bevor Sie ihn live schalten.
+Nach dem Einrichten einer Integration sollten Sie den Agenten gründlich mit einem [Test-Anruf](/agenten-testen) prüfen, bevor Sie ihn live schalten.
 </Tip>

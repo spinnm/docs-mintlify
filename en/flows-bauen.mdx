@@ -53,14 +53,15 @@ While running, the agent checks the outputs in their order. The first matching t
 
 ## Tools in a state
 
-For each REGULAR state, you define which **tools** the agent may use there. There are two kinds:
+For each REGULAR state, you define which **tools** the agent may use there. They come from three categories (details under [Integrations & Tools](/en/connectoren)):
 
-- **`classify`** ✅ – built-in tool with which the agent sorts the caller's request into categories you define. The categories become response codes for your transitions.
-- **Connector tools** 🚧 – business actions such as "book appointment" or "look up patient" that go to your system via a [connector](/en/connectoren).
+- **[Built-in tools](/en/system-tools)** ✅ – platform-native and configuration-free, such as `classify` for sorting the request. The categories become response codes for your transitions.
+- **[Connector tools](/en/connectoren)** ✅ – business actions such as "book appointment" or "look up patient" that go to your system via a connector (e.g. planorg PVS).
+- **[MCP tools](/en/mcp-server)** ✅ – tools of a connected MCP server.
 
-<Warning>
-The integration of connector tools with external systems is currently being finalized (🚧). You can already model flows with these tools; the actual execution against your business system is imminent. The built-in `classify`, as well as transfer and hang-up, work fully.
-</Warning>
+<Note>
+`classify`, transfer, and hang-up work fully. Connector-tool execution is live for the connected systems (MCP servers, planorg PVS, demo connectors); the runtime for **self-implemented standard connectors** following the msg.Hello OpenAPI specification is still being finalized (🚧).
+</Note>
 
 ## State instructions and slots
 

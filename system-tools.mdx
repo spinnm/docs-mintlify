@@ -1,0 +1,55 @@
+---
+title: "Built-In-Tools"
+description: "Plattform-eigene Tools, die ohne Konfiguration in jedem Agenten bereitstehen."
+---
+
+**Built-In-Tools** (auch *System-Tools*) sind Tools, die msg.Hello selbst mitbringt. Sie sind in **jedem Agenten automatisch verfügbar**, brauchen **keinen Connector**, **keine Basis-URL** und **keine Zugangsdaten**, und sie sprechen **kein externes System** an. Ihre Logik läuft vollständig auf der Plattform.
+
+<Info>
+Weil Built-In-Tools ohne Konfiguration bereitstehen, tauchen sie **nicht** in der Connector-Auswahl auf. Sie aktivieren sie direkt im [Flow](/flows-bauen) am jeweiligen Zustand.
+</Info>
+
+## `classify` – Anliegen einordnen
+
+Das zentrale Built-In-Tool ist **`classify`**. Damit ordnet der Agent das Anliegen des Anrufers **genau einer** der von Ihnen definierten Kategorien zu. Die gewählte Kategorie wird zum **Response-Code**, an dem Ihre Flow-Übergänge verzweigen.
+
+<CardGroup cols={2}>
+  <Card title="Was es tut" icon="tags">
+    Wählt aus Ihren Kategorien die passende aus (z. B. `termin`, `rezept`, `sonstiges`) und liefert sie als Verzweigungs-Code zurück.
+  </Card>
+  <Card title="Wann der Agent es aufruft" icon="clock">
+    Erst, wenn die Kategorie eindeutig feststeht. Im Zweifel fragt der Agent weiter nach, statt zu raten.
+  </Card>
+</CardGroup>
+
+### So nutzen Sie es im Flow
+
+<Steps>
+  <Step title="Kategorien definieren">
+    Legen Sie an einem Zustand die erlaubten Kategorien fest – das sind die möglichen Ergebnisse der Einordnung.
+  </Step>
+  <Step title="Übergänge verknüpfen">
+    Verbinden Sie jede Kategorie mit dem Ziel-Zustand, zu dem der Agent bei diesem Anliegen wechseln soll.
+  </Step>
+  <Step title="Testen">
+    Prüfen Sie mit einem [Test-Anruf](/agenten-testen), ob typische Anliegen korrekt eingeordnet werden.
+  </Step>
+</Steps>
+
+```
+[Begrüßung & Anliegen]
+   ── classify → "termin"    →  [Termin buchen]
+   ── classify → "sonstiges" →  [Weiterleiten: an Praxis]
+```
+
+<Note>
+`classify` ist **vollständig live**. Es arbeitet lokal und ohne Nebenwirkungen: kein externer Aufruf, keine Datenbank, keine gespeicherten Zustände.
+</Note>
+
+## Abgrenzung: Weiterleiten & Auflegen
+
+Das **Weiterleiten** an einen Menschen und das **Auflegen** sind keine Tools, sondern **Abschluss-Zustände** im Flow. Sie funktionieren ebenfalls ohne jede Integration. Details dazu im Kapitel [Flows bauen](/flows-bauen).
+
+<Tip>
+Ein nützlicher Einstiegs-Agent kombiniert nur Built-In-Fähigkeiten: begrüßen, mit `classify` das Anliegen erkennen und bei Bedarf weiterleiten. Fachliche Automatisierung über [Connectoren](/connectoren) oder [MCP-Server](/mcp-server) bauen Sie danach schrittweise aus.
+</Tip>

@@ -19,13 +19,40 @@
         "default": true,
         "tabs": [
           {
-            "tab": "Handbuch",
+            "tab": "Dokumentation",
             "groups": [
-              { "group": "Einstieg", "pages": ["index", "erste-schritte"] },
-              { "group": "Agenten & Gespräche", "pages": ["agenten-verwalten", "flows-bauen", "agenten-testen"] },
-              { "group": "Integration", "pages": ["connectoren"] },
-              { "group": "Im Alltag", "pages": ["anrufe-auswerten", "einstellungen", "benutzer-team"] },
-              { "group": "Referenz", "pages": ["glossar", "roadmap"] }
+              {
+                "group": "Einstieg",
+                "pages": [
+                  "index",
+                  "erste-schritte"
+                ]
+              },
+              {
+                "group": "Agenten & Gespräche",
+                "pages": [
+                  "agenten-verwalten",
+                  "prompting-guide",
+                  "flows-bauen",
+                  "agenten-testen"
+                ]
+              },
+              {
+                "group": "Integration & Tools",
+                "pages": [
+                  "connectoren",
+                  "system-tools",
+                  "mcp-server"
+                ]
+              },
+              {
+                "group": "Monitoring",
+                "pages": [
+                  "anrufe-auswerten",
+                  "einstellungen",
+                  "benutzer-team"
+                ]
+              }
             ]
           }
         ]
@@ -36,11 +63,44 @@
           {
             "tab": "Guide",
             "groups": [
-              { "group": "Getting Started", "pages": ["en/index", "en/erste-schritte"] },
-              { "group": "Agents & Conversations", "pages": ["en/agenten-verwalten", "en/flows-bauen", "en/agenten-testen"] },
-              { "group": "Integration", "pages": ["en/connectoren"] },
-              { "group": "Daily Use", "pages": ["en/anrufe-auswerten", "en/einstellungen", "en/benutzer-team"] },
-              { "group": "Reference", "pages": ["en/glossar", "en/roadmap"] }
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "en/index",
+                  "en/erste-schritte"
+                ]
+              },
+              {
+                "group": "Agents & Conversations",
+                "pages": [
+                  "en/agenten-verwalten",
+                  "en/flows-bauen",
+                  "en/agenten-testen"
+                ]
+              },
+              {
+                "group": "Integrations & Tools",
+                "pages": [
+                  "en/connectoren",
+                  "en/system-tools",
+                  "en/mcp-server"
+                ]
+              },
+              {
+                "group": "Daily Use",
+                "pages": [
+                  "en/anrufe-auswerten",
+                  "en/einstellungen",
+                  "en/benutzer-team"
+                ]
+              },
+              {
+                "group": "Reference",
+                "pages": [
+                  "en/glossar",
+                  "en/roadmap"
+                ]
+              }
             ]
           }
         ]
@@ -51,7 +111,7 @@
     "primary": {
       "type": "button",
       "label": "Zum Portal",
-      "href": "https://portal.msg-hello.example"
+      "href": "https://app.msghello.ai"
     }
   },
   "footer": {

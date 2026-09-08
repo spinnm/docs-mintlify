@@ -9,25 +9,24 @@ Ein **Flow** beschreibt, wie ein Gespräch abläuft. Sie bauen ihn im **Flow-Edi
 
 Der Flow-Editor ist eine grafische Oberfläche, in der Sie Zustände als Knoten anordnen und mit Verbindungen (Übergängen) verknüpfen. Sie können den Graphen frei anordnen, Zustände hinzufügen, bearbeiten und wieder entfernen.
 
-## Zustandstypen
+## Zustände
 
-Jeder Zustand hat einen von drei Typen:
+Ein Flow besteht aus **Zuständen** – den Schritten des Gesprächs. Ein Zustand trägt eigene Anweisungen, erlaubte Tools und Übergänge zu Folgezuständen.
 
-<CardGroup cols={3}>
-  <Card title="REGULAR" icon="comments">
-    Ein Gesprächszustand mit eigenen Anweisungen, erlaubten Tools und Übergängen.
+Zwei zusätzliche Punkte schließen das Gespräch ab:
+
+<CardGroup cols={2}>
+  <Card title="Weiterleiten" icon="phone-arrow-up-right">
+    Verbindet den Anruf an eine externe Rufnummer (z. B. an einen Menschen).
   </Card>
-  <Card title="FORWARD" icon="phone-arrow-up-right">
-    Weiterleitung an eine externe Rufnummer (z. B. an einen Menschen). Terminaler Zustand.
-  </Card>
-  <Card title="HANGUP" icon="phone-slash">
-    Beendet den Anruf. Terminaler Zustand.
+  <Card title="Auflegen" icon="phone-slash">
+    Beendet den Anruf.
   </Card>
 </CardGroup>
 
 ## Übergänge und Bedingungen
 
-Ein **REGULAR**-Zustand besitzt **Outputs** – benannte, sortierte Übergänge zu Folgezuständen. Jeder Output ist an eine **Bedingung** geknüpft:
+Ein Zustand besitzt **Outputs** – benannte, sortierte Übergänge zu Folgezuständen. Jeder Output ist an eine **Bedingung** geknüpft:
 
 - ein **Tool**, das im Zustand aufgerufen wurde,
 - ein erwarteter **Response-Code** (das Ergebnis des Tools),
@@ -42,29 +41,34 @@ Beim Durchlaufen prüft der Agent die Outputs in ihrer Reihenfolge. Der erste pa
 ### Beispiel
 
 ```
-[REGULAR: Begrüßung & Anliegen]
-   ── classify → "termin"    →  [REGULAR: Termin buchen]
-   ── classify → "sonstiges" →  [FORWARD: an Praxis]
+[Begrüßung & Anliegen]
+   ── classify → "termin"    →  [Termin buchen]
+   ── classify → "sonstiges" →  [Weiterleiten: an Praxis]
 
-[REGULAR: Termin buchen]
-   ── book_appointment → "ok"        →  [HANGUP: Verabschiedung]
-   ── book_appointment → "kein_slot" →  [REGULAR: Termin buchen]
+[Termin buchen]
+   ── book_appointment → "ok"        →  [Auflegen: Verabschiedung]
+   ── book_appointment → "kein_slot" →  [Termin buchen]
 ```
 
 ## Tools im Zustand
 
-Pro REGULAR-Zustand legen Sie fest, welche **Tools** der Agent dort verwenden darf. Es gibt zwei Arten:
+Pro Zustand legen Sie fest, welche **Tools** der Agent dort verwenden darf. Sie stammen aus drei Kategorien (Details unter [Integrationen & Tools](/connectoren)):
 
-- **`classify`** ✅ – eingebautes Tool, mit dem der Agent das Anliegen des Anrufers in von Ihnen definierte Kategorien einordnet. Die Kategorien werden zu Response-Codes für Ihre Übergänge.
-- **Connector-Tools** 🚧 – fachliche Aktionen wie „Termin buchen" oder „Patient suchen", die über einen [Connector](/connectoren) an Ihr System gehen.
+- **[Built-In-Tools](/system-tools)** – plattform-eigen und ohne Konfiguration, etwa `classify` zum Einordnen des Anliegens. Die Kategorien werden zu Response-Codes für Ihre Übergänge.
+- **[Connector-Tools](/connectoren)** – fachliche Aktionen wie „Termin buchen" oder „Patient suchen", die über einen Connector an Ihr System gehen (z. B. planorg PVS).
+- **[MCP-Tools](/mcp-server)** – Tools eines angebundenen MCP-Servers.
 
-<Warning>
-Die Anbindung der Connector-Tools an externe Systeme wird derzeit fertiggestellt (🚧). Sie können Flows mit diesen Tools bereits modellieren; die tatsächliche Ausführung gegen Ihr Fachsystem steht kurz bevor. Das eingebaute `classify` sowie Weiterleitung und Auflegen funktionieren vollständig.
-</Warning>
+<Note>
+`classify`, Weiterleitung und Auflegen funktionieren vollständig. Die Connector-Tool-Ausführung ist für die angebundenen Systeme (MCP-Server, planorg PVS, Demo-Connectoren) live.
+</Note>
 
-## Zustands-Anweisungen und Slots
+## Zustands-Anweisungen
 
-Jeder REGULAR-Zustand kann eigene **Anweisungen** tragen, die nur dort gelten (zusätzlich zu den [Basis-Instructions](/agenten-verwalten) des Agenten). Werte, die der Agent im Gespräch sammelt (z. B. ein genannter Name oder Wunschtermin), stehen als **Slots** im weiteren Verlauf zur Verfügung.
+Jeder Zustand kann eigene **Anweisungen** tragen, die nur dort gelten (zusätzlich zu den [Basis-Instructions](/agenten-verwalten) des Agenten).
+
+<Tip>
+Wie Sie gute Anweisungen formulieren – global und pro Schritt – zeigt der [Prompting-Guide](/prompting-guide).
+</Tip>
 
 ## Validierung
 

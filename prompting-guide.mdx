@@ -1,0 +1,149 @@
+---
+title: "Prompting-Guide"
+description: "Wie Sie Ihren Agenten mit guten Instruktionen steuern – global und pro Gesprächsschritt."
+---
+
+Ein Agent tut das, was Sie ihm in Worten vorgeben. msg.Hello nutzt ein **Echtzeit-Sprachmodell** – dafür gelten andere Regeln als beim Tippen mit einem Chatbot: kurz, klar und für das **gesprochene** Wort formuliert. Dieser Leitfaden zeigt, **wo** Sie **was** hinterlegen und **wie** Sie es formulieren.
+
+## Zwei Ebenen: global und pro Schritt
+
+Instruktionen leben an zwei Stellen:
+
+| Ebene | Wo im Portal | Gilt |
+|-------|--------------|------|
+| **Global** | Agent-Tab **„Basisinstruktionen"** | für das **gesamte** Gespräch, einmal zu Beginn geladen |
+| **Pro Schritt** | Feld **„Anweisungen"** an jedem Zustand im [Flow-Editor](/flows-bauen) | nur in **dieser** Gesprächsphase |
+
+<Info>
+Im Hintergrund fügt msg.Hello beide Ebenen zu **einem** Prompt zusammen und schickt ihn an das Sprachmodell – in dieser Reihenfolge:
+
+```
+Systemrolle            (global)
+Globale Regeln         (global)
+Kritische Regeln       (global – werden automatisch GROSSGESCHRIEBEN)
+Anweisungen            (aktueller Schritt)
+Erlaubte Tools         (aktueller Schritt)
+```
+
+Bei **jedem Wechsel** in einen neuen Zustand wird der Prompt **neu zusammengesetzt**: Die globale Basis bleibt, nur die „Anweisungen" und „Erlaubten Tools" wechseln. Legen Sie darum Grundsätzliches nach global, Phasenspezifisches an den Schritt.
+</Info>
+
+## Basisinstruktionen (global)
+
+Der Tab **„Basisinstruktionen"** hat drei Felder. Halten Sie hier alles fest, was **immer** gelten soll.
+
+### Systemrolle
+
+Wer der Agent ist, **was er erreichen soll** und wie er klingt (Rolle · Ziel · Persönlichkeit/Ton) – in wenigen Sätzen.
+
+```
+Du bist der freundliche Telefon-Empfang von Muster GmbH. Dein Ziel ist es,
+das Anliegen des Anrufers zu erkennen und ihn an das richtige Team zu verbinden.
+Du sprichst ruhig, zugewandt und kommst schnell auf den Punkt.
+```
+
+### Globale Regeln
+
+Kurze Verhaltensregeln, die in **jedem** Schritt gelten. Als Liste, nicht als Fließtext.
+
+```
+- Sieze den Anrufer.
+- Stelle immer nur eine Frage auf einmal.
+- Antworte in 2–3 kurzen Sätzen.
+- Antworte immer auf Deutsch.
+- Formuliere abwechslungsreich, wiederhole nicht ständig dieselben Sätze.
+```
+
+### Kritische Regeln
+
+Die **unverhandelbaren** Grenzen. Nehmen Sie hier nur das Wichtigste auf.
+
+<Note>
+Kritische Regeln werden im zusammengesetzten Prompt automatisch **großgeschrieben**, damit das Modell sie besonders stark gewichtet. Nutzen Sie das Feld gezielt – zu viele „kritische" Regeln schwächen die Wirkung.
+</Note>
+
+```
+- Erfinde niemals Informationen. Wenn du etwas nicht weißt, sage es und leite weiter.
+- Gib niemals medizinische, rechtliche oder finanzielle Beratung.
+```
+
+## Anweisungen pro Schritt
+
+Im Feld **„Anweisungen"** eines Zustands steht **nur das Ziel und Verhalten dieser einen Phase** – kurz. Wiederholen Sie hier **nicht** die Basisinstruktionen.
+
+<CardGroup cols={3}>
+  <Card title="Begrüßung" icon="hand-wave">
+    „Begrüße den Anrufer freundlich und frage offen, worum es geht."
+  </Card>
+  <Card title="Anliegen einordnen" icon="tags">
+    „Ordne das Anliegen einer Kategorie zu. Frage bei Unklarheit einmal nach, bevor du entscheidest."
+  </Card>
+  <Card title="Weiterleiten" icon="phone-arrow-right">
+    „Sage kurz an, dass du verbindest, und leite an das zuständige Team weiter."
+  </Card>
+</CardGroup>
+
+<Note>
+Was der Agent in diesem Schritt **tun darf**, legen Sie über **„Erlaubte Tools"** fest; **wohin** es je Ergebnis weitergeht, über die **„Ausgänge"**. Beim Built-In-Tool [`classify`](/system-tools) sind die möglichen **Kategorien genau die Response-Codes**, die Sie in den Ausgängen dieses Schritts hinterlegen.
+</Note>
+
+## Für die Stimme schreiben
+
+Ein Sprachmodell wird anders geführt als ein Text-Chatbot. Diese Punkte machen den größten Unterschied:
+
+- **Kurz und gesprochen.** 2–3 Sätze pro Antwort, Stichpunkte statt Absätze, eine Frage pro Zug.
+- **Mit Beispielsätzen führen.** Geben Sie Muster-Formulierungen vor – das Modell orientiert sich stark daran. („Sage etwa: ‚Einen Moment, ich verbinde Sie.'")
+- **Zahlen, E-Mail und Namen bestätigen.** Lassen Sie den Agenten Genanntes zurücklesen: „Ich habe die 0176 … – ist das korrekt?"
+- **Sprache festhalten.** Schreiben Sie explizit „Antworte immer auf Deutsch", wenn der Agent sonst die Sprache wechselt.
+- **Unklare Akustik.** Weisen Sie an, nur auf **klar Verstandenes** zu reagieren und sonst freundlich um Wiederholung zu bitten – **nicht raten**.
+- **Wiederholung vermeiden.** Eine Regel für Abwechslung verhindert roboterhaftes Klingen.
+- **Wichtigstes betonen.** Die eine entscheidende Regel in GROSSBUCHSTABEN – oder in die „Kritischen Regeln" legen, wo sie automatisch betont wird.
+
+<Tip>
+**Stimme**, **Unterbrechbarkeit** (Barge-In) und **Geräuschunterdrückung** sind keine Prompt-Themen, sondern Einstellungen am Agenten (Tab „KI-Modellparameter"). Siehe [Agenten verwalten](/agenten-verwalten).
+</Tip>
+
+## Schritt für Schritt besser werden
+
+- **Eine Änderung pro [Test-Anruf](/agenten-testen).** So erkennen Sie, was wirklich gewirkt hat.
+- **Klein formulieren, groß testen.** Schon kleine Wortänderungen verändern das Verhalten spürbar.
+- **[Transkripte auswerten](/anrufe-auswerten).** Wiederkehrende Missverständnisse gezielt mit **einer** neuen Regel adressieren – statt viele auf einmal.
+
+## Komplettbeispiel: Empfangs-Agent
+
+So sieht ein schlanker, vollständiger Satz Instruktionen für den Empfangs-Agenten aus dem [Schnellstart](/erste-schritte) aus.
+
+**Basisinstruktionen (global)**
+
+```
+Systemrolle
+Du bist der freundliche Telefon-Empfang von Muster GmbH. Dein Ziel ist es, das
+Anliegen des Anrufers zu erkennen und ihn an das richtige Team zu verbinden.
+Du sprichst ruhig, zugewandt und kommst schnell auf den Punkt.
+
+Globale Regeln
+- Sieze den Anrufer.
+- Stelle immer nur eine Frage auf einmal.
+- Antworte in 2–3 kurzen Sätzen, immer auf Deutsch.
+- Formuliere abwechslungsreich.
+
+Kritische Regeln
+- Erfinde niemals Informationen. Im Zweifel weiterleiten.
+- Gib keine medizinische, rechtliche oder finanzielle Beratung.
+```
+
+**Schritt „Anliegen einordnen" (Anweisungen)**
+
+```
+Begrüße kurz und frage offen, worum es geht. Ordne das Anliegen genau einer
+Kategorie zu: vertrieb, support oder sonstiges. Frage bei Unklarheit einmal nach,
+bevor du entscheidest. Reagiere nur auf klar Verstandenes; bitte sonst freundlich
+um Wiederholung.
+```
+
+- **Erlaubte Tools:** `classify`
+- **Ausgänge:** `vertrieb` → Weiterleitung Vertrieb · `support` → Weiterleitung Support · `sonstiges` → Weiterleitung Zentrale
+
+<Tip>
+Prüfen Sie den Agenten nach jeder Änderung mit einem [Test-Anruf](/agenten-testen), bevor Sie eine neue Version veröffentlichen.
+</Tip>
