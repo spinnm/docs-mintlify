@@ -1,9 +1,9 @@
 ---
 title: "Prompting-Guide"
-description: "Wie Sie Ihren Agenten mit guten Instruktionen steuern – global und pro Gesprächsschritt."
+description: "Wie du deinen Agenten mit guten Instruktionen steuerst – global und pro Gesprächsschritt."
 ---
 
-Ein Agent tut das, was Sie ihm in Worten vorgeben. msg.Hello nutzt ein **Echtzeit-Sprachmodell** – dafür gelten andere Regeln als beim Tippen mit einem Chatbot: kurz, klar und für das **gesprochene** Wort formuliert. Dieser Leitfaden zeigt, **wo** Sie **was** hinterlegen und **wie** Sie es formulieren.
+Ein Agent tut das, was du ihm in Worten vorgibst. msg.Hello nutzt ein **Echtzeit-Sprachmodell** – dafür gelten andere Regeln als beim Tippen mit einem Chatbot: kurz, klar und für das **gesprochene** Wort formuliert. Dieser Leitfaden zeigt, **wo** du **was** hinterlegst und **wie** du es formulierst.
 
 ## Zwei Ebenen: global und pro Schritt
 
@@ -25,12 +25,12 @@ Anweisungen            (aktueller Schritt)
 Erlaubte Tools         (aktueller Schritt)
 ```
 
-Bei **jedem Wechsel** in einen neuen Zustand wird der Prompt **neu zusammengesetzt**: Die globale Basis bleibt, nur die „Anweisungen" und „Erlaubten Tools" wechseln. Legen Sie darum Grundsätzliches nach global, Phasenspezifisches an den Schritt.
+Bei **jedem Wechsel** in einen neuen Zustand wird der Prompt **neu zusammengesetzt**: Die globale Basis bleibt, nur die „Anweisungen" und „Erlaubten Tools" wechseln. Lege darum Grundsätzliches nach global, Phasenspezifisches an den Schritt.
 </Info>
 
 ## Basisinstruktionen (global)
 
-Der Tab **„Basisinstruktionen"** hat drei Felder. Halten Sie hier alles fest, was **immer** gelten soll.
+Der Tab **„Basisinstruktionen"** hat drei Felder. Halte hier alles fest, was **immer** gelten soll.
 
 ### Systemrolle
 
@@ -56,10 +56,10 @@ Kurze Verhaltensregeln, die in **jedem** Schritt gelten. Als Liste, nicht als Fl
 
 ### Kritische Regeln
 
-Die **unverhandelbaren** Grenzen. Nehmen Sie hier nur das Wichtigste auf.
+Die **unverhandelbaren** Grenzen. Nimm hier nur das Wichtigste auf.
 
 <Note>
-Kritische Regeln werden im zusammengesetzten Prompt automatisch **großgeschrieben**, damit das Modell sie besonders stark gewichtet. Nutzen Sie das Feld gezielt – zu viele „kritische" Regeln schwächen die Wirkung.
+Kritische Regeln werden im zusammengesetzten Prompt automatisch **großgeschrieben**, damit das Modell sie besonders stark gewichtet. Nutze das Feld gezielt – zu viele „kritische" Regeln schwächen die Wirkung.
 </Note>
 
 ```
@@ -69,7 +69,7 @@ Kritische Regeln werden im zusammengesetzten Prompt automatisch **großgeschrieb
 
 ## Anweisungen pro Schritt
 
-Im Feld **„Anweisungen"** eines Zustands steht **nur das Ziel und Verhalten dieser einen Phase** – kurz. Wiederholen Sie hier **nicht** die Basisinstruktionen.
+Im Feld **„Anweisungen"** eines Zustands steht **nur das Ziel und Verhalten dieser einen Phase** – kurz. Wiederhole hier **nicht** die Basisinstruktionen.
 
 <CardGroup cols={3}>
   <Card title="Begrüßung" icon="hand-wave">
@@ -84,7 +84,7 @@ Im Feld **„Anweisungen"** eines Zustands steht **nur das Ziel und Verhalten di
 </CardGroup>
 
 <Note>
-Was der Agent in diesem Schritt **tun darf**, legen Sie über **„Erlaubte Tools"** fest; **wohin** es je Ergebnis weitergeht, über die **„Ausgänge"**. Beim Built-In-Tool [`classify`](/system-tools) sind die möglichen **Kategorien genau die Response-Codes**, die Sie in den Ausgängen dieses Schritts hinterlegen.
+Was der Agent in diesem Schritt **tun darf**, legst du über **„Erlaubte Tools"** fest; **wohin** es je Ergebnis weitergeht, über die **„Ausgänge"**. Beim Built-In-Tool [`classify`](/system-tools) sind die möglichen **Kategorien genau die Response-Codes**, die du in den Ausgängen dieses Schritts hinterlegst.
 </Note>
 
 ## Für die Stimme schreiben
@@ -92,10 +92,10 @@ Was der Agent in diesem Schritt **tun darf**, legen Sie über **„Erlaubte Tool
 Ein Sprachmodell wird anders geführt als ein Text-Chatbot. Diese Punkte machen den größten Unterschied:
 
 - **Kurz und gesprochen.** 2–3 Sätze pro Antwort, Stichpunkte statt Absätze, eine Frage pro Zug.
-- **Mit Beispielsätzen führen.** Geben Sie Muster-Formulierungen vor – das Modell orientiert sich stark daran. („Sage etwa: ‚Einen Moment, ich verbinde Sie.'")
-- **Zahlen, E-Mail und Namen bestätigen.** Lassen Sie den Agenten Genanntes zurücklesen: „Ich habe die 0176 … – ist das korrekt?"
-- **Sprache festhalten.** Schreiben Sie explizit „Antworte immer auf Deutsch", wenn der Agent sonst die Sprache wechselt.
-- **Unklare Akustik.** Weisen Sie an, nur auf **klar Verstandenes** zu reagieren und sonst freundlich um Wiederholung zu bitten – **nicht raten**.
+- **Mit Beispielsätzen führen.** Gib Muster-Formulierungen vor – das Modell orientiert sich stark daran. („Sage etwa: ‚Einen Moment, ich verbinde Sie.'")
+- **Zahlen, E-Mail und Namen bestätigen.** Lass den Agenten Genanntes zurücklesen: „Ich habe die 0176 … – ist das korrekt?"
+- **Sprache festhalten.** Schreib explizit „Antworte immer auf Deutsch", wenn der Agent sonst die Sprache wechselt.
+- **Unklare Akustik.** Weise an, nur auf **klar Verstandenes** zu reagieren und sonst freundlich um Wiederholung zu bitten – **nicht raten**.
 - **Wiederholung vermeiden.** Eine Regel für Abwechslung verhindert roboterhaftes Klingen.
 - **Wichtigstes betonen.** Die eine entscheidende Regel in GROSSBUCHSTABEN – oder in die „Kritischen Regeln" legen, wo sie automatisch betont wird.
 
@@ -105,7 +105,7 @@ Ein Sprachmodell wird anders geführt als ein Text-Chatbot. Diese Punkte machen 
 
 ## Schritt für Schritt besser werden
 
-- **Eine Änderung pro [Test-Anruf](/agenten-testen).** So erkennen Sie, was wirklich gewirkt hat.
+- **Eine Änderung pro [Test-Anruf](/agenten-testen).** So erkennst du, was wirklich gewirkt hat.
 - **Klein formulieren, groß testen.** Schon kleine Wortänderungen verändern das Verhalten spürbar.
 - **[Transkripte auswerten](/anrufe-auswerten).** Wiederkehrende Missverständnisse gezielt mit **einer** neuen Regel adressieren – statt viele auf einmal.
 
@@ -145,5 +145,5 @@ um Wiederholung.
 - **Ausgänge:** `vertrieb` → Weiterleitung Vertrieb · `support` → Weiterleitung Support · `sonstiges` → Weiterleitung Zentrale
 
 <Tip>
-Prüfen Sie den Agenten nach jeder Änderung mit einem [Test-Anruf](/agenten-testen), bevor Sie eine neue Version veröffentlichen.
+Prüfe den Agenten nach jeder Änderung mit einem [Test-Anruf](/agenten-testen), bevor du eine neue Version veröffentlichst.
 </Tip>

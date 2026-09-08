@@ -12,15 +12,15 @@ Damit ein Agent nicht nur informiert, sondern **echte Vorgänge erledigt**, ruft
     Plattform-eigene Tools, die in **jedem Agenten ohne Konfiguration** verfügbar sind. Kein externes System, keine Zugangsdaten. Beispiel: `classify`.
   </Card>
   <Card title="MCP-Server" icon="server" href="/mcp-server">
-    Binden Sie einen **beliebigen MCP-Server** an. Der Agent liest dessen Tools aus; Sie schalten pro Agent frei, was er nutzen darf.
+    Binde einen **beliebigen MCP-Server** an. Der Agent liest dessen Tools aus; du schaltest pro Agent frei, was er nutzen darf.
   </Card>
   <Card title="Fachsystem-Connectoren" icon="plug">
-    Anbindung an Ihre **Praxis- oder Fachsoftware**. Stellt fachliche Tools bereit (z. B. Terminbuchung) und spricht Ihr System real an.
+    Anbindung an deine **Praxis- oder Fachsoftware**. Stellt fachliche Tools bereit (z. B. Terminbuchung) und spricht dein System real an.
   </Card>
 </CardGroup>
 
 <Info>
-Dieses Kapitel beschreibt, wie Sie Integrationen im Portal **auswählen und konfigurieren**. Die technische **Implementierung** einer eigenen Schnittstelle ist nicht Teil dieser Dokumentation.
+Dieses Kapitel beschreibt, wie du Integrationen im Portal **auswählst und konfigurierst**. Die technische **Implementierung** einer eigenen Schnittstelle ist nicht Teil dieser Dokumentation.
 </Info>
 
 ## Fachsystem-Connectoren
@@ -29,7 +29,7 @@ Ein **Connector** verbindet einen Agenten mit einem externen Fachsystem und stel
 
 ### Verfügbare Connectoren
 
-Im Tab **Connectoren** eines Agenten sehen Sie die verfügbaren Connector-Typen (mit Beschreibung, Anzahl unterstützter Tools und den unterstützten Authentifizierungsmethoden) sowie Ihre bereits aktiven Connectoren.
+Im Tab **Connectoren** eines Agenten siehst du die verfügbaren Connector-Typen (mit Beschreibung, Anzahl unterstützter Tools und den unterstützten Authentifizierungsmethoden) sowie deine bereits aktiven Connectoren.
 
 | Connector | Zweck | Auth | Status |
 |-----------|-------|------|--------|
@@ -38,23 +38,23 @@ Im Tab **Connectoren** eines Agenten sehen Sie die verfügbaren Connector-Typen 
 | **Vertragsverifizierung (Demo)** | Vorführ-Connector: telefonischer Bestätigungsanruf zu einem abgeschlossenen Vertrag mit fiktiven Beispieldaten. | API-Key | Demo |
 
 <Note>
-Die **Demo-Connectoren** antworten mit fest hinterlegten Beispieldaten und eignen sich, um einen Flow ohne echtes Fachsystem auszuprobieren. Für den produktiven Einsatz nutzen Sie einen Fachsystem-Connector wie **planorg PVS** oder einen **[MCP-Server](/mcp-server)**.
+Die **Demo-Connectoren** antworten mit fest hinterlegten Beispieldaten und eignen sich, um einen Flow ohne echtes Fachsystem auszuprobieren. Für den produktiven Einsatz nutzt du einen Fachsystem-Connector wie **planorg PVS** oder einen **[MCP-Server](/mcp-server)**.
 </Note>
 
 ### Einen Connector konfigurieren
 
 <Steps>
   <Step title="Connector-Typ wählen">
-    Wählen Sie den passenden Connector-Typ für Ihr System.
+    Wähle den passenden Connector-Typ für dein System.
   </Step>
   <Step title="Basis-URL hinterlegen">
-    Tragen Sie die Adresse (Basis-URL) ein, unter der Ihr System die Schnittstelle bereitstellt.
+    Trage die Adresse (Basis-URL) ein, unter der dein System die Schnittstelle bereitstellt.
   </Step>
   <Step title="Zugangsdaten hinterlegen">
-    Geben Sie die Authentifizierung ein (siehe unten). Welche Felder erscheinen, hängt von der gewählten Methode ab. Geheime Werte werden verschlüsselt gespeichert.
+    Gib die Authentifizierung ein (siehe unten). Welche Felder erscheinen, hängt von der gewählten Methode ab. Geheime Werte werden verschlüsselt gespeichert.
   </Step>
   <Step title="Tools aktivieren">
-    Aktivieren Sie die Tools, die der Agent über diesen Connector nutzen darf.
+    Aktiviere die Tools, die der Agent über diesen Connector nutzen darf.
   </Step>
 </Steps>
 
@@ -68,13 +68,13 @@ Fachsystem- und MCP-Connectoren unterstützen zwei Authentifizierungsmethoden. W
 | **Bearer-Token** | `Bearer Token` | Im Header `Authorization: Bearer <Token>`. Der Token wird unverändert weitergereicht (z. B. ein vorab ausgestelltes JWT). |
 
 <Note>
-Ihre Zugangsdaten werden **verschlüsselt** abgelegt. Geheime Felder werden im Portal nach dem Speichern nicht mehr im Klartext angezeigt – beim Bearbeiten lassen Sie das Feld leer, um den gespeicherten Wert zu behalten.
+Deine Zugangsdaten werden **verschlüsselt** abgelegt. Geheime Felder werden im Portal nach dem Speichern nicht mehr im Klartext angezeigt – beim Bearbeiten lässt du das Feld leer, um den gespeicherten Wert zu behalten.
 </Note>
 
 ## Beispiel: Terminbuchung
 
-Der ausgereifteste Anwendungsfall ist die telefonische **Terminbuchung** für das Gesundheitswesen über den **planorg-PVS-Connector**. Er stellt u. a. Tools bereit, um Patient:innen zu identifizieren, Ärzt:innen und Kalender aufzulisten, Verfügbarkeiten zu ermitteln sowie Termine für bekannte und neue Patient:innen zu buchen. In Ihrem Flow verketten Sie diese Tools zum vollständigen Buchungsgespräch.
+Der ausgereifteste Anwendungsfall ist die telefonische **Terminbuchung** für das Gesundheitswesen über den **planorg-PVS-Connector**. Er stellt u. a. Tools bereit, um Patient:innen zu identifizieren, Ärzt:innen und Kalender aufzulisten, Verfügbarkeiten zu ermitteln sowie Termine für bekannte und neue Patient:innen zu buchen. In deinem Flow verkettest du diese Tools zum vollständigen Buchungsgespräch.
 
 <Tip>
-Nach dem Einrichten einer Integration sollten Sie den Agenten gründlich mit einem [Test-Anruf](/agenten-testen) prüfen, bevor Sie ihn live schalten.
+Nach dem Einrichten einer Integration solltest du den Agenten gründlich mit einem [Test-Anruf](/agenten-testen) prüfen, bevor du ihn live schaltest.
 </Tip>

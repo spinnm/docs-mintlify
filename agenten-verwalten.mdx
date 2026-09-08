@@ -7,9 +7,9 @@ Ein **Agent** ist ein konfigurierter Voice-Agent, der an eine Rufnummer gebunden
 
 ## Agenten-Übersicht
 
-Die Agentenliste zeigt alle Agenten Ihres Mandanten mit ihrem Veröffentlichungsstatus (aktive Live-Version oder „noch keine Version"). Von hier legen Sie neue Agenten an oder löschen bestehende.
+Die Agentenliste zeigt alle Agenten deines Mandanten mit ihrem Veröffentlichungsstatus (aktive Live-Version oder „noch keine Version"). Von hier legst du neue Agenten an oder löschst bestehende.
 
-Öffnen Sie die Liste über **Agents** in der Seitenleiste.
+Öffne die Liste über **Agents** in der Seitenleiste.
 
 <Frame caption="Die Agentenliste – hier noch ohne Agenten, mit der Karte „Neuer Agent“.">
   <img src="/images/agenten/01-agents-leer.png" alt="Leere Agentenliste mit der Karte Neuer Agent" />
@@ -17,14 +17,14 @@ Die Agentenliste zeigt alle Agenten Ihres Mandanten mit ihrem Veröffentlichungs
 
 ## Neuen Agenten anlegen
 
-Klicken Sie auf die Karte **Neuer Agent**. Der **Agenten-Assistent** führt in fünf Schritten durch die Grundkonfiguration. Nur der Name ist Pflicht – alle weiteren Einstellungen sind optional und lassen sich später anpassen.
+Klicke auf die Karte **Neuer Agent**. Der **Agenten-Assistent** führt in fünf Schritten durch die Grundkonfiguration. Nur der Name ist Pflicht – alle weiteren Einstellungen sind optional und lassen sich später anpassen.
 
 <Steps>
   <Step title="Grundeinstellungen">
     **Name** und **Beschreibung** des Agenten sowie die **Telefonnummer**, unter der er erreichbar ist. Der Name muss eindeutig sein; die Rufnummer muss bei unserem Provider registriert sein.
   </Step>
   <Step title="Basis-Instructions">
-    Die grundlegende Anweisung an den Agenten: **Systemrolle** (wer er ist und wie er kommuniziert), **globale Regeln** für alle Gespräche und **kritische Regeln** mit höchster Priorität. Wie Sie diese Felder gut formulieren, zeigt der [Prompting-Guide](/prompting-guide).
+    Die grundlegende Anweisung an den Agenten: **Systemrolle** (wer er ist und wie er kommuniziert), **globale Regeln** für alle Gespräche und **kritische Regeln** mit höchster Priorität. Wie du diese Felder gut formulierst, zeigt der [Prompting-Guide](/prompting-guide).
   </Step>
   <Step title="Anrufparameter">
     Zeitliche Grenzen des Gesprächs: **maximale Wartezeit** auf eine Nutzereingabe und **maximale Anrufdauer**. Beide sind standardmäßig unbegrenzt und werden über einen Schalter aktiviert.
@@ -33,19 +33,19 @@ Klicken Sie auf die Karte **Neuer Agent**. Der **Agenten-Assistent** führt in f
     **Stimme**, **Transkriptsprache**, **Geräuschunterdrückung** und **Barge-in** (ob der Anrufer den Agenten unterbrechen darf).
   </Step>
   <Step title="Connectoren">
-    Optionale Anbindung an Ihre Fachsysteme. Verfügbare Connectoren stehen rechts, aktivierte links. Details im Kapitel [Connectoren einrichten](/connectoren). Zum Abschluss speichern Sie den Agenten mit **Erstellen**.
+    Optionale Anbindung an deine Fachsysteme. Verfügbare Connectoren stehen rechts, aktivierte links. Details im Kapitel [Connectoren einrichten](/connectoren). Zum Abschluss speicherst du den Agenten mit **Erstellen**.
   </Step>
 </Steps>
 
-Nach **Erstellen** erscheint der neue Agent in der Liste – zunächst ohne Live-Version und ohne Rufnummer. Von der Karte aus öffnen Sie den **Entwurf** (Flow-Editor), die **Versionen** oder die **Einstellungen**.
+Nach **Erstellen** erscheint der neue Agent in der Liste – zunächst ohne Live-Version und ohne Rufnummer. Von der Karte aus öffnest du den **Entwurf** (Flow-Editor), die **Versionen** oder die **Einstellungen**.
 
 ## Versionen und Livegang
 
 Ein Agent arbeitet mit **Versionen** seines Flows:
 
-- Sie bearbeiten den **Entwurf (Draft)**.
+- Du bearbeitest den **Entwurf (Draft)**.
 - Beim **Veröffentlichen** wird der Entwurf geprüft und als unveränderliche, nummerierte **Version** gespeichert.
-- Sie **aktivieren** eine Version als Live-Version. Neue Anrufe nutzen diese; laufende Anrufe bleiben auf ihrer Version.
-- Aus einer Version können Sie jederzeit wieder einen bearbeitbaren Entwurf öffnen.
+- Du **aktivierst** eine Version als Live-Version. Neue Anrufe nutzen diese; laufende Anrufe bleiben auf ihrer Version.
+- Aus einer Version kannst du jederzeit wieder einen bearbeitbaren Entwurf öffnen.
 
 Mehr dazu im Kapitel [Gesprächs-Flows bauen](/flows-bauen#versionierung).

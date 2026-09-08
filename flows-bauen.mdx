@@ -3,11 +3,11 @@ title: "Gesprächs-Flows bauen"
 description: "Den Gesprächsablauf eines Agenten als Zustandsgraph modellieren."
 ---
 
-Ein **Flow** beschreibt, wie ein Gespräch abläuft. Sie bauen ihn im **Flow-Editor** als **Zustandsgraph**: eine Landkarte aus Zuständen (States) und Übergängen zwischen ihnen.
+Ein **Flow** beschreibt, wie ein Gespräch abläuft. Du baust ihn im **Flow-Editor** als **Zustandsgraph**: eine Landkarte aus Zuständen (States) und Übergängen zwischen ihnen.
 
 ## Der Flow-Editor
 
-Der Flow-Editor ist eine grafische Oberfläche, in der Sie Zustände als Knoten anordnen und mit Verbindungen (Übergängen) verknüpfen. Sie können den Graphen frei anordnen, Zustände hinzufügen, bearbeiten und wieder entfernen.
+Der Flow-Editor ist eine grafische Oberfläche, in der du Zustände als Knoten anordnest und mit Verbindungen (Übergängen) verknüpfst. Du kannst den Graphen frei anordnen, Zustände hinzufügen, bearbeiten und wieder entfernen.
 
 ## Zustände
 
@@ -35,7 +35,7 @@ Ein Zustand besitzt **Outputs** – benannte, sortierte Übergänge zu Folgezust
 Beim Durchlaufen prüft der Agent die Outputs in ihrer Reihenfolge. Der erste passende Übergang bestimmt den Folgezustand.
 
 <Note>
-**Ohne Response-Code kein Übergang.** Löst ein Tool keinen deklarierten Response-Code aus, bleibt der Agent im aktuellen Zustand. So behalten Sie die Kontrolle über den Gesprächsverlauf.
+**Ohne Response-Code kein Übergang.** Löst ein Tool keinen deklarierten Response-Code aus, bleibt der Agent im aktuellen Zustand. So behältst du die Kontrolle über den Gesprächsverlauf.
 </Note>
 
 ### Beispiel
@@ -52,10 +52,10 @@ Beim Durchlaufen prüft der Agent die Outputs in ihrer Reihenfolge. Der erste pa
 
 ## Tools im Zustand
 
-Pro Zustand legen Sie fest, welche **Tools** der Agent dort verwenden darf. Sie stammen aus drei Kategorien (Details unter [Integrationen & Tools](/connectoren)):
+Pro Zustand legst du fest, welche **Tools** der Agent dort verwenden darf. Sie stammen aus drei Kategorien (Details unter [Integrationen & Tools](/connectoren)):
 
-- **[Built-In-Tools](/system-tools)** – plattform-eigen und ohne Konfiguration, etwa `classify` zum Einordnen des Anliegens. Die Kategorien werden zu Response-Codes für Ihre Übergänge.
-- **[Connector-Tools](/connectoren)** – fachliche Aktionen wie „Termin buchen" oder „Patient suchen", die über einen Connector an Ihr System gehen (z. B. planorg PVS).
+- **[Built-In-Tools](/system-tools)** – plattform-eigen und ohne Konfiguration, etwa `classify` zum Einordnen des Anliegens. Die Kategorien werden zu Response-Codes für deine Übergänge.
+- **[Connector-Tools](/connectoren)** – fachliche Aktionen wie „Termin buchen" oder „Patient suchen", die über einen Connector an dein System gehen (z. B. planorg PVS).
 - **[MCP-Tools](/mcp-server)** – Tools eines angebundenen MCP-Servers.
 
 <Note>
@@ -67,25 +67,25 @@ Pro Zustand legen Sie fest, welche **Tools** der Agent dort verwenden darf. Sie 
 Jeder Zustand kann eigene **Anweisungen** tragen, die nur dort gelten (zusätzlich zu den [Basis-Instructions](/agenten-verwalten) des Agenten).
 
 <Tip>
-Wie Sie gute Anweisungen formulieren – global und pro Schritt – zeigt der [Prompting-Guide](/prompting-guide).
+Wie du gute Anweisungen formulierst – global und pro Schritt – zeigt der [Prompting-Guide](/prompting-guide).
 </Tip>
 
 ## Validierung
 
-Der Editor prüft Ihren Flow laufend – etwa ob alle Zustände erreichbar sind und Übergänge gültig sind. Offene Punkte werden angezeigt, bevor Sie veröffentlichen. Zusätzlich können Sie Flows **importieren und exportieren**.
+Der Editor prüft deinen Flow laufend – etwa ob alle Zustände erreichbar sind und Übergänge gültig sind. Offene Punkte werden angezeigt, bevor du veröffentlichst. Zusätzlich kannst du Flows **importieren und exportieren**.
 
 ## Versionierung
 
 <Steps>
   <Step title="Entwurf bearbeiten">
-    Sie arbeiten immer auf einem bearbeitbaren **Entwurf (Draft)**.
+    Du arbeitest immer auf einem bearbeitbaren **Entwurf (Draft)**.
   </Step>
   <Step title="Veröffentlichen">
     Beim Veröffentlichen wird der Entwurf validiert und als unveränderliche, nummerierte **Version** gespeichert.
   </Step>
   <Step title="Aktivieren">
-    Sie setzen eine Version als **Live-Version**. Neue Anrufe nutzen sie ab sofort.
+    Du setzt eine Version als **Live-Version**. Neue Anrufe nutzen sie ab sofort.
   </Step>
 </Steps>
 
-Frühere Versionen können Sie schreibgeschützt einsehen und bei Bedarf wieder als Entwurf öffnen.
+Frühere Versionen kannst du schreibgeschützt einsehen und bei Bedarf wieder als Entwurf öffnen.
