@@ -1,0 +1,70 @@
+---
+title: "Connecting an MCP server"
+description: "Connect any MCP server and enable its tools per agent."
+---
+
+Via an **MCP server** (Model Context Protocol) you connect any external system without msg having to prescribe a fixed interface for it. The agent **reads the server's tools automatically**; you decide per agent which of them it may use. This is the most flexible way to connect your own business logic.
+
+<Note>
+The MCP integration is **live** (✅): the agent actually calls your server's tools at runtime.
+</Note>
+
+## Requirements for the server
+
+<CardGroup cols={2}>
+  <Card title="Transport" icon="arrow-right-arrow-left">
+    The server must provide MCP's **Streamable HTTP** interface (JSON or SSE responses are detected automatically).
+  </Card>
+  <Card title="Authentication" icon="key">
+    **Static header auth** via bearer token or API key. OAuth flows are not supported.
+  </Card>
+</CardGroup>
+
+## Adding an MCP server
+
+In an agent's **Connectors** tab, choose the type **MCP server (generic)**. You can add this type **multiple times** – each configured server is its own instance.
+
+<Steps>
+  <Step title="Enter the base URL">
+    Your server's Streamable HTTP address, e.g. `https://mcp.customer.com/mcp`.
+  </Step>
+  <Step title="Choose authentication">
+    - **Bearer token** → sent as `Authorization: Bearer <token>`.
+    - **API key** → sent as the header `X-API-Key: <key>`.
+
+    Secret values are stored encrypted.
+  </Step>
+  <Step title="Read out tools (preview)">
+    Before adding, the portal reads the server's available tools live and shows them with name and description. This lets you see **in advance** what the server offers.
+  </Step>
+  <Step title="Enable tools">
+    Selectively enable the tools the agent may use. Only enabled tools are available in the flow.
+  </Step>
+</Steps>
+
+<Warning>
+If the address is unreachable or not a valid MCP server, the portal reports the discovery as an error – **nothing is created**. Correct the address or credentials and trigger the preview again.
+</Warning>
+
+## Keeping tools up to date
+
+If your server's tool offering changes, refresh the stored list via **Refresh tools**. The portal reads out again and replaces the stored selection.
+
+<Note>
+If a refresh would remove a tool that is still **actively enabled** on an agent, it is rejected. Remove the tool from the agent first, then refresh again.
+</Note>
+
+## Results in the flow
+
+Each MCP tool returns two possible outcomes in the flow, on which you branch:
+
+| Response code | Meaning |
+|---------------|---------|
+| `SUCCESS` | The call succeeded. |
+| `ERROR` | The server reported an error. |
+
+The actual business result (the content the server returns) reaches the agent separately for conducting the conversation.
+
+<Tip>
+Treat an MCP server like an external trust boundary: enable only the tools the agent really needs, and check the behavior with a [test call](/en/agenten-testen) before going live.
+</Tip>

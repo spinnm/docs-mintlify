@@ -1,34 +1,48 @@
 ---
-title: "Setting up connectors"
-description: "Connect your specialist systems so the agent can handle real transactions."
+title: "Integrations & Tools – Overview"
+description: "How the agent acts: built-in tools, MCP servers, and specialist-system connectors."
 ---
 
-A **connector** links an agent to an external system – for example, your practice or specialist software. It provides the agent with **tools** (e.g. "book appointment", "look up patient") that the agent uses in the [flow](/en/flows-bauen). This lets the agent handle complete business processes end-to-end, rather than just providing information.
+So that an agent doesn't just provide information but **handles real transactions**, it calls **tools** in the [flow](/en/flows-bauen) – small, clearly defined actions such as "classify the request", "book appointment", or "look up balance". Where a tool comes from, and whether it talks to an external system, depends on its **category**.
 
-<Info>
-This chapter describes how to **select and configure** a connector in the portal. The technical **implementation** of a connector is out of scope for this handbook.
-</Info>
+## Three categories of tools
 
-## Two ways to connect
-
-<CardGroup cols={2}>
-  <Card title="Standard connector" icon="code">
-    Your system provides a standardized interface following the msg.Hello specification. Maximum flexibility, no dependency on a particular vendor.
+<CardGroup cols={3}>
+  <Card title="Built-in tools" icon="wand-magic-sparkles" href="/en/system-tools">
+    Platform-native tools available in **every agent without any configuration**. No external system, no credentials. Example: `classify`.
   </Card>
-  <Card title="Direct integrations" icon="puzzle-piece">
-    For established systems, msg offers ready-made connectors – with no implementation effort on your part. The range is growing continuously. 📋
+  <Card title="MCP servers" icon="server" href="/en/mcp-server">
+    Connect **any MCP server**. The agent reads out its tools; you enable per agent which of them it may use.
+  </Card>
+  <Card title="Specialist-system connectors" icon="plug">
+    Connect to your **practice or specialist software**. Provides business tools (e.g. appointment booking) and actually calls your system.
   </Card>
 </CardGroup>
 
-## Maturity
+<Info>
+This chapter describes how to **select and configure** integrations in the portal. The technical **implementation** of your own interface is out of scope for this handbook.
+</Info>
 
-<Warning>
-The **connector concept** and the **configuration in the portal** are available (✅). The **execution** of the business tools against your system is currently being finalized (🚧). You can therefore already create connectors and prepare your flows; the actual connection will follow shortly. Ready-made direct integrations for systems such as Doctolib or ClickDoc are planned (📋), see [Roadmap](/en/roadmap).
-</Warning>
+## Specialist-system connectors
 
-## Configuring a connector
+A **connector** links an agent to an external specialist system and provides it with the matching tools. Each tool is assigned to exactly **one** connector.
 
-In an agent's **Connectors** tab, you see the available connector types (with description, number of supported tools, and the supported authentication methods) as well as your already active connectors.
+### Available connectors
+
+In an agent's **Connectors** tab you see the available connector types (with description, number of supported tools, and the supported authentication methods) as well as your already active connectors.
+
+| Connector | Purpose | Auth | Maturity |
+|-----------|---------|------|----------|
+| **planorg PVS (Principa)** | Appointment booking via the FHIR R4 interface of planorg's Principa practice-management system – look up patient, list practitioners/calendars, find free slots, book appointments. | Bearer token | ✅ live |
+| **Debt management (demo)** | Demo connector: telephone balance inquiry and installment-plan agreement using fictitious sample data. | API key | ✅ demo |
+| **Contract verification (demo)** | Demo connector: telephone confirmation call for a concluded contract using fictitious sample data. | API key | ✅ demo |
+| **Standard connector (your own OpenAPI spec)** | Your system provides a standardized interface following the msg.Hello specification – maximum flexibility, no vendor lock-in. | API key | 🚧 being finalized |
+
+<Note>
+The **demo connectors** respond with hardcoded sample data and are handy for trying out a flow without a real specialist system. For production use, choose a specialist-system connector such as **planorg PVS** or an **[MCP server](/en/mcp-server)**.
+</Note>
+
+### Configuring a connector
 
 <Steps>
   <Step title="Choose a connector type">
@@ -38,21 +52,34 @@ In an agent's **Connectors** tab, you see the available connector types (with de
     Enter the address (base URL) where your system provides the interface.
   </Step>
   <Step title="Enter the credentials">
-    Enter the authentication details (e.g. an API key). Which fields appear depends on the selected authentication method. Secret values are stored encrypted.
+    Enter the authentication (see below). Which fields appear depends on the selected method. Secret values are stored encrypted.
   </Step>
   <Step title="Enable tools">
-    Enable the tools that the agent is allowed to use through this connector. Each tool is assigned to exactly one connector.
+    Enable the tools that the agent is allowed to use through this connector.
   </Step>
 </Steps>
 
+## Authentication
+
+Specialist-system and MCP connectors support two authentication methods. Which one is available is determined by the connector type.
+
+| Method | Field | How it is sent |
+|--------|-------|----------------|
+| **API key** | `API Key` | As a fixed key with every request (for MCP in the `X-API-Key` header). |
+| **Bearer token** | `Bearer Token` | In the `Authorization: Bearer <token>` header. The token is passed through unchanged (e.g. a pre-issued JWT). |
+
 <Note>
-Your credentials are stored **encrypted**. Secret fields are no longer displayed in plain text in the portal after saving.
+Your credentials are stored **encrypted**. Secret fields are no longer displayed in plain text in the portal after saving – when editing, leave the field empty to keep the stored value.
 </Note>
 
 ## Example: appointment booking
 
-The most mature use case is telephone **appointment booking** for healthcare. The associated connector provides tools to, among other things, identify patients, query specialties and appointment types, determine availability, and book, look up, and cancel appointments. In your flow, you chain these tools together into a complete booking conversation.
+The most mature use case is telephone **appointment booking** for healthcare via the **planorg PVS connector**. It provides tools to, among other things, identify patients, list practitioners and calendars, determine availability, and book appointments for both known and new patients. In your flow, you chain these tools together into a complete booking conversation.
 
 <Tip>
-After setting up a connector, you should thoroughly check the agent with a [test call](/en/agenten-testen) before going live.
+After setting up an integration, you should thoroughly check the agent with a [test call](/en/agenten-testen) before going live.
 </Tip>
+
+## Outlook
+
+Ready-made **direct integrations** for further established systems (e.g. Doctolib, ClickDoc) and the runtime for **self-implemented standard connectors** following the msg.Hello OpenAPI specification are coming – see [Roadmap](/en/roadmap).

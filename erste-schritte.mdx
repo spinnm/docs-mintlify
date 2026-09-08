@@ -1,54 +1,52 @@
 ---
-title: "Erste Schritte"
-description: "Vom bereitgestellten Mandanten zum ersten einsatzbereiten Agenten."
+title: "Schnellstart"
+description: "In 5 Minuten zum ersten Agenten."
 ---
 
-Dieses Kapitel führt Sie vom ersten Login bis zu einem Agenten, den Sie testen können.
+Bauen Sie in wenigen Minuten Ihren ersten Voice-Agenten: Er begrüßt Anrufer, erkennt ihr Anliegen und leitet an das passende Team weiter – ganz ohne Anbindung an ein Fachsystem.
 
-## Voraussetzung: Ihr Mandant
-
-Ihr **Mandant** (die abgeschlossene Arbeitsumgebung Ihrer Organisation) wird **von msg eingerichtet**. Im Rahmen des Onboardings richtet msg außerdem Ihren ersten **Administrator-Zugang** ein und übergibt Ihnen anschließend den Mandanten zur eigenständigen Verwaltung.
+<Frame caption="In unter 2 Minuten: einen Agenten im Portal anlegen und konfigurieren.">
+  {/* TODO: Video einbetten, sobald verfügbar:
+  <video controls className="w-full aspect-video rounded-2xl" src="/images/schnellstart-agent.mp4" poster="/images/schnellstart-agent.jpg" />
+  */}
+  <img src="/images/schnellstart-placeholder.svg" alt="Schnellstart-Video – folgt in Kürze" />
+</Frame>
 
 <Note>
-Sie müssen Ihren Mandanten also nicht selbst anlegen. Sobald Sie Ihre Zugangsdaten erhalten haben, können Sie sich anmelden und sofort loslegen.
+**Voraussetzung.** Ihr **Mandant** und Ihr Administrator-Zugang werden **von msg eingerichtet**. Sobald Sie Ihre Zugangsdaten haben, melden Sie sich im msg.Hello-Portal per Single Sign-On (SSO) an – und können sofort loslegen.
 </Note>
 
-## Anmelden
+## In 5 Schritten zum ersten Agenten
 
-<Steps>
-  <Step title="Portal öffnen">
-    Öffnen Sie das msg.Hello-Portal in Ihrem Browser.
-  </Step>
-  <Step title="Mit Ihrem Konto anmelden">
-    Geben Sie Ihre E-Mail-Adresse ein. Die Anmeldung erfolgt über Single Sign-On (SSO) – je nach Konfiguration Ihrer Organisation über Ihren gewohnten Unternehmens-Login.
-  </Step>
-  <Step title="Mandant auswählen">
-    Falls Sie mehreren Mandanten angehören, wählen Sie den gewünschten aus. Andernfalls landen Sie direkt auf der Startseite.
-  </Step>
-</Steps>
-
-## Der erste Agent
-
-Auf der Startseite führt Sie eine **Onboarding-Checkliste** durch die wichtigsten Schritte. Der Kern ist der erste Agent:
+Als Beispiel bauen wir einen **Empfangs-Agenten**, der Anrufer je nach Anliegen an das richtige Team weiterleitet.
 
 <Steps>
   <Step title="Agenten anlegen">
-    Legen Sie über den **Agenten-Assistenten** einen neuen Agenten an. Sie vergeben einen Namen und durchlaufen die Grundeinstellungen. Details: [Agenten verwalten](/agenten-verwalten).
+    Legen Sie über den **Agenten-Assistenten** einen neuen Agenten an. Vergeben Sie einen Namen und hinterlegen Sie eine kurze **Begrüßung**, z. B. „Guten Tag, Sie sind mit dem Empfang verbunden. Wie kann ich helfen?"
   </Step>
-  <Step title="Gesprächs-Flow bauen">
-    Definieren Sie im **Flow-Editor**, wie das Gespräch ablaufen soll – Begrüßung, Anliegen erkennen, weiterleiten oder auflegen. Details: [Gesprächs-Flows bauen](/flows-bauen).
+  <Step title="Anliegen erkennen">
+    Fügen Sie im **Flow-Editor** einen Gesprächs-Zustand hinzu, in dem der Agent das Built-In-Tool **`classify`** nutzt. Definieren Sie die möglichen Kategorien – z. B. `vertrieb`, `support`, `sonstiges`. Der Agent ordnet das Anliegen genau einer davon zu.
   </Step>
-  <Step title="Rufnummer zuweisen">
-    Weisen Sie dem Agenten eine Rufnummer zu, unter der er erreichbar sein soll.
+  <Step title="Weiterleiten">
+    Verbinden Sie jede Kategorie mit einem Ziel: Legen Sie je einen **Weiterleiten**-Zustand mit der passenden **Rufnummer** an (Vertrieb, Support, Zentrale). Für unklare Fälle können Sie stattdessen nachfragen oder **auflegen**.
   </Step>
-  <Step title="Testen">
-    Prüfen Sie den Agenten mit einem **Test-Anruf direkt im Browser**, bevor er live geht. Details: [Agenten testen](/agenten-testen).
+  <Step title="Test-Anruf">
+    Prüfen Sie den Agenten mit einem **Test-Anruf direkt im Browser** – ohne echten Anruf. Sprechen Sie typische Anliegen ein und sehen Sie, ob korrekt eingeordnet und weitergeleitet wird. Details: [Agenten testen](/agenten-testen).
   </Step>
-  <Step title="Veröffentlichen">
-    Veröffentlichen Sie den Flow als **Version** und aktivieren Sie diese. Ab dann nutzen neue Anrufe die aktive Version.
+  <Step title="Veröffentlichen & Rufnummer zuweisen">
+    Veröffentlichen Sie den Flow als **Version**, aktivieren Sie diese und weisen Sie dem Agenten eine **Rufnummer** zu. Ab dann nutzen neue Anrufe die aktive Version.
   </Step>
 </Steps>
 
-<Tip>
-Beginnen Sie klein: ein Agent, der begrüßt, das Anliegen erkennt und bei Bedarf an einen Menschen weiterleitet, ist in wenigen Minuten aufgebaut und sofort nützlich. Fachliche Automatisierung über Connectoren bauen Sie danach schrittweise aus.
-</Tip>
+## Fertig – und jetzt?
+
+Ihr Agent nimmt Anrufe entgegen, erkennt das Anliegen und leitet zuverlässig weiter. Von hier aus bauen Sie ihn schrittweise aus:
+
+<CardGroup cols={2}>
+  <Card title="Gespräche verfeinern" icon="diagram-project" href="/flows-bauen">
+    Mehr Zustände, Zwischenfragen und Verzweigungen im Flow-Editor.
+  </Card>
+  <Card title="Fachsysteme & Tools anbinden" icon="plug" href="/connectoren">
+    Über Connectoren oder MCP-Server echte Vorgänge erledigen – etwa Termine buchen.
+  </Card>
+</CardGroup>

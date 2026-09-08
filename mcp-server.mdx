@@ -1,0 +1,70 @@
+---
+title: "MCP-Server anbinden"
+description: "Einen beliebigen MCP-Server verbinden und seine Tools pro Agent freischalten."
+---
+
+Über einen **MCP-Server** (Model Context Protocol) binden Sie ein beliebiges externes System an, ohne dass msg dafür eine feste Schnittstelle vorgeben muss. Der Agent liest die **Tools des Servers automatisch aus**; Sie entscheiden pro Agent, welche davon er nutzen darf. Das ist der flexibelste Weg, eigene Fachlogik anzubinden.
+
+<Note>
+Die MCP-Anbindung ist **live**: Der Agent ruft die Tools Ihres Servers zur Laufzeit real auf.
+</Note>
+
+## Voraussetzungen an den Server
+
+<CardGroup cols={2}>
+  <Card title="Transport" icon="arrow-right-arrow-left">
+    Der Server muss die **Streamable-HTTP**-Schnittstelle von MCP bereitstellen (JSON- oder SSE-Antworten werden automatisch erkannt).
+  </Card>
+  <Card title="Authentifizierung" icon="key">
+    **Statische Header-Auth** über Bearer-Token oder API-Key. OAuth-Flows werden nicht unterstützt.
+  </Card>
+</CardGroup>
+
+## Einen MCP-Server hinzufügen
+
+Im Tab **Connectoren** eines Agenten wählen Sie den Typ **MCP-Server (generisch)**. Diesen Typ können Sie **mehrfach** hinzufügen – jeder konfigurierte Server ist eine eigene Instanz.
+
+<Steps>
+  <Step title="Basis-URL eintragen">
+    Die Streamable-HTTP-Adresse Ihres Servers, z. B. `https://mcp.kunde.de/mcp`.
+  </Step>
+  <Step title="Authentifizierung wählen">
+    - **Bearer-Token** → wird als `Authorization: Bearer <Token>` gesendet.
+    - **API-Key** → wird als Header `X-API-Key: <Schlüssel>` gesendet.
+
+    Geheime Werte werden verschlüsselt gespeichert.
+  </Step>
+  <Step title="Tools auslesen (Vorschau)">
+    Vor dem Anlegen liest das Portal die verfügbaren Tools des Servers live aus und zeigt sie mit Name und Beschreibung an. So sehen Sie **vorab**, was der Server anbietet.
+  </Step>
+  <Step title="Tools freischalten">
+    Aktivieren Sie gezielt die Tools, die der Agent verwenden darf. Nur freigeschaltete Tools stehen im Flow zur Verfügung.
+  </Step>
+</Steps>
+
+<Warning>
+Ist die Adresse nicht erreichbar oder kein gültiger MCP-Server, meldet das Portal die Discovery als Fehler – **es wird nichts angelegt**. Korrigieren Sie Adresse bzw. Zugangsdaten und lösen Sie die Vorschau erneut aus.
+</Warning>
+
+## Tools aktuell halten
+
+Ändert sich das Tool-Angebot Ihres Servers, aktualisieren Sie die hinterlegte Liste über **Tools aktualisieren**. Das Portal liest neu aus und ersetzt die gespeicherte Auswahl.
+
+<Note>
+Würde eine Aktualisierung ein Tool entfernen, das an einem Agenten noch **aktiv freigeschaltet** ist, wird sie abgelehnt. Nehmen Sie das Tool zuerst aus dem Agenten heraus und aktualisieren Sie dann erneut.
+</Note>
+
+## Ergebnisse im Flow
+
+Jedes MCP-Tool liefert im Flow zwei mögliche Ergebnisse, an denen Sie verzweigen:
+
+| Response-Code | Bedeutung |
+|---------------|-----------|
+| `SUCCESS` | Der Aufruf war erfolgreich. |
+| `ERROR` | Der Server hat einen Fehler gemeldet. |
+
+Das eigentliche fachliche Ergebnis (die Inhalte, die der Server zurückgibt) fließt dem Agenten separat für die Gesprächsführung zu.
+
+<Tip>
+Behandeln Sie einen MCP-Server wie eine externe Vertrauensgrenze: Schalten Sie nur Tools frei, die der Agent wirklich braucht, und prüfen Sie das Verhalten mit einem [Test-Anruf](/agenten-testen), bevor Sie live gehen.
+</Tip>
