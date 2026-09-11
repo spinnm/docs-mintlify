@@ -60,12 +60,13 @@ The **demo connectors** respond with hardcoded sample data and are ideal for try
 
 ## Authentication
 
-Domain-system and MCP connectors support two authentication methods. Which one is available is defined by the respective connector type.
+Domain-system and MCP connectors support up to three authentication methods. Which ones are available is defined by the respective connector type.
 
 | Method | Field | How it is sent |
 |--------|-------|----------------|
 | **API key** | `API Key` | As a fixed key on every request (for MCP in the header `X-API-Key`). |
 | **Bearer token** | `Bearer Token` | In the header `Authorization: Bearer <Token>`. The token is passed through unchanged (e.g. a pre-issued JWT). |
+| **None (NoAuth)** | – | No credentials are requested and **no auth header** is sent. For open or network-internally secured systems. Currently only selectable for the **[MCP server](/en/mcp-server)** connector. |
 
 <Note>
 Your credentials are stored **encrypted**. Secret fields are no longer shown in plain text in the portal after saving – when editing, leave the field empty to keep the stored value.

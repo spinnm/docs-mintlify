@@ -60,12 +60,13 @@ Die **Demo-Connectoren** antworten mit fest hinterlegten Beispieldaten und eigne
 
 ## Authentifizierung
 
-Fachsystem- und MCP-Connectoren unterstützen zwei Authentifizierungsmethoden. Welche verfügbar ist, gibt der jeweilige Connector-Typ vor.
+Fachsystem- und MCP-Connectoren unterstützen bis zu drei Authentifizierungsmethoden. Welche verfügbar sind, gibt der jeweilige Connector-Typ vor.
 
 | Methode | Feld | Wie es gesendet wird |
 |---------|------|----------------------|
 | **API-Key** | `API Key` | Als fester Schlüssel bei jeder Anfrage (bei MCP im Header `X-API-Key`). |
 | **Bearer-Token** | `Bearer Token` | Im Header `Authorization: Bearer <Token>`. Der Token wird unverändert weitergereicht (z. B. ein vorab ausgestelltes JWT). |
+| **Keine (NoAuth)** | – | Es werden keine Zugangsdaten abgefragt und **kein Auth-Header** gesendet. Für offene oder netzwerkintern abgesicherte Systeme. Aktuell nur beim **[MCP-Server](/mcp-server)**-Connector wählbar. |
 
 <Note>
 Deine Zugangsdaten werden **verschlüsselt** abgelegt. Geheime Felder werden im Portal nach dem Speichern nicht mehr im Klartext angezeigt – beim Bearbeiten lässt du das Feld leer, um den gespeicherten Wert zu behalten.

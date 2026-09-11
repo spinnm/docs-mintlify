@@ -16,7 +16,7 @@ The MCP integration is **live**: the agent calls your server's tools for real at
     The server must provide the **Streamable-HTTP** interface of MCP (JSON or SSE responses are detected automatically).
   </Card>
   <Card title="Authentication" icon="key">
-    **Static header auth** via Bearer token or API key. OAuth flows are not supported.
+    **Static header auth** via Bearer token or API key – or **no authentication** for open or network-internally secured servers. OAuth flows are not supported.
   </Card>
 </CardGroup>
 
@@ -31,6 +31,7 @@ In the **Connectors** tab of an agent you choose the type **MCP server (generic)
   <Step title="Choose authentication">
     - **Bearer token** → sent as `Authorization: Bearer <Token>`.
     - **API key** → sent as the header `X-API-Key: <Key>`.
+    - **No authentication** → no header is sent and no field is filled in. Only for open or network-internally secured servers.
 
     Secret values are stored encrypted.
   </Step>
