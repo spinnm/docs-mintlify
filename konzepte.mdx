@@ -1,0 +1,114 @@
+---
+title: "Konzepte & Kontrolle"
+description: "Warum ein Agent in msg.Hello aus Flow, Zuständen und Werkzeugen besteht – und welche Garantien daraus folgen."
+---
+
+Ein Agent in msg.Hello ist kein frei laufendes Sprachmodell, sondern ein Sprachmodell innerhalb einer Struktur. Diese Struktur legt für **jede Phase des Gesprächs** fest, was der Agent sagen soll und was er tun darf. Daraus entstehen Zusagen, die du einem Anrufer, einer Fachabteilung und einem Prüfer gegenüber vertreten kannst.
+
+Dieses Kapitel erklärt die Idee dahinter. Wie du sie im Portal umsetzt, steht in [Gesprächs-Flows bauen](/flows-bauen) und im [Prompting-Guide](/prompting-guide).
+
+## Drei Ebenen, drei Zuständigkeiten
+
+| Ebene | Was sie bestimmt | Wo im Portal |
+|-------|------------------|--------------|
+| **Basisinstruktionen** | die **Haltung** – wer der Agent ist, wie er spricht, was immer gilt | Agent-Tab **Basisinstruktionen** |
+| **Flow** | den **Ablauf** – welche Phasen es gibt und wie der Agent zwischen ihnen wechselt | [Flow-Editor](/flows-bauen) |
+| **Tools** | die **Befugnis** – was der Agent in einer Phase tatsächlich tun kann | pro Zustand im Flow-Editor |
+
+Der praktische Gewinn dieser Trennung: Du änderst den Tonfall, ohne den Ablauf anzufassen – und du änderst den Ablauf, ohne den Tonfall neu zu schreiben.
+
+## Warum kein einzelner großer Prompt?
+
+Man kann einem Sprachmodell alles in einem langen Text mitgeben: die Rolle, den gewünschten Ablauf, jede Ausnahme, jedes Verbot. Das funktioniert in einfachen Fällen – und wird unzuverlässig, sobald ein Gespräch länger wird oder ein Anrufer vom erwarteten Weg abweicht.
+
+Der Grund ist einfach: **Ein Prompt ist eine Bitte. Ein Flow ist eine Struktur.** Eine Bitte kann überhört, missverstanden oder wegdiskutiert werden. Eine Struktur nicht.
+
+msg.Hello setzt den Prompt deshalb **bei jedem Zustandswechsel neu zusammen**. Die globale Basis bleibt stehen; die Anweisungen und die erlaubten Werkzeuge wechseln mit der Gesprächsphase. Der Agent bekommt in jedem Schritt genau den Ausschnitt, den dieser Schritt braucht – nicht das gesamte Regelwerk auf einmal.
+
+## Die harte Grenze: Werkzeuge gelten pro Schritt
+
+Das ist die zentrale Eigenschaft der Plattform.
+
+Ein Agent kann in einem Zustand **nur das tun, wofür dort ein Werkzeug freigeschaltet ist**. Nicht freigeschaltete Werkzeuge stehen ihm in dieser Phase nicht zur Verfügung – sie fehlen schlicht in seinem Werkzeugkasten.
+
+<Note>
+Ein Anrufer kann keine Ratenzahlung vereinbaren, bevor er verifiziert ist – **nicht weil wir es dem Agenten verboten haben, sondern weil das Werkzeug an dieser Stelle nicht existiert.**
+</Note>
+
+Der Unterschied ist für die Beurteilung eines Agenten entscheidend. Ein Verbot im Prompt ist eine Anweisung, die das Modell befolgen soll. Ein nicht freigeschaltetes Werkzeug ist eine Handlung, die das Modell nicht ausführen kann. Das Erste lässt sich durch geschickte Formulierungen eines Anrufers aushebeln, das Zweite nicht.
+
+Daraus folgt eine Entwurfsregel: **Schalte in jedem Zustand nur die Werkzeuge frei, die dieser Schritt wirklich braucht.** Jedes zusätzlich freigeschaltete Werkzeug ist eine zusätzlich offene Tür.
+
+## Übergänge trägt das Ergebnis, nicht das Gespräch
+
+Ein Zustand wechselt nicht, weil der Anrufer das Thema wechselt, und auch nicht, weil der Agent es für sinnvoll hält. Er wechselt, wenn ein **tatsächlich ausgeführtes Werkzeug** ein Ergebnis meldet, für das du einen Übergang definiert hast.
+
+Jeder Übergang (**Output**) besteht aus einem Werkzeug, einem erwarteten **Response-Code** und dem Folgezustand. Der Agent prüft die Outputs in der von dir festgelegten Reihenfolge; der erste passende bestimmt, wie es weitergeht.
+
+<Note>
+**Ohne Response-Code kein Übergang.** Meldet kein Werkzeug ein passendes Ergebnis, bleibt der Agent im aktuellen Zustand – und bleibt damit auch bei dessen Werkzeugen und Anweisungen.
+</Note>
+
+Ein Anrufer kann ein Gespräch also beschleunigen wollen, abschweifen oder drängen – der Pfad durch deinen Flow entsteht ausschließlich aus Ergebnissen, nicht aus Überredung.
+
+## Entwurf, Version, Livegang
+
+Ein Agent arbeitet nie direkt an der Leitung, an der du gerade schraubst.
+
+<Steps>
+  <Step title="Entwurf">
+    Du bearbeitest den **Entwurf**. Er hat auf laufende Anrufe keinerlei Wirkung.
+  </Step>
+  <Step title="Version">
+    Beim **Veröffentlichen** wird der Entwurf geprüft und als **unveränderliche, nummerierte Version** eingefroren.
+  </Step>
+  <Step title="Livegang">
+    Du **aktivierst** eine Version bewusst. Erst neue Anrufe nutzen sie – **laufende Anrufe bleiben auf ihrer Version**.
+  </Step>
+</Steps>
+
+Damit ist jederzeit nachvollziehbar, nach welchem Stand ein bestimmter Anruf geführt wurde. Und ein Rücksprung ist kein Zurückbauen, sondern das Aktivieren einer früheren Version.
+
+## Ein Beispiel
+
+Ein Agent im Forderungsmanagement soll erst die Identität des Anrufers klären und danach über Zahlungen sprechen. Im Flow sieht das so aus:
+
+```
+[Verifizierung]
+   erlaubte Werkzeuge: verify_customer
+   ── verify_customer → "CUSTOMER_VERIFIED"   →  [Saldo nennen]
+   ── verify_customer → "CUSTOMER_NOT_FOUND"  →  [Weiterleiten: Sachbearbeitung]
+
+[Saldo nennen]
+   erlaubte Werkzeuge: get_balance, propose_installment_plan
+   ── propose_installment_plan → "PLAN_PROPOSED" → [Ratenplan vereinbaren]
+
+[Ratenplan vereinbaren]
+   erlaubte Werkzeuge: agree_installment_plan
+```
+
+Bittet ein Anrufer im Zustand **Verifizierung** darum, „gleich die Raten festzumachen", kann der Agent darauf eingehen, erklären und vertrösten – **vereinbaren kann er nichts**, denn `agree_installment_plan` ist zwei Zustände entfernt. Den Weg dorthin öffnet allein ein erfolgreiches `verify_customer`.
+
+Den vollständigen Fall beschreibt das Kapitel [Connectoren](/connectoren) mit dem Demo-Connector **Forderungsmanagement**.
+
+## Glossar
+
+| Begriff | Bedeutung |
+|---------|-----------|
+| **Agent** | Der konfigurierte Gesprächspartner: Basisinstruktionen, Flow und Connectoren zusammen. |
+| **Flow** | Der Gesprächsablauf als Zustandsgraph. |
+| **Zustand** | Eine Phase des Gesprächs mit eigenen Anweisungen, Werkzeugen und Ausgängen. |
+| **Output** | Ein benannter Übergang von einem Zustand zum nächsten, geknüpft an ein Werkzeug-Ergebnis. |
+| **Response-Code** | Das Ergebnis eines Werkzeugaufrufs, an dem du verzweigst. |
+| **Tool / Werkzeug** | Eine Handlung, die der Agent ausführen kann – plattform-eigen, über einen Connector oder über einen MCP-Server. |
+| **Connector** | Die Anbindung an ein Fachsystem; stellt dem Agenten dessen Werkzeuge bereit. |
+| **Version** | Ein eingefrorener, nummerierter Stand eines Flows. |
+
+<CardGroup cols={2}>
+  <Card title="Flow bauen" icon="diagram-project" href="/flows-bauen">
+    Zustände, Übergänge und Werkzeuge im Flow-Editor anlegen.
+  </Card>
+  <Card title="Instruktionen schreiben" icon="pen-line" href="/prompting-guide">
+    Haltung global, Phasenspezifisches am Zustand.
+  </Card>
+</CardGroup>

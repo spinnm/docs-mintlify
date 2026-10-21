@@ -1,0 +1,114 @@
+---
+title: "Concepts & Control"
+description: "Why an agent in msg.Hello consists of a flow, states, and tools – and what guarantees follow from that."
+---
+
+An agent in msg.Hello is not a free-running speech model, but a speech model inside a structure. That structure defines, **for every phase of the conversation**, what the agent should say and what it is allowed to do. The result is a set of assurances you can defend to a caller, to a business department, and to an auditor.
+
+This chapter explains the idea behind it. How you put it into practice in the portal is covered in [Build conversation flows](/en/flows-bauen) and the [Prompting Guide](/en/prompting-guide).
+
+## Three levels, three responsibilities
+
+| Level | What it determines | Where in the portal |
+|-------|--------------------|---------------------|
+| **Base instructions** | the **attitude** – who the agent is, how it speaks, what always applies | Agent tab **Base instructions** |
+| **Flow** | the **course** – which phases exist and how the agent moves between them | [Flow editor](/en/flows-bauen) |
+| **Tools** | the **authority** – what the agent can actually do in a phase | per state in the flow editor |
+
+The practical gain of this separation: you change the tone without touching the course – and you change the course without rewriting the tone.
+
+## Why not one large prompt?
+
+You can give a speech model everything in one long text: the role, the desired course, every exception, every prohibition. That works in simple cases – and becomes unreliable as soon as a conversation gets longer or a caller leaves the expected path.
+
+The reason is simple: **a prompt is a request. A flow is a structure.** A request can be missed, misunderstood, or argued away. A structure cannot.
+
+That is why msg.Hello **reassembles the prompt on every state switch**. The global base stays in place; the instructions and the permitted tools change with the conversation phase. In each step, the agent receives exactly the section that step needs – not the entire rulebook at once.
+
+## The hard boundary: tools apply per step
+
+This is the platform's central property.
+
+In a given state, an agent can **only do what a tool has been permitted for there**. Tools that are not permitted are unavailable to it in that phase – they are simply missing from its toolbox.
+
+<Note>
+A caller cannot agree an installment plan before being verified – **not because we forbade it to the agent, but because the tool does not exist at that point.**
+</Note>
+
+The difference is decisive when judging an agent. A prohibition in the prompt is an instruction the model is supposed to follow. A tool that is not permitted is an action the model cannot perform. The first can be worked around by a skilful caller, the second cannot.
+
+From this follows a design rule: **in each state, permit only the tools that step genuinely needs.** Every additional permitted tool is an additional open door.
+
+## Transitions are carried by the result, not by the conversation
+
+A state does not switch because the caller changes the subject, nor because the agent considers it sensible. It switches when a **tool that was actually executed** reports a result for which you have defined a transition.
+
+Each transition (**output**) consists of a tool, an expected **response code**, and the subsequent state. The agent checks the outputs in the order you defined; the first matching one determines what happens next.
+
+<Note>
+**No response code, no transition.** If no tool reports a matching result, the agent stays in the current state – and therefore also stays with that state's tools and instructions.
+</Note>
+
+So a caller may want to speed things up, wander off, or push – the path through your flow arises solely from results, never from persuasion.
+
+## Draft, version, going live
+
+An agent never works on the line you are currently tinkering with.
+
+<Steps>
+  <Step title="Draft">
+    You edit the **draft**. It has no effect whatsoever on ongoing calls.
+  </Step>
+  <Step title="Version">
+    On **publishing**, the draft is validated and frozen as an **immutable, numbered version**.
+  </Step>
+  <Step title="Going live">
+    You **activate** a version deliberately. Only new calls use it – **ongoing calls stay on their version**.
+  </Step>
+</Steps>
+
+This makes it traceable at any time which state of configuration a given call followed. And stepping back is not a rebuild, but the activation of an earlier version.
+
+## An example
+
+An agent in receivables management is meant to establish the caller's identity first and talk about payments only afterwards. In the flow, that looks like this:
+
+```
+[Verification]
+   permitted tools: verify_customer
+   ── verify_customer → "CUSTOMER_VERIFIED"   →  [State balance]
+   ── verify_customer → "CUSTOMER_NOT_FOUND"  →  [Forward: case handling]
+
+[State balance]
+   permitted tools: get_balance, propose_installment_plan
+   ── propose_installment_plan → "PLAN_PROPOSED" → [Agree installment plan]
+
+[Agree installment plan]
+   permitted tools: agree_installment_plan
+```
+
+If a caller in the **Verification** state asks to "just settle the installments right away", the agent can respond, explain, and defer – **but it cannot agree to anything**, because `agree_installment_plan` is two states away. The only thing that opens the way there is a successful `verify_customer`.
+
+The full case is described in the chapter [Connectors](/en/connectoren) with the **Receivables management** demo connector.
+
+## Glossary
+
+| Term | Meaning |
+|------|---------|
+| **Agent** | The configured conversation partner: base instructions, flow, and connectors together. |
+| **Flow** | The course of the conversation as a state graph. |
+| **State** | A phase of the conversation with its own instructions, tools, and outputs. |
+| **Output** | A named transition from one state to the next, tied to a tool result. |
+| **Response code** | The result of a tool call that you branch on. |
+| **Tool** | An action the agent can perform – platform-native, via a connector, or via an MCP server. |
+| **Connector** | The link to a business system; provides the agent with that system's tools. |
+| **Version** | A frozen, numbered state of a flow. |
+
+<CardGroup cols={2}>
+  <Card title="Build a flow" icon="diagram-project" href="/en/flows-bauen">
+    Create states, transitions, and tools in the flow editor.
+  </Card>
+  <Card title="Write instructions" icon="pen-line" href="/en/prompting-guide">
+    Attitude globally, phase-specific things on the state.
+  </Card>
+</CardGroup>

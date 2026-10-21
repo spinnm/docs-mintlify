@@ -25,7 +25,9 @@
                 "group": "Einstieg",
                 "pages": [
                   "index",
-                  "erste-schritte"
+                  "konzepte",
+                  "erste-schritte",
+                  "faq"
                 ]
               },
               {
@@ -67,7 +69,9 @@
                 "group": "Getting Started",
                 "pages": [
                   "en/index",
-                  "en/erste-schritte"
+                  "en/konzepte",
+                  "en/erste-schritte",
+                  "en/faq"
                 ]
               },
               {

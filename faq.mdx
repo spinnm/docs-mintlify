@@ -1,0 +1,107 @@
+---
+title: "Häufige Fragen"
+description: "Kurze Antworten auf die Fragen, die vor und nach dem ersten Agenten am häufigsten gestellt werden."
+---
+
+Diese Seite beantwortet die Fragen, die im Gespräch über msg.Hello am häufigsten aufkommen. Jede Antwort steht für sich; die Links führen zum ausführlichen Kapitel.
+
+## Grundlagen
+
+### Was macht msg.Hello?
+
+msg.Hello nimmt Anrufe für dich entgegen. Ein Agent begrüßt den Anrufer, versteht sein Anliegen, erledigt den Vorgang über deine angebundenen Systeme und schließt das Gespräch ab – durch Auflegen oder Weiterleiten an einen Menschen.
+
+### Ist das nur ein Sprachmenü mit besserer Stimme?
+
+Nein. Ein Sprachmenü fragt Ziffern ab, ein Agent führt ein Gespräch und erledigt dabei echte Vorgänge. Er versteht freie Formulierungen, fragt nach, wenn etwas fehlt, und ruft Werkzeuge in deinem Fachsystem auf.
+
+### Für welche Anliegen eignet sich ein Agent?
+
+Am besten für wiederkehrende Telefonate mit klarem Ablauf: Termine, Auskünfte, Identifikation, Statusabfragen, einfache Vereinbarungen. Je klarer der Ablauf, desto zuverlässiger der Agent.
+
+### Ist msg.Hello auf eine Branche festgelegt?
+
+Nein. Der Gesprächsablauf wird pro Agent gebaut, und die Fachlogik kommt über [Connectoren](/connectoren) oder einen [MCP-Server](/mcp-server) aus deinem eigenen System. Die Plattform gibt die Struktur vor, nicht die Branche.
+
+## Einrichtung
+
+### Wie lange dauert es bis zum ersten Agenten?
+
+Ein einfacher Agent, der Anliegen erkennt und weiterleitet, entsteht in wenigen Schritten – siehe [Erste Schritte](/erste-schritte). Zeit kostet nicht das Anlegen, sondern das Durchdenken des Gesprächs und das Anbinden der Fachsysteme.
+
+### Brauche ich eine Schnittstelle zu meinem System?
+
+Nur wenn der Agent dort etwas tun soll. Begrüßen, Einordnen, Weiterleiten und Auflegen funktionieren ohne jede Anbindung. Für fachliche Vorgänge brauchst du einen [Connector](/connectoren) oder einen [MCP-Server](/mcp-server).
+
+### Wer kann einen Agenten konfigurieren?
+
+Jede Person mit der passenden Rolle in deinem Mandanten – das sind fachliche Rollen, keine Entwicklerrollen. Wer was darf, steuerst du über [Benutzer & Team](/benutzer-team).
+
+### Muss ich programmieren können?
+
+Nein. Flow, Instruktionen und Werkzeuge werden im Portal konfiguriert. Programmierkenntnisse brauchst du nur auf der anderen Seite der Schnittstelle, wenn dein Fachsystem angebunden werden soll.
+
+### Woher kommt die Rufnummer?
+
+Die Rufnummer wird beim Anlegen des Agenten hinterlegt und muss bei unserem Provider registriert sein. Ein neuer Agent startet zunächst ohne Rufnummer und ohne Live-Version.
+
+## Im Betrieb
+
+### Kann ich etwas ändern, während der Agent live ist?
+
+Ja. Du arbeitest immer am **Entwurf**; auf laufende Anrufe wirkt sich das nicht aus. Erst wenn du eine Version veröffentlichst und aktivierst, nutzen **neue** Anrufe den neuen Stand – laufende Anrufe bleiben auf ihrer Version.
+
+### Wie prüfe ich eine Änderung, ohne anzurufen?
+
+Über den [Test-Anruf](/agenten-testen) im Browser. Er läuft gegen deinen aktuellen Entwurf, zeigt live den Zustand, das Gespräch als Text und jeden Werkzeugaufruf – und erzeugt **keinen** Eintrag in der Anrufauswertung.
+
+### Was passiert, wenn der Agent nicht weiterweiß?
+
+Er bleibt im aktuellen Zustand und kann nachfragen. Für den Fall, dass es nicht weitergeht, baust du einen Ausgang ein: an einen Menschen weiterleiten oder das Gespräch geordnet beenden.
+
+### Was passiert, wenn mein Fachsystem ausfällt?
+
+Der Werkzeugaufruf meldet ein Fehler-Ergebnis – bei MCP-Tools etwa den Response-Code `ERROR`. Du entscheidest im Flow, was dann geschieht; üblich ist eine Weiterleitung an einen Menschen. **Ein Ausfall führt nicht dazu, dass der Agent etwas erfindet.**
+
+### Kann der Anrufer den Agenten unterbrechen?
+
+Ja, wenn du **Barge-in** für den Agenten aktivierst. Zusammen mit Geräuschunterdrückung, Stimme und Transkriptsprache gehört das zu den Modell-Parametern unter [Agenten verwalten](/agenten-verwalten).
+
+### Wie lange darf ein Gespräch dauern?
+
+Das legst du pro Agent fest: maximale Wartezeit auf eine Eingabe und maximale Anrufdauer. Beide sind standardmäßig unbegrenzt und werden über einen Schalter aktiviert.
+
+## Kontrolle & Sicherheit
+
+### Kann ein Agent etwas zusagen, was er nicht darf?
+
+Nein – sofern du die Werkzeuge sauber pro Zustand vergibst. Ein Agent kann nur das tun, wofür im aktuellen Zustand ein Werkzeug freigeschaltet ist; alles andere existiert für ihn an dieser Stelle nicht. Die Begründung dazu steht unter [Konzepte & Kontrolle](/konzepte).
+
+### Kann ein Anrufer den Agenten überreden, einen Schritt zu überspringen?
+
+Nein. Ein Zustand wechselt nur, wenn ein tatsächlich ausgeführtes Werkzeug ein Ergebnis meldet, für das du einen Übergang definiert hast. Ohne dieses Ergebnis bleibt der Agent, wo er ist – samt seiner dortigen Werkzeuge.
+
+### Werden Gespräche aufgezeichnet?
+
+Anrufe und Transkripte stehen nach dem Gespräch in der [Anrufauswertung](/anrufe-auswerten). Wie lange sie aufbewahrt werden, legst du in den [Einstellungen](/einstellungen) fest. Test-Anrufe werden nicht protokolliert.
+
+### Werden alte Daten automatisch gelöscht?
+
+Die Aufbewahrungsfristen für Anrufe und Dialoge sind bereits konfigurierbar. Die **automatische, zeitgesteuerte Löschung** nach Fristablauf wird derzeit finalisiert.
+
+### Wie melden sich Benutzer an?
+
+Über Single Sign-On deiner Organisation. Passwörter und Anmeldeverfahren verwaltet dein Identity-Provider, nicht msg.Hello.
+
+### Wie sicher ist die Anbindung eines fremden MCP-Servers?
+
+Behandle ihn als externe Vertrauensgrenze: Schalte pro Agent nur die Werkzeuge frei, die er wirklich braucht, und prüfe das Verhalten vorher mit einem Test-Anruf. Zugangsdaten werden verschlüsselt gespeichert.
+
+<CardGroup cols={2}>
+  <Card title="Konzepte & Kontrolle" icon="shield-check" href="/konzepte">
+    Warum ein Agent aus Flow, Zuständen und Werkzeugen besteht.
+  </Card>
+  <Card title="Erste Schritte" icon="rocket" href="/erste-schritte">
+    Der schnellste Weg vom ersten Login zum ersten Agenten.
+  </Card>
+</CardGroup>

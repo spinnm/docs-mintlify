@@ -1,0 +1,107 @@
+---
+title: "Frequently asked questions"
+description: "Short answers to the questions that come up most often before and after the first agent."
+---
+
+This page answers the questions that come up most often in conversations about msg.Hello. Each answer stands on its own; the links lead to the detailed chapter.
+
+## Basics
+
+### What does msg.Hello do?
+
+msg.Hello answers calls for you. An agent greets the caller, understands their request, completes the task through your connected systems, and closes the conversation – by hanging up or forwarding to a human.
+
+### Is this just a phone menu with a better voice?
+
+No. A phone menu asks for digits; an agent holds a conversation and completes real tasks along the way. It understands free phrasing, asks when something is missing, and calls tools in your business system.
+
+### Which requests is an agent suited for?
+
+Best for recurring calls with a clear course: appointments, information, identification, status requests, simple agreements. The clearer the course, the more reliable the agent.
+
+### Is msg.Hello tied to one industry?
+
+No. The conversation course is built per agent, and the business logic comes from your own system via [connectors](/en/connectoren) or an [MCP server](/en/mcp-server). The platform provides the structure, not the industry.
+
+## Setup
+
+### How long does it take to get the first agent?
+
+A simple agent that recognises requests and forwards them takes just a few steps – see [Getting started](/en/erste-schritte). The time goes not into creating it, but into thinking the conversation through and connecting the business systems.
+
+### Do I need an interface to my system?
+
+Only if the agent is meant to do something there. Greeting, sorting, forwarding, and hanging up work without any connection at all. For business tasks you need a [connector](/en/connectoren) or an [MCP server](/en/mcp-server).
+
+### Who can configure an agent?
+
+Anyone with the appropriate role in your tenant – these are business roles, not developer roles. You control who may do what under [Users & team](/en/benutzer-team).
+
+### Do I need to be able to program?
+
+No. Flow, instructions, and tools are configured in the portal. You need programming skills only on the other side of the interface, when your business system is to be connected.
+
+### Where does the phone number come from?
+
+The phone number is set when the agent is created and must be registered with our provider. A new agent starts without a phone number and without a live version.
+
+## In operation
+
+### Can I change something while the agent is live?
+
+Yes. You always work on the **draft**; this has no effect on ongoing calls. Only when you publish and activate a version do **new** calls use the new state – ongoing calls stay on their version.
+
+### How do I check a change without calling?
+
+With the [test call](/en/agenten-testen) in the browser. It runs against your current draft and shows the state, the conversation as text, and every tool call live – and it creates **no** entry in the call analysis.
+
+### What happens if the agent gets stuck?
+
+It stays in the current state and can ask again. For the case where things do not move forward, you build an exit: forward to a human, or end the conversation in an orderly way.
+
+### What happens if my business system fails?
+
+The tool call reports an error result – for MCP tools, the response code `ERROR`. You decide in the flow what happens then; forwarding to a human is the usual choice. **A failure does not lead to the agent making things up.**
+
+### Can the caller interrupt the agent?
+
+Yes, if you enable **barge-in** for the agent. Together with noise suppression, voice, and transcription language, this is part of the model parameters under [Manage agents](/en/agenten-verwalten).
+
+### How long may a conversation last?
+
+You define this per agent: maximum waiting time for an input and maximum call duration. Both are unlimited by default and are enabled with a switch.
+
+## Control & security
+
+### Can an agent promise something it is not allowed to?
+
+No – provided you assign the tools cleanly per state. An agent can only do what a tool has been permitted for in the current state; everything else does not exist for it at that point. The reasoning is explained under [Concepts & Control](/en/konzepte).
+
+### Can a caller persuade the agent to skip a step?
+
+No. A state switches only when a tool that was actually executed reports a result for which you have defined a transition. Without that result, the agent stays where it is – along with the tools available there.
+
+### Are conversations recorded?
+
+Calls and transcripts are available after the conversation in the [call analysis](/en/anrufe-auswerten). How long they are retained is set in the [settings](/en/einstellungen). Test calls are not logged.
+
+### Is old data deleted automatically?
+
+The retention periods for calls and dialogues are already configurable. The **automatic, time-controlled deletion** after a period expires is currently being finalised.
+
+### How do users sign in?
+
+Through your organisation's single sign-on. Passwords and sign-in procedures are managed by your identity provider, not by msg.Hello.
+
+### How safe is connecting a third-party MCP server?
+
+Treat it as an external trust boundary: for each agent, permit only the tools it genuinely needs, and check the behaviour with a test call beforehand. Credentials are stored encrypted.
+
+<CardGroup cols={2}>
+  <Card title="Concepts & Control" icon="shield-check" href="/en/konzepte">
+    Why an agent consists of a flow, states, and tools.
+  </Card>
+  <Card title="Getting started" icon="rocket" href="/en/erste-schritte">
+    The fastest path from the first login to the first agent.
+  </Card>
+</CardGroup>
