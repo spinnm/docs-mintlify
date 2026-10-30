@@ -24,7 +24,14 @@ Die Agentenliste zeigt alle Agenten deines Mandanten mit ihrem Veröffentlichung
 
 ## Neuen Agenten anlegen
 
-Klicke auf die Karte **Neuer Agent**. Der **Agenten-Assistent** führt in fünf Schritten durch die Grundkonfiguration. Nur der Name ist Pflicht – alle weiteren Einstellungen sind optional und lassen sich später anpassen.
+Klicke auf die Karte **Neuer Agent**. Es öffnet sich der Dialog **Agent hinzufügen**, in dem du den Ausgangspunkt wählst.
+
+- **Leerer Agent** startet den Agenten-Assistenten, und du legst alle Einstellungen selbst fest.
+- Eine **Vorlage** legt einen fertig vorkonfigurierten Agenten an. Mehr dazu unter [Agent aus einer Vorlage anlegen](#agent-aus-einer-vorlage-anlegen).
+
+Bestätige deine Wahl mit **Erstellen**.
+
+Wählst du **Leerer Agent**, führt dich der **Agenten-Assistent** in fünf Schritten durch die Grundkonfiguration. Nur der Name ist Pflicht – alle weiteren Einstellungen sind optional und lassen sich später anpassen.
 
 <Frame caption="Schritt 1 des Agenten-Assistenten: Grundeinstellungen mit Name, Beschreibung und Rufnummer.">
   <img src="/images/agenten/Agents_Grundeinstellungen.png" alt="Agenten-Assistent – Schritt Grundeinstellungen" />
@@ -60,6 +67,35 @@ Klicke auf die Karte **Neuer Agent**. Der **Agenten-Assistent** führt in fünf 
 </Steps>
 
 Nach **Erstellen** erscheint der neue Agent in der Liste – zunächst ohne Live-Version und ohne Rufnummer. Von der Karte aus öffnest du den **Entwurf** (Flow-Editor), die **Versionen** oder die **Einstellungen**.
+
+## Agent aus einer Vorlage anlegen
+
+Vorlagen sind fertig konfigurierte Agenten, die msg.Hello mitbringt. Sie eignen sich als Starthilfe, wenn du nicht bei null anfangen willst. Im Dialog **Agent hinzufügen** siehst du jede Vorlage mit Name, Beschreibung und Schlagworten.
+
+Eine Vorlage übernimmt Basis-Instructions, KI-Modell-Parameter, Anrufparameter, Connectoren und den kompletten Flow als **Entwurf** in einen neuen Agenten. Der Agent startet wie jeder neue Agent ohne Live-Version und ohne Rufnummer. Du passt ihn an, prüfst ihn mit einem [Test-Anruf](/agenten-testen) und veröffentlichst ihn danach.
+
+Gibt es bereits einen Agenten mit demselben Namen, hängt msg.Hello eine laufende Nummer an, zum Beispiel „Praxisassistent (2)".
+
+<Warning>
+Vorlagen enthalten **keine Zugangsdaten**. Braucht ein Connector der Vorlage Zugangsdaten, öffnet das Portal nach dem Anlegen direkt den Tab **Connectoren** und zeigt einen Hinweis an. Trage dort die fehlenden Werte ein, bevor du den Agenten testest.
+</Warning>
+
+## Agenten exportieren und importieren (API)
+
+Einen kompletten Agenten kannst du über die REST-API als JSON exportieren und als neuen Agenten wieder importieren, etwa um ihn zwischen Mandanten oder Umgebungen zu übertragen.
+
+| Aktion | Endpunkt |
+|--------|----------|
+| Exportieren | `GET /tenants/{tid}/bots/{botId}/export` |
+| Importieren | `POST /tenants/{tid}/bots/import` |
+
+Wie du dafür einen Zugang einrichtest, beschreibt [API-Zugriff](/api-zugriff).
+
+Der Export enthält Name und Beschreibung, Basis-Instructions, KI-Modell- und Anrufparameter, die Connector-Konfiguration und den aktuellen **Entwurf** des Flows. Nicht enthalten sind die **Rufnummer**, die **Versionen** und alle **geheimen Zugangsdaten**. Beim Import entsteht immer ein neuer Agent mit eigenen IDs. Den Entwurf veröffentlichst du dort anschließend selbst.
+
+<Note>
+Willst du nur den Gesprächsablauf übertragen, reicht der [Flow-Export im Flow-Editor](/flows-bauen#flows-importieren-und-exportieren).
+</Note>
 
 ## Versionen und Livegang
 

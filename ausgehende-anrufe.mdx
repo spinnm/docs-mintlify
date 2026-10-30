@@ -1,0 +1,46 @@
+---
+title: "Ausgehende Anrufe"
+description: "Einen Agenten per API eine Rufnummer anrufen lassen."
+---
+
+Ein Agent kann nicht nur Anrufe annehmen, sondern auch selbst anrufen. So erinnert er etwa an einen Termin, fragt nach einer Rückmeldung oder ruft einen Interessenten zurück. Ausgehende Anrufe startest du über die API, zum Beispiel aus deinem Fachsystem heraus.
+
+<Note>
+Ausgehende Anrufe gibt es derzeit nur über die API. Im Portal gibt es dafür noch keine Schaltfläche.
+</Note>
+
+## Voraussetzungen
+
+- Der Agent hat eine aktive **Live-Version**. Der Anruf folgt dem Flow dieser Version.
+- Am Agenten ist eine **Rufnummer** hinterlegt. Sie erscheint beim Angerufenen als Absender.
+- Dein Zugang trägt die Berechtigung `hello_call-outbound`. Wie du einen Client dafür einrichtest, beschreibt [API-Zugriff](/api-zugriff).
+
+## Einen Anruf starten
+
+Sende die Zielrufnummer im internationalen Format E.164, also mit `+` und Ländervorwahl und ohne Leerzeichen.
+
+```bash
+curl -X POST "https://<API-Host>/tenants/<tid>/bots/<botId>/outbound-calls" \
+  -H "Authorization: Bearer <Token>" \
+  -H "Content-Type: application/json" \
+  -d '{ "to": "+4917012345678" }'
+```
+
+Die API bestätigt mit `202`, sobald der Anruf aufgebaut wird. Sie wartet nicht, bis jemand abhebt.
+
+| Antwort | Bedeutung |
+|---------|-----------|
+| `202` | Der Anruf wird aufgebaut. |
+| `400` | Die Rufnummer ist ungültig. |
+| `404` | Agent oder Mandant gibt es nicht. |
+| `409` | Der Agent hat keine Live-Version oder keine Rufnummer. |
+
+## Was danach passiert
+
+Hebt die angerufene Person ab, führt der Agent das Gespräch nach seinem Flow, genau wie bei einem eingehenden Anruf. Nach Gesprächsende erscheint der Anruf in der [Anrufauswertung](/anrufe-auswerten).
+
+Kommt kein Gespräch zustande, weil niemand abhebt, die Leitung besetzt ist oder der Anruf fehlschlägt, speichert msg.Hello ihn als **abgebrochen**. So siehst du auch erfolglose Versuche in der Anrufliste.
+
+<Tip>
+Ein ausgehender Anruf beginnt anders als ein eingehender, denn der Agent ruft unaufgefordert an. Formuliere die Begrüßung im ersten Zustand so, dass sie sich vorstellt und den Anlass nennt. Für eingehende und ausgehende Gespräche lohnen sich oft getrennte Agenten.
+</Tip>

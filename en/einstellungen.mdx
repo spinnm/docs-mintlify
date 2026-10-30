@@ -1,6 +1,6 @@
 ---
 title: "Settings"
-description: "Data protection, appearance, and language for your tenant."
+description: "Data protection and appearance for your tenant, plus your personal display and language."
 ---
 
 In **Settings**, you manage tenant-wide defaults.
@@ -24,15 +24,28 @@ The **automatic, scheduled deletion** after the retention period expires is curr
 
 ## Appearance
 
-Adjust the **primary color** of the interface to match your corporate design.
+Adjust the **primary color** of the interface to match your corporate design. It applies to all users of your tenant.
 
 <Frame caption="Appearance: primary color with live preview.">
   <img src="/images/agenten/einstellungen-erscheinungsbild.png" alt="Appearance settings with primary color and preview" />
 </Frame>
 
-## Language
+If the chosen color does not reach the minimum contrast of 4.5:1 everywhere in the light theme, the portal shows a notice. You can still save the color. Users who need more contrast then turn on contrast mode themselves.
 
-Choose the **language** of the interface. The portal is available in **German** and **English**.
+## Display and language
+
+Each user sets display and language **for themselves** in the top navigation bar. These are not tenant settings and apply only to you.
+
+<CardGroup cols={2}>
+  <Card title="Display" icon="circle-half-stroke">
+    Choose between **Light**, **Dark** and **Contrast mode**. Contrast mode uses a fixed color palette tested for accessibility and replaces the tenant's primary color.
+  </Card>
+  <Card title="Language" icon="language">
+    The portal is available in **German** and **English**. Dates and times follow the selected language.
+  </Card>
+</CardGroup>
+
+As long as you don't actively select a display mode, the portal follows your operating system. If increased contrast is enabled there, it starts in contrast mode. Otherwise it follows the light or dark system setting.
 
 <Note>
 The language of the interface is independent of the **language of the agent** in the conversation – the latter is set per agent in the [model parameters](/en/agenten-verwalten).

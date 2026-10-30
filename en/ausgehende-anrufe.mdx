@@ -1,0 +1,46 @@
+---
+title: "Outbound calls"
+description: "Have an agent call a phone number via the API."
+---
+
+An agent can not only answer calls but also place calls itself. This way it can remind someone of an appointment, ask for feedback or call back a prospect. You start outbound calls via the API, for example from your business system.
+
+<Note>
+Outbound calls are currently available only via the API. The portal does not yet have a button for them.
+</Note>
+
+## Prerequisites
+
+- The agent has an active **live version**. The call follows the flow of this version.
+- A **phone number** is stored on the agent. The person called sees it as the caller ID.
+- Your access carries the permission `hello_call-outbound`. [API access](/en/api-zugriff) describes how to set up a client for this.
+
+## Start a call
+
+Send the destination number in the international E.164 format, that is with `+` and country code and without spaces.
+
+```bash
+curl -X POST "https://<API-Host>/tenants/<tid>/bots/<botId>/outbound-calls" \
+  -H "Authorization: Bearer <Token>" \
+  -H "Content-Type: application/json" \
+  -d '{ "to": "+4917012345678" }'
+```
+
+The API confirms with `202` as soon as the call is being set up. It does not wait until someone answers.
+
+| Response | Meaning |
+|----------|---------|
+| `202` | The call is being set up. |
+| `400` | The phone number is invalid. |
+| `404` | The agent or tenant does not exist. |
+| `409` | The agent has no live version or no phone number. |
+
+## What happens next
+
+When the person called answers, the agent conducts the conversation according to its flow, just like with an incoming call. After the call ends, it appears in the [call analysis](/en/anrufe-auswerten).
+
+If no conversation takes place because nobody answers, the line is busy or the call fails, msg.Hello stores it as **Cancelled**. This way you also see unsuccessful attempts in the call list.
+
+<Tip>
+An outbound call starts differently from an incoming one, because the agent calls unprompted. Phrase the greeting in the first state so that the agent introduces itself and states the reason for the call. Separate agents for incoming and outgoing conversations are often worthwhile.
+</Tip>

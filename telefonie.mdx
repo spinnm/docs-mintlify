@@ -1,0 +1,35 @@
+---
+title: "Telefonie-Anbindung"
+description: "Wie Anrufe deinen Agenten erreichen: über eine Rufnummer oder per SIP aus deiner Telefonanlage."
+---
+
+Ein Agent ist auf zwei Wegen erreichbar. Anrufer wählen seine **Rufnummer**, oder deine eigene **Telefonanlage** leitet Gespräche per SIP direkt an ihn weiter. In beiden Fällen nimmt der Agent den Anruf an und führt das Gespräch nach seiner aktiven Live-Version.
+
+## Über eine Rufnummer
+
+Die Rufnummer hinterlegst du in den Grundeinstellungen des Agenten (siehe [Agenten verwalten](/agenten-verwalten)). Sie muss bei unserem Telefonie-Provider registriert sein. Jede Rufnummer gehört zu genau einem Agenten.
+
+Dieselbe Rufnummer nutzt der Agent auch als Absender, wenn er [selbst anruft](/ausgehende-anrufe).
+
+## Per SIP aus deiner Telefonanlage
+
+Betreibst du eine eigene Telefonanlage oder ein Contact-Center, kannst du Gespräche per SIP an einen Agenten übergeben, ohne eine eigene Rufnummer für ihn zu schalten. Jeder Agent hat dafür eine eigene SIP-Adresse.
+
+```
+sip:<Agenten-ID>@<SIP-Domain>
+```
+
+- Die **Agenten-ID** ist die ID des Agenten. Du findest sie in der Adresszeile des Browsers, wenn du den Agenten im Portal öffnest.
+- Die **SIP-Domain** deiner Umgebung erhältst du von msg.
+
+Deine Telefonanlage wählt diese Adresse, zum Beispiel als Weiterleitungsziel in einer Warteschleife oder einem Sprachmenü. Gibt es zur gewählten ID keinen Agenten, wird der Anruf abgewiesen.
+
+<Tip>
+So kann eine bestehende Servicenummer erhalten bleiben. Die Telefonanlage nimmt den Anruf an und übergibt nur die passenden Anliegen an den Agenten.
+</Tip>
+
+## Rufnummer des Anrufers
+
+Bei jedem Anruf übermittelt das Telefonnetz die Rufnummer des Anrufers, sofern er sie nicht unterdrückt. msg.Hello speichert sie mit dem Anruf. Sie erscheint in der [Anrufauswertung](/anrufe-auswerten), und der Agent kann sie mit dem Built-In-Tool [Anrufernummer abrufen](/system-tools) im Gespräch nutzen.
+
+Bei eingehenden Anrufen speichert msg.Hello außerdem den SIP-Header `From` als Metadaten zur laufenden Sitzung. Er enthält die Absenderadresse, wie sie das Telefonnetz oder deine Telefonanlage übermittelt hat.

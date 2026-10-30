@@ -46,6 +46,28 @@ Das zentrale Built-In-Tool ist **`classify`**. Damit ordnet der Agent das Anlieg
 `classify` ist **vollständig live**. Es arbeitet lokal und ohne Nebenwirkungen: kein externer Aufruf, keine Datenbank, keine gespeicherten Zustände.
 </Note>
 
+## `get_caller_phone_number` – Anrufernummer abrufen
+
+Mit **Anrufernummer abrufen** (`get_caller_phone_number`) liest der Agent die Rufnummer des aktuellen Anrufers aus. So muss der Anrufer seine Nummer nicht diktieren, etwa für einen Rückruf oder zur Zuordnung im Fachsystem. Das Tool braucht keine Parameter. Der Agent ruft es nur auf, wenn er die Nummer im Gespräch tatsächlich braucht.
+
+| Response-Code | Bedeutung |
+|---------------|-----------|
+| `SUCCESS` | Die Nummer liegt vor und steht dem Agenten als `phone_number` zur Verfügung. |
+| `ANONYMOUS` | Der Anrufer hat seine Nummer unterdrückt. Der Agent fragt bei Bedarf danach. |
+| `ERROR` | Die Nummer ließ sich technisch nicht ermitteln. |
+
+Schalte das Tool im Flow an dem Zustand frei, in dem die Nummer gebraucht wird, und verzweige bei Bedarf an den Response-Codes.
+
+```
+[Rückruf anbieten]
+   ── get_caller_phone_number → SUCCESS    →  [Rückruf bestätigen]
+   ── get_caller_phone_number → ANONYMOUS  →  [Nummer erfragen]
+```
+
+<Note>
+Auch dieses Tool arbeitet ohne externen Aufruf. Es liest nur die Rufnummer, die beim Anruf übermittelt wurde.
+</Note>
+
 ## Abgrenzung: Weiterleiten & Auflegen
 
 Das **Weiterleiten** an einen Menschen und das **Auflegen** sind keine Tools, sondern **Abschluss-Zustände** im Flow. Sie funktionieren ebenfalls ohne jede Integration. Details dazu im Kapitel [Flows bauen](/flows-bauen).

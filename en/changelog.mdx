@@ -1,0 +1,45 @@
+---
+title: "Changelog"
+description: "New features and changes in msg.Hello at a glance."
+---
+
+This page lists the changes to msg.Hello, grouped by release. The latest changes are at the top.
+
+<Update label="October 2026" description="Templates, undo/redo in the flow editor, contrast mode, agent export and outbound calls">
+
+## Agents and flows
+
+- **Create agents from templates.** When creating an agent, you choose between an empty agent and a template with ready-made instructions, connectors and flow. See [Create an agent from a template](/en/agenten-verwalten#create-an-agent-from-a-template).
+- **Undo and redo in the flow editor.** You can reverse every change to the draft with the buttons or `Ctrl` + `Z`. See [Undo and redo](/en/flows-bauen#undo-and-redo).
+- **Confirmation dialogs in the flow editor.** Before deleting a state, changing a type or importing a flow, the editor names what gets lost.
+- **Flow import into several agents.** You can now import the same flow into any number of agents and tenants. Previously, identical state IDs could collide between two agents. Existing drafts remain unchanged.
+- **Export and import agents.** You can export a complete agent as JSON via the API and import it as a new agent. Credentials, phone number and versions are not transferred. See [Export and import agents](/en/agenten-verwalten#export-and-import-agents-api) and [API access](/en/api-zugriff).
+
+## Tools and integrations
+
+- **New built-in tool for the caller's number.** With `get_caller_phone_number`, the agent reads the caller's phone number and detects withheld numbers. See [Built-in tools](/en/system-tools).
+- **OAuth client credentials for MCP servers.** In addition to Bearer token and API key, you can now connect an MCP server via client credentials. msg.Hello obtains and renews the access token itself. See [Connecting an MCP server](/en/mcp-server).
+- **Outbound calls (API).** With `POST /tenants/{tid}/bots/{botId}/outbound-calls`, an agent calls a phone number. This requires an active live version and a phone number stored on the agent. See [Outbound calls](/en/ausgehende-anrufe).
+
+## Portal
+
+- **Contrast mode.** In the top navigation, you choose between Light, Dark and Contrast mode. See [Display and language](/en/einstellungen#display-and-language).
+- **Language selection in the navigation.** You now switch the interface language directly in the top navigation. Dates and times follow the selected language.
+- **Contrast check for the primary color.** The portal warns you if a primary color does not reach the minimum contrast of 4.5:1.
+- **Link to the documentation** in the sidebar.
+- **Accessibility.** All functions can be operated by keyboard, including the panel dividers in the flow editor and in the test call as well as the states in the flow graph. Headings, lists and revealed content are marked up semantically. See [Accessibility](/en/barrierefreiheit).
+- **No error telemetry to third parties.** The portal no longer sends error reports to an external monitoring service.
+
+## Sign-in and security
+
+- **Stricter PKCE checks.** Public OIDC clients must use PKCE with `S256`. If a code challenge was sent during sign-in, the matching verifier is now required when retrieving the token. Confidential clients such as the msg.Hello portals are not affected. See [API access](/en/api-zugriff#clients-with-user-sign-in).
+- **Token introspection.** The identity service offers the endpoint `/protocol/oidc/introspect` according to RFC 7662. See [Validate tokens](/en/api-zugriff#validate-tokens).
+- **Global roles for custom OIDC clients.** You can now assign a tenant's custom OIDC clients the tenant's standard roles in addition to custom roles. This lets a machine client access the API directly via client credentials. See [API access](/en/api-zugriff).
+
+## Telephony and operations
+
+- **Connection via SIP domains.** Agents are additionally reachable via a SIP address whose user part is the agent ID. This lets your phone system forward calls directly to an agent. See [Telephony connection](/en/telefonie).
+- **SIP headers as metadata.** For incoming calls, msg.Hello stores the SIP header `From` as session metadata.
+- **GPT-Live as voice model.** In addition to OpenAI Realtime and Azure OpenAI Realtime, operators can configure OpenAI GPT-Live as the provider.
+
+</Update>

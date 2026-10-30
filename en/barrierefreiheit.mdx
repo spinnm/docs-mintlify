@@ -1,0 +1,46 @@
+---
+title: "Accessibility"
+description: "Contrast mode, keyboard operation and keyboard shortcuts in the portal."
+---
+
+The msg.Hello portal follows the German Accessible Information Technology Ordinance (BITV). You can operate all functions without a mouse, and a dedicated contrast mode supports people with impaired vision.
+
+## Contrast mode
+
+In the display selection in the top navigation, you choose between **Light**, **Dark** and **Contrast mode**. Contrast mode uses a fixed color palette whose combinations are tested for sufficient contrast. It replaces your tenant's primary color.
+
+If you have enabled increased contrast in your operating system, the portal automatically starts in contrast mode as long as you don't choose another display mode. More on this under [Display and language](/en/einstellungen#display-and-language).
+
+<Tip>
+If you as an administrator choose a primary color with too little contrast, the portal warns you. Users who need more contrast then switch to contrast mode.
+</Tip>
+
+## Keyboard operation
+
+With `Tab` and `Shift` + `Tab`, you reach every control.
+
+| Element | Operation |
+|---------|-----------|
+| States in the flow graph | `Enter` or `Space` selects the state. A focused state is automatically scrolled into view. |
+| Table rows, for example in the call list | `Enter` or `Space` opens the row. Sortable column headers are buttons. |
+| Panel dividers in the flow editor and in the test call | Arrow keys move the divider in 5 percent steps, `Home` and `End` move it to the edge. |
+| Disabled buttons | They remain focusable and state the reason in the tooltip, for example unsaved changes or validation errors. |
+
+If you drag a panel divider with the mouse, `Esc` cancels the action and restores the previous layout.
+
+## Keyboard shortcuts in the flow editor
+
+| Action | Windows / Linux | macOS |
+|--------|-----------------|-------|
+| Undo | `Ctrl` + `Z` | `⌘` + `Z` |
+| Redo | `Ctrl` + `Shift` + `Z` or `Ctrl` + `Y` | `⌘` + `Shift` + `Z` |
+
+Details under [Undo and redo](/en/flows-bauen#undo-and-redo).
+
+## Screen readers
+
+Headings, lists and regions of the portal are marked up semantically, so screen readers can read out the structure of a page. Buttons and controls carry descriptive names, and sorted table columns announce their sort direction.
+
+## Language and date format
+
+The portal is available in German and English. Dates and times follow the selected portal language, not the browser settings.

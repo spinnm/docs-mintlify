@@ -46,6 +46,28 @@ The central built-in tool is **`classify`**. With it the agent assigns the calle
 `classify` is **fully live**. It works locally and without side effects: no external call, no database, no stored states.
 </Note>
 
+## `get_caller_phone_number` – get the caller's number
+
+With **`get_caller_phone_number`** (shown in the portal as *Anrufernummer abrufen*), the agent reads the phone number of the current caller. This way the caller doesn't have to dictate their number, for example for a callback or for matching in your business system. The tool needs no parameters. The agent only calls it when it actually needs the number in the conversation.
+
+| Response code | Meaning |
+|---------------|---------|
+| `SUCCESS` | The number is available and passed to the agent as `phone_number`. |
+| `ANONYMOUS` | The caller withheld their number. The agent asks for it if needed. |
+| `ERROR` | The number could not be determined for technical reasons. |
+
+Enable the tool in the flow at the state where the number is needed, and branch on the response codes if required.
+
+```
+[Offer callback]
+   ── get_caller_phone_number → SUCCESS    →  [Confirm callback]
+   ── get_caller_phone_number → ANONYMOUS  →  [Ask for number]
+```
+
+<Note>
+This tool also works without an external call. It only reads the phone number transmitted with the call.
+</Note>
+
 ## Distinction: forwarding & hanging up
 
 **Forwarding** to a human and **hanging up** are not tools but **terminal states** in the flow. They also work without any integration. Details on this in the [Building flows](/en/flows-bauen) chapter.

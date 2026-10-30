@@ -13,6 +13,27 @@ The flow editor is a graphical interface in which you arrange states as nodes an
   <img src="/images/agenten/Agent_Entwurf.png" alt="Flow editor with state list and state configuration" />
 </Frame>
 
+### Undo and redo
+
+You can undo every change in the draft. This applies to edited fields and type changes as well as to deleted states and a flow import. Use the **Undo** and **Redo** buttons in the editor header or the keyboard shortcuts.
+
+| Action | Windows / Linux | macOS |
+|--------|-----------------|-------|
+| Undo | `Ctrl` + `Z` | `⌘` + `Z` |
+| Redo | `Ctrl` + `Shift` + `Z` or `Ctrl` + `Y` | `⌘` + `Shift` + `Z` |
+
+Typing several characters in a row into the same field counts as a single step. The history covers the last 50 steps and lasts as long as the editor is open. When the cursor is in a text field, the shortcuts act on the text field itself.
+
+### Confirmation dialogs
+
+Before the editor discards anything, it asks for confirmation and names the consequences.
+
+- **Delete state** shows how many outputs of other states point to this state and lose their target as a result. If it is the start state, the dialog points out that the flow then has no entry point.
+- **Change type** (Standard, Forward, Hang up) lists what gets lost, such as outputs, conditions, allowed tools or the forward number. Switching the type back later does not restore them.
+- **Import flow** points out that the import replaces every state in the draft.
+
+You can reverse all three actions afterwards with **Undo**.
+
 ## States
 
 A flow consists of **states** – the steps of the conversation. A state carries its own instructions, permitted tools, and transitions to subsequent states.
@@ -100,16 +121,18 @@ You can **export** a complete flow as a **JSON file** and **import** it elsewher
 
 <Steps>
   <Step title="Export">
-    In the flow editor, open the **⋮ menu** (top right) and choose **Export flow**. The current flow is downloaded as a JSON file. Export is also possible in the read-only version view.
+    In the flow editor, open the **⋮ menu** (top right) and choose **Export flow**. The dialog shows the flow data as JSON. You can **Copy** it or save it as a JSON file with **Download file**. Export is also possible in the read-only version view.
   </Step>
   <Step title="Import">
-    In the **draft**, open the same menu and choose **Import flow**. Pick a previously exported JSON file; its content replaces the current draft. Afterwards, check the result with a [test call](/en/agenten-testen).
+    In the **draft**, open the same menu and choose **Import flow**. On the **File** tab, drag a previously exported JSON file into the dialog, or paste the JSON on the **Text** tab. With **Import flow**, the content replaces the current draft. Afterwards, check the result with a [test call](/en/agenten-testen).
   </Step>
 </Steps>
 
 <Note>
-The import overwrites the existing **draft**. Already published versions remain untouched – the imported flow only becomes a version with the next publish.
+The import overwrites the existing **draft**. Already published versions remain untouched – the imported flow only becomes a version with the next publish. If you don't like the result, bring back the previous draft with **Undo**.
 </Note>
+
+You can import the same flow into any number of agents, even across tenants. Each agent manages the states of its draft separately from all others. To transfer a complete agent including instructions and connectors, use the [agent export](/en/agenten-verwalten#export-and-import-agents-api).
 
 ### Structure of an export file
 

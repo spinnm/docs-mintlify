@@ -1,0 +1,35 @@
+---
+title: "Telephony connection"
+description: "How calls reach your agent: via a phone number or via SIP from your phone system."
+---
+
+An agent can be reached in two ways. Callers dial its **phone number**, or your own **phone system** forwards calls directly to it via SIP. In both cases, the agent answers the call and conducts the conversation according to its active live version.
+
+## Via a phone number
+
+You store the phone number in the agent's basic settings (see [Manage agents](/en/agenten-verwalten)). It must be registered with our telephony provider. Each phone number belongs to exactly one agent.
+
+The agent also uses the same phone number as caller ID when it [places calls itself](/en/ausgehende-anrufe).
+
+## Via SIP from your phone system
+
+If you operate your own phone system or contact center, you can hand calls over to an agent via SIP without setting up a separate phone number for it. For this purpose, every agent has its own SIP address.
+
+```
+sip:<agent ID>@<SIP domain>
+```
+
+- The **agent ID** is the ID of the agent. You find it in the browser's address bar when you open the agent in the portal.
+- msg provides the **SIP domain** of your environment.
+
+Your phone system dials this address, for example as the forwarding destination in a queue or a voice menu. If no agent exists for the dialed ID, the call is rejected.
+
+<Tip>
+This way you can keep an existing service number. The phone system answers the call and hands over only the matching requests to the agent.
+</Tip>
+
+## Caller's phone number
+
+With every call, the telephone network transmits the caller's phone number, unless the caller withholds it. msg.Hello stores it with the call. It appears in the [call analysis](/en/anrufe-auswerten), and the agent can use it during the conversation with the built-in tool [get the caller's number](/en/system-tools).
+
+For incoming calls, msg.Hello also stores the SIP header `From` as metadata of the ongoing session. It contains the sender address as transmitted by the telephone network or your phone system.

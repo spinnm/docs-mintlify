@@ -1,0 +1,82 @@
+---
+title: "API access"
+description: "Access the msg.Hello API automatically with your own OIDC client and roles."
+---
+
+Everything you do in the portal runs through the msg.Hello REST API. If you want to automate tasks, such as moving agents between environments or triggering [outbound calls](/en/ausgehende-anrufe) from your system, you access this API directly with your **own OIDC client**.
+
+<Info>
+msg provides the addresses of your environment, that is the **API base URL** and the **issuer URL** of the identity service. The examples use `<API-Host>` and `<IAM-Host>` for them.
+</Info>
+
+## Steps to your first API call
+
+<Steps>
+  <Step title="Create a client">
+    In your tenant's user and permission management, open the **Clients** area and select **Add new Client**. Enter a **Description** and check **Confidential**. After creating the client, you find the **Client ID** and **Client Secret** in the **Keys** tab.
+  </Step>
+  <Step title="Assign roles">
+    In the client, open the **Roles** tab and select **Assign Roles**. You can give the client your tenant's **standard roles** and your **custom roles**. The client may do exactly what these roles allow.
+  </Step>
+  <Step title="Retrieve a token">
+    Your system exchanges client ID and secret at the token endpoint for a short-lived access token (OAuth client credentials).
+  </Step>
+  <Step title="Call the API">
+    Send the token with every call in the header `Authorization: Bearer <Token>`.
+  </Step>
+</Steps>
+
+<Warning>
+Treat the client secret like a password. Give the client only the roles it needs for its task, and create separate clients for different systems.
+</Warning>
+
+## Retrieve a token
+
+You find the token endpoint via OpenID discovery at `https://<IAM-Host>/.well-known/openid-configuration`. Request the scope `tenant_permission` so that the permissions from the client's roles end up in the token.
+
+```bash
+curl -X POST "https://<IAM-Host>/protocol/oidc/token" \
+  -u "<Client-ID>:<Client-Secret>" \
+  -d "grant_type=client_credentials" \
+  -d "scope=tenant_permission"
+```
+
+The response contains the `access_token` and its lifetime in `expires_in`. Retrieve a new token in good time before it expires. The token is bound to your tenant and works only for its data.
+
+## Call the API
+
+All tenant-specific endpoints start with `/tenants/{tid}`, where `{tid}` is the ID of your tenant. You see the tenant ID and agent ID in the portal in the browser's address bar, for example in `/tenants/<tid>/agents/<botId>`. One example is exporting an agent.
+
+```bash
+curl "https://<API-Host>/tenants/<tid>/bots/<botId>/export" \
+  -H "Authorization: Bearer <Token>"
+```
+
+## Permissions
+
+Every endpoint checks whether the token carries the matching permission. For the newer automation endpoints, these are the following.
+
+| Action | Endpoint | Permission |
+|--------|----------|------------|
+| Export an agent | `GET /tenants/{tid}/bots/{botId}/export` | `hello_bot-export` |
+| Import an agent | `POST /tenants/{tid}/bots/import` | `hello_bot-import` |
+| Create an agent from a template | `POST /tenants/{tid}/bots/import-template` | `hello_template-import` |
+| Start an outbound call | `POST /tenants/{tid}/bots/{botId}/outbound-calls` | `hello_call-outbound` |
+
+You see which role contains which permission in the permission management. If a permission is missing, the API responds with `403`. In that case, assign the client a suitable role or create a [custom role](/en/benutzer-team#roles-and-permissions) with exactly these permissions.
+
+## Clients with user sign-in
+
+If a person rather than a system is to sign in, for example in your own tool, create the client **without** checking **Confidential** and enter your application's **Redirect URIs**. The token then carries the permissions of the signed-in person.
+
+Such public clients must use the authorization code flow with **PKCE** and the method `S256`. The identity service rejects requests without a code challenge or with a different method. If a code challenge was sent during sign-in, the matching `code_verifier` is required when retrieving the token.
+
+## Validate tokens
+
+A service that accepts tokens from msg.Hello can validate them at the endpoint `https://<IAM-Host>/protocol/oidc/introspect` (token introspection according to RFC 7662). The service authenticates there with the client ID and secret of a confidential client via HTTP Basic. The response states whether the token is still valid and contains its details such as client, scope and expiry time.
+
+```bash
+curl -X POST "https://<IAM-Host>/protocol/oidc/introspect" \
+  -u "<Client-ID>:<Client-Secret>" \
+  -d "token=<Token>"
+```
