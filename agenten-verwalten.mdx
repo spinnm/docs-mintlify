@@ -89,6 +89,8 @@ Einen kompletten Agenten kannst du über die REST-API als JSON exportieren und a
 | Exportieren | `GET /tenants/{tid}/bots/{botId}/export` |
 | Importieren | `POST /tenants/{tid}/bots/import` |
 
+Wie du dafür einen Zugang einrichtest, beschreibt [API-Zugriff](/api-zugriff).
+
 Der Export enthält Name und Beschreibung, Basis-Instructions, KI-Modell- und Anrufparameter, die Connector-Konfiguration und den aktuellen **Entwurf** des Flows. Nicht enthalten sind die **Rufnummer**, die **Versionen** und alle **geheimen Zugangsdaten**. Beim Import entsteht immer ein neuer Agent mit eigenen IDs. Den Entwurf veröffentlichst du dort anschließend selbst.
 
 <Note>

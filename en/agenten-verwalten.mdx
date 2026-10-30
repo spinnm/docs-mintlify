@@ -89,6 +89,8 @@ You can export a complete agent as JSON via the REST API and import it again as 
 | Export | `GET /tenants/{tid}/bots/{botId}/export` |
 | Import | `POST /tenants/{tid}/bots/import` |
 
+[API access](/en/api-zugriff) describes how to set up access for this.
+
 The export contains name and description, base instructions, AI model and call parameters, the connector configuration and the current **draft** of the flow. It does not contain the **phone number**, the **versions** or any **secret credentials**. An import always creates a new agent with its own IDs. You then publish the draft there yourself.
 
 <Note>

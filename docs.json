@@ -45,7 +45,10 @@
                 "pages": [
                   "connectoren",
                   "system-tools",
-                  "mcp-server"
+                  "mcp-server",
+                  "telefonie",
+                  "ausgehende-anrufe",
+                  "api-zugriff"
                 ]
               },
               {
@@ -53,7 +56,8 @@
                 "pages": [
                   "anrufe-auswerten",
                   "einstellungen",
-                  "benutzer-team"
+                  "benutzer-team",
+                  "barrierefreiheit"
                 ]
               }
             ]
@@ -90,7 +94,10 @@
                 "pages": [
                   "en/connectoren",
                   "en/system-tools",
-                  "en/mcp-server"
+                  "en/mcp-server",
+                  "en/telefonie",
+                  "en/ausgehende-anrufe",
+                  "en/api-zugriff"
                 ]
               },
               {
@@ -98,7 +105,8 @@
                 "pages": [
                   "en/anrufe-auswerten",
                   "en/einstellungen",
-                  "en/benutzer-team"
+                  "en/benutzer-team",
+                  "en/barrierefreiheit"
                 ]
               }
             ]

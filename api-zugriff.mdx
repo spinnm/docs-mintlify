@@ -1,0 +1,82 @@
+---
+title: "API-Zugriff"
+description: "Mit einem eigenen OIDC-Client und Rollen automatisiert auf die msg.Hello-API zugreifen."
+---
+
+Alles, was du im Portal tust, läuft über die REST-API von msg.Hello. Willst du Abläufe automatisieren, etwa Agenten zwischen Umgebungen übertragen oder [ausgehende Anrufe](/ausgehende-anrufe) aus deinem System auslösen, greifst du mit einem **eigenen OIDC-Client** direkt auf diese API zu.
+
+<Info>
+Die Adressen deiner Umgebung, also die **API-Basis-URL** und die **Issuer-URL** des Identity-Dienstes, erhältst du von msg. In den Beispielen stehen dafür `<API-Host>` und `<IAM-Host>`.
+</Info>
+
+## Der Weg zum API-Aufruf
+
+<Steps>
+  <Step title="Client anlegen">
+    Öffne in der Benutzer- und Rechteverwaltung deines Mandanten den Bereich **Clients** und wähle **Neuen Client hinzufügen**. Vergib eine **Beschreibung** und setze den Haken bei **Vertraulich**. Nach dem Anlegen findest du **Client-ID** und **Client Secret** im Tab **Schlüssel**.
+  </Step>
+  <Step title="Rollen zuweisen">
+    Öffne im Client den Tab **Rollen** und wähle **Rollen zuweisen**. Du kannst dem Client die **Standard-Rollen** deines Mandanten und deine **eigenen Rollen** geben. Der Client darf genau das, was diese Rollen erlauben.
+  </Step>
+  <Step title="Token abrufen">
+    Dein System tauscht Client-ID und Secret am Token-Endpunkt gegen ein kurzlebiges Access-Token (OAuth Client Credentials).
+  </Step>
+  <Step title="API aufrufen">
+    Sende das Token bei jedem Aufruf im Header `Authorization: Bearer <Token>` mit.
+  </Step>
+</Steps>
+
+<Warning>
+Behandle das Client Secret wie ein Passwort. Gib dem Client nur die Rollen, die er für seine Aufgabe braucht, und lege für unterschiedliche Systeme getrennte Clients an.
+</Warning>
+
+## Token abrufen
+
+Den Token-Endpunkt findest du über die OpenID-Discovery unter `https://<IAM-Host>/.well-known/openid-configuration`. Fordere den Scope `tenant_permission` an, damit die Berechtigungen aus den Rollen des Clients im Token landen.
+
+```bash
+curl -X POST "https://<IAM-Host>/protocol/oidc/token" \
+  -u "<Client-ID>:<Client-Secret>" \
+  -d "grant_type=client_credentials" \
+  -d "scope=tenant_permission"
+```
+
+Die Antwort enthält das `access_token` und seine Laufzeit in `expires_in`. Hole rechtzeitig vor Ablauf ein neues Token. Das Token ist an deinen Mandanten gebunden und funktioniert nur für dessen Daten.
+
+## API aufrufen
+
+Alle mandantenbezogenen Endpunkte beginnen mit `/tenants/{tid}`, wobei `{tid}` die ID deines Mandanten ist. Mandanten-ID und Agenten-ID siehst du im Portal in der Adresszeile des Browsers, etwa in `/tenants/<tid>/agents/<botId>`. Ein Beispiel ist der Export eines Agenten.
+
+```bash
+curl "https://<API-Host>/tenants/<tid>/bots/<botId>/export" \
+  -H "Authorization: Bearer <Token>"
+```
+
+## Berechtigungen
+
+Jeder Endpunkt prüft, ob das Token die passende Berechtigung trägt. Für die neueren Automatisierungs-Endpunkte sind das die folgenden.
+
+| Aktion | Endpunkt | Berechtigung |
+|--------|----------|--------------|
+| Agent exportieren | `GET /tenants/{tid}/bots/{botId}/export` | `hello_bot-export` |
+| Agent importieren | `POST /tenants/{tid}/bots/import` | `hello_bot-import` |
+| Agent aus Vorlage anlegen | `POST /tenants/{tid}/bots/import-template` | `hello_template-import` |
+| Ausgehenden Anruf starten | `POST /tenants/{tid}/bots/{botId}/outbound-calls` | `hello_call-outbound` |
+
+Welche Rolle welche Berechtigung enthält, siehst du in der Rechteverwaltung. Fehlt eine Berechtigung, antwortet die API mit `403`. Weise dem Client dann eine passende Rolle zu oder lege eine [eigene Rolle](/benutzer-team#rollen-und-rechte) mit genau diesen Rechten an.
+
+## Clients mit Benutzer-Anmeldung
+
+Soll sich statt eines Systems eine Person anmelden, etwa in einem eigenen Werkzeug, legst du den Client **ohne** den Haken bei **Vertraulich** an und trägst die **Redirect URIs** deiner Anwendung ein. Das Token trägt dann die Rechte der angemeldeten Person.
+
+Solche öffentlichen Clients müssen den Authorization-Code-Flow mit **PKCE** und der Methode `S256` verwenden. Anfragen ohne Code-Challenge oder mit einer anderen Methode lehnt der Identity-Dienst ab. Wurde bei der Anmeldung eine Code-Challenge gesendet, ist beim Token-Abruf der passende `code_verifier` Pflicht.
+
+## Tokens prüfen
+
+Ein Dienst, der Tokens von msg.Hello entgegennimmt, kann sie am Endpunkt `https://<IAM-Host>/protocol/oidc/introspect` prüfen (Token Introspection nach RFC 7662). Der Dienst meldet sich dort mit Client-ID und Secret eines vertraulichen Clients per HTTP Basic an. Die Antwort sagt, ob das Token noch gültig ist, und enthält seine Angaben wie Client, Scope und Ablaufzeit.
+
+```bash
+curl -X POST "https://<IAM-Host>/protocol/oidc/introspect" \
+  -u "<Client-ID>:<Client-Secret>" \
+  -d "token=<Token>"
+```
