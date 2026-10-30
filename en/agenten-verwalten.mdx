@@ -24,7 +24,14 @@ Open the list via **Agents** in the sidebar.
 
 ## Create a new agent
 
-Click the **New agent** card. The **agent wizard** guides you through the basic configuration in five steps. Only the name is required – all other settings are optional and can be adjusted later.
+Click the **New agent** card. The **Add agent** dialog opens, where you choose the starting point.
+
+- **Empty agent** starts the agent wizard, and you define all settings yourself.
+- A **template** creates a fully preconfigured agent. More on this under [Create an agent from a template](#create-an-agent-from-a-template).
+
+Confirm your choice with **Create**.
+
+If you choose **Empty agent**, the **agent wizard** guides you through the basic configuration in five steps. Only the name is required – all other settings are optional and can be adjusted later.
 
 <Frame caption="Step 1 of the agent wizard: basic settings with name, description and phone number.">
   <img src="/images/agenten/Agents_Grundeinstellungen.png" alt="Agent wizard – basic settings step" />
@@ -61,6 +68,33 @@ Click the **New agent** card. The **agent wizard** guides you through the basic 
 
 After **Create**, the new agent appears in the list – initially without a live version and without a phone number. From the card you open the **draft** (flow editor), the **versions** or the **settings**.
 
+## Create an agent from a template
+
+Templates are fully configured agents that ship with msg.Hello. They give you a head start when you don't want to begin from scratch. In the **Add agent** dialog, each template shows its name, description and tags.
+
+A template copies base instructions, AI model parameters, call parameters, connectors and the complete flow as a **draft** into a new agent. Like every new agent, it starts without a live version and without a phone number. You adapt it, check it with a [test call](/en/agenten-testen) and then publish it.
+
+If an agent with the same name already exists, msg.Hello appends a sequential number, for example "Praxisassistent (2)".
+
+<Warning>
+Templates contain **no credentials**. If a connector of the template needs credentials, the portal opens the **Connectors** tab right after creation and shows a notice. Enter the missing values there before you test the agent.
+</Warning>
+
+## Export and import agents (API)
+
+You can export a complete agent as JSON via the REST API and import it again as a new agent, for example to move it between tenants or environments.
+
+| Action | Endpoint |
+|--------|----------|
+| Export | `GET /tenants/{tid}/bots/{botId}/export` |
+| Import | `POST /tenants/{tid}/bots/import` |
+
+The export contains name and description, base instructions, AI model and call parameters, the connector configuration and the current **draft** of the flow. It does not contain the **phone number**, the **versions** or any **secret credentials**. An import always creates a new agent with its own IDs. You then publish the draft there yourself.
+
+<Note>
+If you only want to transfer the conversation flow, the [flow export in the flow editor](/en/flows-bauen#import-and-export-flows) is enough.
+</Note>
+
 ## Versions and going live
 
 An agent works with **versions** of its flow:
@@ -70,4 +104,4 @@ An agent works with **versions** of its flow:
 - You **activate** a version as the live version. New calls use it; ongoing calls stay on their version.
 - From a version you can reopen an editable draft at any time.
 
-More on this in the chapter [Build conversation flows](/en/flows-bauen#versionierung).
+More on this in the chapter [Build conversation flows](/en/flows-bauen#versioning).

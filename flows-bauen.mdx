@@ -13,6 +13,27 @@ Der Flow-Editor ist eine grafische Oberfläche, in der du Zustände als Knoten a
   <img src="/images/agenten/Agent_Entwurf.png" alt="Flow-Editor mit Zustandsliste und Zustands-Konfiguration" />
 </Frame>
 
+### Rückgängig und Wiederherstellen
+
+Jede Änderung im Entwurf lässt sich rückgängig machen. Das gilt für bearbeitete Felder und Typwechsel ebenso wie für gelöschte Zustände und einen Flow-Import. Nutze dafür die Schaltflächen **Rückgängig** und **Wiederherstellen** in der Kopfzeile des Editors oder die Tastenkürzel.
+
+| Aktion | Windows / Linux | macOS |
+|--------|-----------------|-------|
+| Rückgängig | `Strg` + `Z` | `⌘` + `Z` |
+| Wiederherstellen | `Strg` + `Umschalt` + `Z` oder `Strg` + `Y` | `⌘` + `Umschalt` + `Z` |
+
+Tippst du mehrere Zeichen hintereinander in dasselbe Feld, zählt das als ein einziger Schritt. Der Verlauf umfasst die letzten 50 Schritte und gilt, solange der Editor geöffnet ist. Steht der Cursor in einem Textfeld, wirken die Tastenkürzel auf das Textfeld selbst.
+
+### Sicherheitsabfragen
+
+Bevor der Editor etwas verwirft, fragt er nach und nennt die Folgen.
+
+- **Zustand löschen** zeigt, wie viele Ausgänge anderer Zustände auf diesen Zustand zeigen und dadurch ihr Ziel verlieren. Ist es der Startzustand, weist der Dialog darauf hin, dass der Flow danach keinen Einstiegspunkt mehr hat.
+- **Typ ändern** (Standard, Weiterleitung, Auflegen) listet auf, was dabei verloren geht, etwa Ausgänge, Bedingungen, erlaubte Tools oder die Weiterleitungsnummer. Ein späteres Zurückstellen des Typs holt diese Angaben nicht zurück.
+- **Flow importieren** weist darauf hin, dass der Import jeden Zustand im Entwurf ersetzt.
+
+Alle drei Aktionen kannst du anschließend mit **Rückgängig** zurücknehmen.
+
 ## Zustände
 
 Ein Flow besteht aus **Zuständen** – den Schritten des Gesprächs. Ein Zustand trägt eigene Anweisungen, erlaubte Tools und Übergänge zu Folgezuständen.
@@ -100,16 +121,18 @@ Du kannst einen kompletten Flow als **JSON-Datei exportieren** und an anderer St
 
 <Steps>
   <Step title="Exportieren">
-    Öffne im Flow-Editor das **⋮-Menü** (oben rechts) und wähle **Flow exportieren**. Der aktuelle Flow wird als JSON-Datei heruntergeladen. Export ist auch in der schreibgeschützten Versionsansicht möglich.
+    Öffne im Flow-Editor das **⋮-Menü** (oben rechts) und wähle **Flow exportieren**. Der Dialog zeigt die Flow-Daten als JSON an. Du kannst sie **kopieren** oder mit **Datei herunterladen** als JSON-Datei speichern. Export ist auch in der schreibgeschützten Versionsansicht möglich.
   </Step>
   <Step title="Importieren">
-    Öffne im **Entwurf** dasselbe Menü und wähle **Flow importieren**. Wähle eine zuvor exportierte JSON-Datei; ihr Inhalt ersetzt den aktuellen Entwurf. Prüfe das Ergebnis anschließend mit einem [Test-Anruf](/agenten-testen).
+    Öffne im **Entwurf** dasselbe Menü und wähle **Flow importieren**. Ziehe im Reiter **Datei** eine zuvor exportierte JSON-Datei in den Dialog oder füge das JSON im Reiter **Text** ein. Mit **Flow importieren** ersetzt der Inhalt den aktuellen Entwurf. Prüfe das Ergebnis anschließend mit einem [Test-Anruf](/agenten-testen).
   </Step>
 </Steps>
 
 <Note>
-Der Import überschreibt den bestehenden **Entwurf**. Bereits veröffentlichte Versionen bleiben unberührt – der importierte Flow wird erst mit dem nächsten Veröffentlichen zu einer Version.
+Der Import überschreibt den bestehenden **Entwurf**. Bereits veröffentlichte Versionen bleiben unberührt – der importierte Flow wird erst mit dem nächsten Veröffentlichen zu einer Version. Gefällt dir das Ergebnis nicht, holst du den vorherigen Entwurf mit **Rückgängig** zurück.
 </Note>
+
+Denselben Flow kannst du in beliebig viele Agenten importieren, auch mandantenübergreifend. Jeder Agent verwaltet die Zustände seines Entwurfs getrennt von allen anderen. Einen kompletten Agenten samt Instructions und Connectoren überträgst du über den [Agenten-Export](/agenten-verwalten#agenten-exportieren-und-importieren-api).
 
 ### Aufbau einer Export-Datei
 

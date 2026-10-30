@@ -45,6 +45,14 @@ No. Flow, instructions, and tools are configured in the portal. You need program
 
 The phone number is set when the agent is created and must be registered with our provider. A new agent starts without a phone number and without a live version.
 
+### Do I have to build every agent from scratch?
+
+No. When creating an agent, you can choose a [template](/en/agenten-verwalten#create-an-agent-from-a-template) instead of an empty agent. It already includes instructions, connectors and flow. You only enter the credentials yourself.
+
+### Does the agent know the caller's number?
+
+Yes, if you allow it. With the built-in tool [`get_caller_phone_number`](/en/system-tools), the agent reads the transmitted phone number. If the number is withheld, it receives the code `ANONYMOUS` and can ask for it.
+
 ## In operation
 
 ### Can I change something while the agent is live?
@@ -95,7 +103,7 @@ Through your organisation's single sign-on. Passwords and sign-in procedures are
 
 ### How safe is connecting a third-party MCP server?
 
-Treat it as an external trust boundary: for each agent, permit only the tools it genuinely needs, and check the behaviour with a test call beforehand. Credentials are stored encrypted.
+Treat it as an external trust boundary: for each agent, permit only the tools it genuinely needs, and check the behaviour with a test call beforehand. Credentials are stored encrypted. Instead of a permanent token, you can also store [OAuth client credentials](/en/mcp-server). The agent then works only with short-lived access tokens.
 
 <CardGroup cols={2}>
   <Card title="Concepts & Control" icon="shield-check" href="/en/konzepte">

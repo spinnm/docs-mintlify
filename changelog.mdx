@@ -1,0 +1,45 @@
+---
+title: "Änderungsprotokoll"
+description: "Neue Funktionen und Änderungen an msg.Hello im Überblick."
+---
+
+Hier findest du die Änderungen an msg.Hello, gruppiert nach Release. Die neuesten Änderungen stehen oben.
+
+<Update label="Oktober 2026" description="Vorlagen, Undo/Redo im Flow-Editor, Kontrastmodus, Agenten-Export und ausgehende Anrufe">
+
+## Agenten und Flows
+
+- **Agenten aus Vorlagen anlegen.** Beim Anlegen wählst du zwischen einem leeren Agenten und einer Vorlage mit fertigen Instructions, Connectoren und Flow. Siehe [Agent aus einer Vorlage anlegen](/agenten-verwalten#agent-aus-einer-vorlage-anlegen).
+- **Rückgängig und Wiederherstellen im Flow-Editor.** Jede Änderung am Entwurf lässt sich über Schaltflächen oder `Strg` + `Z` zurücknehmen. Siehe [Rückgängig und Wiederherstellen](/flows-bauen).
+- **Sicherheitsabfragen im Flow-Editor.** Vor dem Löschen eines Zustands, einem Typwechsel und einem Flow-Import nennt der Editor, was dabei verloren geht.
+- **Flow-Import in mehrere Agenten.** Denselben Flow kannst du jetzt in beliebig viele Agenten und Mandanten importieren. Vorher konnten gleiche Zustands-IDs in zwei Agenten kollidieren. Bestehende Entwürfe bleiben dabei unverändert.
+- **Agenten exportieren und importieren.** Ein kompletter Agent lässt sich über die API als JSON exportieren und als neuer Agent importieren. Zugangsdaten, Rufnummer und Versionen werden nicht übertragen. Siehe [Agenten exportieren und importieren](/agenten-verwalten#agenten-exportieren-und-importieren-api).
+
+## Tools und Integrationen
+
+- **Neues Built-In-Tool „Anrufernummer abrufen".** Mit `get_caller_phone_number` liest der Agent die Rufnummer des Anrufers aus und erkennt unterdrückte Nummern. Siehe [Built-In-Tools](/system-tools).
+- **OAuth Client Credentials für MCP-Server.** Neben Bearer-Token und API-Key kann ein MCP-Server jetzt per Client Credentials angebunden werden. msg.Hello holt und erneuert das Access-Token selbst. Siehe [MCP-Server anbinden](/mcp-server).
+- **Ausgehende Anrufe (API).** Mit `POST /tenants/{tid}/bots/{botId}/outbound-calls` ruft ein Agent eine Rufnummer an. Voraussetzung sind eine aktive Live-Version und eine hinterlegte Rufnummer am Agenten.
+
+## Portal
+
+- **Kontrastmodus.** In der oberen Navigation wählst du zwischen Hell, Dunkel und Kontrastmodus. Siehe [Darstellung und Sprache](/einstellungen#darstellung-und-sprache).
+- **Sprachauswahl in der Navigation.** Die Sprache der Oberfläche stellst du jetzt direkt in der oberen Navigation um. Datums- und Zeitangaben folgen der gewählten Sprache.
+- **Kontrastprüfung der Primärfarbe.** Das Portal warnt, wenn eine Primärfarbe den Mindestkontrast von 4,5:1 nicht erreicht.
+- **Link zur Dokumentation** in der Seitenleiste.
+- **Barrierefreiheit.** Alle Funktionen sind per Tastatur bedienbar, einschließlich der Bereichsgrenzen im Flow-Editor und im Test-Anruf sowie der Zustände im Flow-Graphen. Überschriften, Listen und eingeblendete Inhalte sind semantisch ausgezeichnet.
+- **Keine Fehler-Telemetrie an Dritte.** Das Portal sendet keine Fehlerberichte mehr an einen externen Monitoring-Dienst.
+
+## Anmeldung und Sicherheit
+
+- **PKCE wird strenger geprüft.** Öffentliche OIDC-Clients müssen PKCE mit `S256` verwenden. Wurde bei der Anmeldung eine Code-Challenge gesendet, ist der passende Verifier beim Token-Abruf jetzt Pflicht. Vertrauliche Clients wie die msg.Hello-Portale sind davon nicht betroffen.
+- **Token-Introspection.** Der Identity-Dienst bietet den Endpunkt `/protocol/oidc/introspect` nach RFC 7662 an.
+- **Globale Rollen für eigene OIDC-Clients.** Eigenen OIDC-Clients eines Mandanten lassen sich jetzt neben eigenen Rollen auch die Standard-Rollen des Mandanten zuweisen.
+
+## Telefonie und Betrieb
+
+- **Anbindung über SIP-Domains.** Agenten sind zusätzlich über eine SIP-Adresse erreichbar, deren Benutzerteil die Agenten-ID ist.
+- **SIP-Header als Metadaten.** Bei eingehenden Anrufen speichert msg.Hello die SIP-Header des Anrufs als Metadaten zur Sitzung.
+- **GPT-Live als Sprachmodell.** Neben OpenAI Realtime und Azure OpenAI Realtime kann der Betrieb OpenAI GPT-Live als Anbieter konfigurieren.
+
+</Update>

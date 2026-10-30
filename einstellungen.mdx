@@ -1,6 +1,6 @@
 ---
 title: "Einstellungen"
-description: "Datenschutz, Erscheinungsbild und Sprache deines Mandanten."
+description: "Datenschutz und Erscheinungsbild deines Mandanten sowie persönliche Darstellung und Sprache."
 ---
 
 In den **Einstellungen** verwaltest du mandantenweite Vorgaben.
@@ -24,15 +24,28 @@ Die **automatische, zeitgesteuerte Löschung** nach Ablauf der Frist wird derzei
 
 ## Erscheinungsbild
 
-Passe die **Primärfarbe** der Oberfläche an dein Corporate Design an.
+Passe die **Primärfarbe** der Oberfläche an dein Corporate Design an. Sie gilt für alle Benutzer deines Mandanten.
 
 <Frame caption="Erscheinungsbild: Primärfarbe mit Live-Vorschau.">
   <img src="/images/agenten/einstellungen-erscheinungsbild.png" alt="Erscheinungsbild-Einstellungen mit Primärfarbe und Vorschau" />
 </Frame>
 
-## Sprache
+Erreicht die gewählte Farbe im hellen Design nicht überall den Mindestkontrast von 4,5:1, zeigt das Portal einen Hinweis an. Du kannst die Farbe trotzdem speichern. Benutzer, die mehr Kontrast brauchen, schalten dann selbst den Kontrastmodus ein.
 
-Wähle die **Sprache** der Oberfläche. Das Portal steht auf **Deutsch** und **Englisch** zur Verfügung.
+## Darstellung und Sprache
+
+Darstellung und Sprache stellt jeder Benutzer **für sich selbst** in der oberen Navigationsleiste ein. Sie sind keine Mandanten-Einstellung und gelten nur für dich.
+
+<CardGroup cols={2}>
+  <Card title="Darstellung" icon="circle-half-stroke">
+    Wähle zwischen **Hell**, **Dunkel** und **Kontrastmodus**. Der Kontrastmodus nutzt eine feste, auf Barrierefreiheit geprüfte Farbpalette und ersetzt dabei die Primärfarbe des Mandanten.
+  </Card>
+  <Card title="Sprache" icon="language">
+    Das Portal steht auf **Deutsch** und **Englisch** zur Verfügung. Datums- und Zeitangaben folgen der gewählten Sprache.
+  </Card>
+</CardGroup>
+
+Solange du keine Darstellung aktiv auswählst, richtet sich das Portal nach deinem Betriebssystem. Ist dort erhöhter Kontrast eingestellt, startet es im Kontrastmodus, ansonsten folgt es der hellen oder dunklen Systemeinstellung.
 
 <Note>
 Die Sprache der Oberfläche ist unabhängig von der **Sprache des Agenten** im Gespräch – Letztere stellst du pro Agenten in den [Modell-Parametern](/agenten-verwalten) ein.

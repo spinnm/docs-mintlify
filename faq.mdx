@@ -45,6 +45,14 @@ Nein. Flow, Instruktionen und Werkzeuge werden im Portal konfiguriert. Programmi
 
 Die Rufnummer wird beim Anlegen des Agenten hinterlegt und muss bei unserem Provider registriert sein. Ein neuer Agent startet zunächst ohne Rufnummer und ohne Live-Version.
 
+### Muss ich jeden Agenten bei null anfangen?
+
+Nein. Beim Anlegen kannst du statt eines leeren Agenten eine [Vorlage](/agenten-verwalten#agent-aus-einer-vorlage-anlegen) wählen. Sie bringt Instructions, Connectoren und Flow bereits mit, nur die Zugangsdaten trägst du selbst ein.
+
+### Kennt der Agent die Nummer des Anrufers?
+
+Ja, wenn du es erlaubst. Mit dem Built-In-Tool [Anrufernummer abrufen](/system-tools) liest der Agent die übermittelte Rufnummer aus. Bei unterdrückter Nummer erhält er den Code `ANONYMOUS` und kann nachfragen.
+
 ## Im Betrieb
 
 ### Kann ich etwas ändern, während der Agent live ist?
@@ -95,7 +103,7 @@ Die Aufbewahrungsfristen für Anrufe und Dialoge sind bereits konfigurierbar. Di
 
 ### Wie sicher ist die Anbindung eines fremden MCP-Servers?
 
-Behandle ihn als externe Vertrauensgrenze: Schalte pro Agent nur die Werkzeuge frei, die er wirklich braucht, und prüfe das Verhalten vorher mit einem Test-Anruf. Zugangsdaten werden verschlüsselt gespeichert.
+Behandle ihn als externe Vertrauensgrenze: Schalte pro Agent nur die Werkzeuge frei, die er wirklich braucht, und prüfe das Verhalten vorher mit einem Test-Anruf. Zugangsdaten werden verschlüsselt gespeichert. Statt eines dauerhaften Tokens kannst du auch [OAuth Client Credentials](/mcp-server) hinterlegen, dann arbeitet der Agent nur mit kurzlebigen Access-Tokens.
 
 <CardGroup cols={2}>
   <Card title="Konzepte & Kontrolle" icon="shield-check" href="/konzepte">
