@@ -48,7 +48,8 @@
                   "mcp-server",
                   "telefonie",
                   "ausgehende-anrufe",
-                  "api-zugriff"
+                  "api-zugriff",
+                  "sicherheit-verantwortung"
                 ]
               },
               {
@@ -97,7 +98,8 @@
                   "en/mcp-server",
                   "en/telefonie",
                   "en/ausgehende-anrufe",
-                  "en/api-zugriff"
+                  "en/api-zugriff",
+                  "en/sicherheit-verantwortung"
                 ]
               },
               {
